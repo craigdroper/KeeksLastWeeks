@@ -26,9 +26,12 @@ function love.load()
             TODO one of the states should be the "Dirty Bit Productions" tweenin opacity
             title and then it goes into the "Start" menu state
         --]]
+        --TODO delete
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end,
         ['game-over'] = function() return GameOverState() end,
+        -- Add the apartment world states
+        ['apt-menu'] = function() return AptWMenuState() end,
         -- Add Bar Mini Game States to global state machine
         -- ['bar-game-start'] = function() return BGStartState() end,
         ['bar-game-play'] = function() return BGPlayState() end,
@@ -42,7 +45,7 @@ function love.load()
         ['coke-game-score'] = function() return CokeGScoreState() end
     }
     -- gStateMachine:change('start')
-    gStateMachine:change('coke-game-title')
+    gStateMachine:change('apt-menu')
     --[[
     gStateMachine:change('bar-game-serve', {
         paddle = BGPaddle(1),

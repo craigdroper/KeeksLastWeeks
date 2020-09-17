@@ -19,6 +19,10 @@ require 'src/StateMachine'
 require 'src/Util'
 require 'src/states/BaseState'
 
+-- Apartment World requirements
+require 'src/world/apartment/Apartment'
+require 'src/world/apartment/states/AptWMenuState'
+
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BGBall'
 require 'src/games/bar/src/BGBrick'

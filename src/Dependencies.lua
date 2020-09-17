@@ -31,6 +31,15 @@ require 'src/games/bar/src/states/BGServeState'
 -- require 'src/games/bar/src/states/BGStartState'
 require 'src/games/bar/src/states/BGVictoryState'
 
+-- Coke Flappy Bird Game requirements
+require 'src/games/coke/src/CokeGBird'
+require 'src/games/coke/src/CokeGPipe'
+require 'src/games/coke/src/CokeGPipePair'
+require 'src/games/coke/src/states/CokeGCountdownState'
+require 'src/games/coke/src/states/CokeGPlayState'
+require 'src/games/coke/src/states/CokeGScoreState'
+require 'src/games/coke/src/states/CokeGTitleScreenState'
+
 -- TODO will be deleted since we're not borrowing from Zelda right now
 require 'src/world/Doorway'
 require 'src/world/Dungeon'
@@ -96,6 +105,10 @@ gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['medium-flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 14),
+    ['flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 28),
+    ['huge-flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 56),
+    -- TODO delete 
     ['gothic-medium'] = love.graphics.newFont('fonts/GothicPixels.ttf', 16),
     ['gothic-large'] = love.graphics.newFont('fonts/GothicPixels.ttf', 32),
     ['zelda'] = love.graphics.newFont('fonts/zelda.otf', 64),
@@ -148,4 +161,21 @@ gBGSounds = {
     ['pause'] = love.audio.newSource('src/games/bar/sounds/pause.wav'),
     ['powerup'] = love.audio.newSource('src/games/bar/sounds/powerup.wav'),
     ['music'] = love.audio.newSource('src/games/bar/sounds/music.wav'),
+}
+
+gCokeGImages = {
+    ['ground'] = love.graphics.newImage('src/games/coke/graphics/ground.png'),
+    ['background'] = love.graphics.newImage('src/games/coke/graphics/background.png'),
+    ['pipe'] = love.graphics.newImage('src/games/coke/graphics/pipe.png'),
+    ['bird'] = love.graphics.newImage('src/games/coke/graphics/bird.png'),
+    ['pause'] = love.graphics.newImage('src/games/coke/graphics/pause.png'),
+}
+
+gCokeSounds = {
+    ['jump'] = love.audio.newSource('src/games/coke/sounds/jump.wav', 'static'),
+    ['explosion'] = love.audio.newSource('src/games/coke/sounds/explosion.wav', 'static'),
+    ['hurt'] = love.audio.newSource('src/games/coke/sounds/hurt.wav', 'static'),
+    ['score'] = love.audio.newSource('src/games/coke/sounds/score.wav', 'static'),
+    ['pause'] = love.audio.newSource('src/games/coke/sounds/pause.wav', 'static'),
+    ['music'] = love.audio.newSource('src/games/coke/sounds/marios_way.mp3', 'static')
 }

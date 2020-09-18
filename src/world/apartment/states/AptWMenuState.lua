@@ -13,11 +13,10 @@ function AptWMenuState:init()
     -- The apartment is a static enough object this can all be initialized
     -- at the beginning
     self.apartment = Apartment()
-    self.player = nil
+    self.player = gGlobalEnts['player'] 
 end
 
-function AptWMenuState:enter(params)
-    self.player = params.player
+function AptWMenuState:enter()
 end
 
 function AptWMenuState:update(dt)

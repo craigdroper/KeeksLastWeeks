@@ -16,8 +16,11 @@ require 'src/game_objects'
 require 'src/Hitbox'
 require 'src/Player'
 require 'src/StateMachine'
+require 'src/StateStack'
 require 'src/Util'
 require 'src/states/BaseState'
+require 'src/states/game/FadeInState'
+require 'src/states/game/FadeOutState'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'

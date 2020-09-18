@@ -21,11 +21,12 @@ function love.load()
 
     love.graphics.setFont(gFonts['small'])
 
+    gStateStack = StateStack()
+
+    --[[ TODO delete
     gStateMachine = StateMachine {
-        --[[
             TODO one of the states should be the "Dirty Bit Productions" tweenin opacity
             title and then it goes into the "Start" menu state
-        --]]
         --TODO delete
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end,
@@ -44,26 +45,23 @@ function love.load()
         ['coke-game-play'] = function() return CokeGPlayState() end,
         ['coke-game-score'] = function() return CokeGScoreState() end
     }
+        --]]
 
+    gGlobalEnts = {}
     player = Player()
     player.stateMachine = StateMachine {
         ['walk'] = function() return PlayerWalkState(player) end,
         ['idle'] = function() return PlayerIdleState(player) end,
     }
     player:changeState('idle')
-    gStateMachine:change('apt-menu',
-        {player = player}
-    )
-    --[[
-    gStateMachine:change('bar-game-serve', {
-        paddle = BGPaddle(1),
-        bricks = BGLevelMaker.createMap(32),
-        health = 3,
-        score = 0,
-        level = 32,
-        recoverPoints = 5000,
-    })
-    --]]
+    gGlobalEnts['player'] = player
+
+    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        function()
+            gStateStack:push(AptWMenuState())
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+        function() end))
+    end))
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
@@ -102,13 +100,13 @@ function love.update(dt)
     end
 
     Timer.update(dt)
-    gStateMachine:update(dt)
+    gStateStack:update(dt)
 
     love.keyboard.keysPressed = {}
 end
 
 function love.draw()
     push:start()
-    gStateMachine:render()
+    gStateStack:render()
     push:finish()
 end

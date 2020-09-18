@@ -10,13 +10,8 @@ DialogueState = Class{__includes = BaseState}
 
 -- function DialogueState:init(x, y, width, height, text, font, callback)
 function DialogueState:init(text, callback)
-    local tbwidth = VIRTUAL_WIDTH / 2
-    local tbheight = 64
-    local tbx = (VIRTUAL_WIDTH - tbwidth) / 2
-    local boxYPad = 6
-    local tby = (VIRTUAL_HEIGHT - tbheight - boxYPad)
-    self.textbox = Textbox(tbx, tby, tbwidth, tbheight, text, gFonts['medium'])
-    -- self.textbox = Textbox(x, y, width, height, text, font)
+    self.textbox = Textbox(TEXT_X, TEXT_Y, TEXT_WIDTH, TEXT_HEIGHT,
+        text, gFonts['medium'])
     self.callback = callback or function() end
 end
 

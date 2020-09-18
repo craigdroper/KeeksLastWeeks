@@ -59,7 +59,9 @@ function love.load()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             gStateStack:push(AptWSitState())
-            gStateStack:push(DialogueState('Welcome home!'))
+            gStateStack:push(AptWBaseMenuState())
+            gStateStack:push(DialogueState(
+                'Welcome home\n\nWhat would you like to do next?'))
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
         function() end))
     end))

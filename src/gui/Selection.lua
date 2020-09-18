@@ -61,10 +61,13 @@ function Selection:render()
         local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
 
         -- draw selection marker if we're at the right index
+        local cursorPadX = 8
         if i == self.currentSelection then
-            love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
+            -- love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
+            love.graphics.draw(gTextures['cursor'], self.x + cursorPadX, paddedY)
         end
 
+        -- Pad the txt for room with the cursor
         love.graphics.printf(self.items[i].text, self.x, paddedY, self.width, 'center')
 
         currentY = currentY + self.gapHeight

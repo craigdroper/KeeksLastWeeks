@@ -30,6 +30,7 @@ require 'src/gui/Textbox'
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
 require 'src/world/apartment/states/AptWSitState'
+require 'src/world/apartment/states/AptWBaseMenuState'
 
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BGBall'
@@ -86,7 +87,8 @@ gTextures = {
     --TODO delete legacy code to here
     ['apartment'] = love.graphics.newImage('graphics/sets/interior2.jpg'),
     ['bar'] = love.graphics.newImage('graphics/sets/interior3.png'),
-    ['keeks-walk'] = love.graphics.newImage('graphics/characters/kiki_walk.png')
+    ['keeks-walk'] = love.graphics.newImage('graphics/characters/kiki_walk.png'),
+    ['cursor'] = love.graphics.newImage('graphics/cursor.png'),
 }
 
 gFrames = {
@@ -137,6 +139,7 @@ gSounds = {
     ['lift'] = love.audio.newSource('sounds/lift.wav'),
     ['throw'] = love.audio.newSource('sounds/throw.wav'),
     ['breakpot'] = love.audio.newSource('sounds/breakpot.wav'),
+    ['blip'] = love.audio.newSource('sounds/blip.wav'),
 }
 
 gBGTextures = {

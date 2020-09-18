@@ -24,6 +24,13 @@ WINDOW_HEIGHT = 720
 
 TILE_SIZE = 16
 
+-- couple suggested constants for Dialogue and Menu boxes
+TEXT_WIDTH = VIRTUAL_WIDTH / 2
+TEXT_HEIGHT = 64
+TEXT_X = (VIRTUAL_WIDTH - TEXT_WIDTH) / 2
+TEXT_Y_PAD = 6
+TEXT_Y = (VIRTUAL_HEIGHT - TEXT_HEIGHT - TEXT_Y_PAD)
+
 --
 -- entity constants
 --

@@ -13,14 +13,29 @@
 Menu = Class{}
 
 function Menu:init(def)
-    self.panel = Panel(def.x, def.y, def.width, def.height)
-    
+    -- TODO dynamically create a bottom and center justified menu with
+    -- dimensions to fit all the items and the cursor
+    local maxTextLength = 0
+    for _, item in pairs(def.items) do
+        if item.text:len() > maxTextLength then
+            maxTextLength = item.text:len()
+        end
+    end
+    local charPixelHeight = 32
+    local charPixelWidth = 10
+    local cursorWidth = 28
+    local menuWidth = (charPixelWidth * maxTextLength) + 2 * cursorWidth
+    local menuHeight = charPixelHeight * #def.items
+    local menuX = (VIRTUAL_WIDTH - menuWidth) / 2
+    local menuY = (VIRTUAL_HEIGHT - TEXT_Y_PAD - menuHeight)
+
+    self.panel = Panel(menuX, menuY, menuWidth, menuHeight)
     self.selection = Selection {
         items = def.items,
-        x = def.x,
-        y = def.y,
-        width = def.width,
-        height = def.height
+        x = menuX,
+        y = menuY,
+        width = menuWidth,
+        height = menuHeight,
     }
 end
 

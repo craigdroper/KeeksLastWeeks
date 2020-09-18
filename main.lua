@@ -44,8 +44,16 @@ function love.load()
         ['coke-game-play'] = function() return CokeGPlayState() end,
         ['coke-game-score'] = function() return CokeGScoreState() end
     }
-    -- gStateMachine:change('start')
-    gStateMachine:change('apt-menu')
+
+    player = Player()
+    player.stateMachine = StateMachine {
+        ['walk'] = function() return PlayerWalkState(player) end,
+        ['idle'] = function() return PlayerIdleState(player) end,
+    }
+    player:changeState('idle')
+    gStateMachine:change('apt-menu',
+        {player = player}
+    )
     --[[
     gStateMachine:change('bar-game-serve', {
         paddle = BGPaddle(1),

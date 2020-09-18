@@ -26,8 +26,10 @@ function Entity:init(def)
 
     self.walkSpeed = def.walkSpeed
 
-    self.health = def.health
+    -- XXX Not used
+    -- self.health = def.health
 
+    -- XXX Not used
     -- self.dead = false
 end
 

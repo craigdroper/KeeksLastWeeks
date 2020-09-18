@@ -8,12 +8,11 @@
 
 PlayerWalkState = Class{__includes = EntityWalkState}
 
-function PlayerWalkState:init(player, dungeon)
+function PlayerWalkState:init(player)
     self.entity = player
-    self.dungeon = dungeon
 
     -- render offset for spaced character sprite
-    self.entity.offsetY = 5
+    self.entity.offsetY = 0
     self.entity.offsetX = 0
 end
 

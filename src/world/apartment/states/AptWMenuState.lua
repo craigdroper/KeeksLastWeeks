@@ -10,14 +10,24 @@
 AptWMenuState = Class{__includes = BaseState}
 
 function AptWMenuState:init()
+    -- The apartment is a static enough object this can all be initialized
+    -- at the beginning
     self.apartment = Apartment()
-    -- TODO fetch a reference to the global keeks player
+    self.player = nil
+end
+
+function AptWMenuState:enter(params)
+    self.player = params.player
 end
 
 function AptWMenuState:update(dt)
+    self.player:update(dt)
     -- TODO implement scrolling through menu and waiting for selection here
 end
 
 function AptWMenuState:render()
     self.apartment:render()
+    if self.player then
+        self.player:render()
+    end
 end

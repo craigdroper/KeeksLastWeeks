@@ -29,7 +29,7 @@ require 'src/gui/Textbox'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
-require 'src/world/apartment/states/AptWSitState'
+require 'src/world/apartment/states/AptWPrimaryState'
 require 'src/world/apartment/states/AptWLeaveState'
 require 'src/world/apartment/states/AptWBaseMenuState'
 require 'src/world/apartment/states/AptWFunMenuState'

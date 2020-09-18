@@ -30,7 +30,9 @@ require 'src/gui/Textbox'
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
 require 'src/world/apartment/states/AptWSitState'
+require 'src/world/apartment/states/AptWLeaveState'
 require 'src/world/apartment/states/AptWBaseMenuState'
+require 'src/world/apartment/states/AptWFunMenuState'
 
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BGBall'
@@ -130,16 +132,18 @@ gFonts = {
 }
 
 gSounds = {
+    ['door'] = love.audio.newSource('sounds/door.wav'),
+    ['blip'] = love.audio.newSource('sounds/blip.wav'),
+    ['footsteps'] = love.audio.newSource('sounds/footsteps.wav'),
+    -- Currently unused sounds
     ['music'] = love.audio.newSource('sounds/music.mp3'),
     ['sword'] = love.audio.newSource('sounds/sword.wav'),
     ['hit-enemy'] = love.audio.newSource('sounds/hit_enemy.wav'),
     ['hit-player'] = love.audio.newSource('sounds/hit_player.wav'),
-    ['door'] = love.audio.newSource('sounds/door.wav'),
     ['powerup'] = love.audio.newSource('sounds/powerup.wav'),
     ['lift'] = love.audio.newSource('sounds/lift.wav'),
     ['throw'] = love.audio.newSource('sounds/throw.wav'),
     ['breakpot'] = love.audio.newSource('sounds/breakpot.wav'),
-    ['blip'] = love.audio.newSource('sounds/blip.wav'),
 }
 
 gBGTextures = {

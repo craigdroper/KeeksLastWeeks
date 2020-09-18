@@ -47,14 +47,19 @@ function love.load()
     }
         --]]
 
-    gGlobalEnts = {}
+    gGlobalObjs = {}
     player = Player()
     player.stateMachine = StateMachine {
-        ['walk'] = function() return PlayerWalkState(player) end,
+        -- Initial thought is that the player will only have to be "idle"
+        -- since any movement is controlled completely by the program
+        -- and there is no need for a "walk" type state where we need
+        -- to check if we're interacting with the map
         ['idle'] = function() return PlayerIdleState(player) end,
     }
     player:changeState('idle')
-    gGlobalEnts['player'] = player
+    gGlobalObjs['player'] = player
+
+    gGlobalObjs['apartment'] = Apartment()
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()

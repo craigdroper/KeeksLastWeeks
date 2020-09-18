@@ -46,6 +46,7 @@ function Apartment:generateFurniture()
     -- Populate furniture
     local GAP_FROM_LEFT_WALL = 10
     local GAP_FROM_TOP_WALL = 10
+    local GAP_FROM_BOTTOM_WALL = 10
 
     -- Draw in couch starting from gaps
     local vertCouchWidth = gFramesInfo[self.name][gAPT_VERT_COUCH_NAME]['width']
@@ -79,12 +80,11 @@ function Apartment:generateFurniture()
         tableX, tableY}
 
     -- Center the tv stand on the horizontal portion of the couch, and
-    -- give it a reasonable gap from the coffee table
+    -- the bottom of the room
     local tvWidth = gFramesInfo[self.name][gAPT_TV_NAME]['width']
     local tvHeight = gFramesInfo[self.name][gAPT_TV_NAME]['height']
     local tvX = (horzCouchX + horzCouchWidth/2 - tvWidth/2)
-    local TABLE_TV_GAP = 100
-    local tvY = (tableY + tableHeight) + TABLE_TV_GAP
+    local tvY = VIRTUAL_HEIGHT - GAP_FROM_BOTTOM_WALL - tvHeight
     self.furniture['tv'] = {gTextures[self.name],
         gFrames[self.name][gAPT_TV_NAME],
         tvX, tvY}

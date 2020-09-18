@@ -1,19 +1,9 @@
---[[
-    AptWSitState Class
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-
-    The AptWSitState is the starting screen of the game, shown on startup. It should
-    display "Press Enter" and also our highest score.
-]]
 
 AptWSitState = Class{__includes = BaseState}
 
 function AptWSitState:init()
-    -- The apartment is a static enough object this can all be initialized
-    -- at the beginning
-    self.apartment = Apartment()
-    self.player = gGlobalEnts['player']
+    self.apartment = gGlobalObjs['apartment']
+    self.player = gGlobalObjs['player']
 end
 
 function AptWSitState:enter()
@@ -25,11 +15,11 @@ function AptWSitState:enter()
     local ARMREST_OFFSET = 7
     self.player.x = (horzCouchX + horzCouchWidth/2) - self.player.width/2 - ARMREST_OFFSET
     self.player.y = horzCouchY
+    self.player:changeAnimation('idle-down')
 end
 
 function AptWSitState:update(dt)
     self.player:update(dt)
-    -- TODO implement scrolling through menu and waiting for selection here
 end
 
 function AptWSitState:render()

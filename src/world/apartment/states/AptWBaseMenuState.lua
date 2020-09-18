@@ -2,7 +2,6 @@
 AptWBaseMenuState = Class{__includes = BaseState}
 
 function AptWBaseMenuState:init()
-    print('Constructing AptWBaseState')
     self.aptMenu = Menu {
         items = {
             {
@@ -10,7 +9,7 @@ function AptWBaseMenuState:init()
                 onSelect = function()
                     -- Pop off AptWBaseMenuState
                     gStateStack:pop()
-                    -- TODO push AptWFunMenuState
+                    gStateStack:push(AptWFunMenuState())
                 end
             },
             {

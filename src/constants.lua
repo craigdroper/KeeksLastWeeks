@@ -35,6 +35,8 @@ TEXT_Y = (VIRTUAL_HEIGHT - TEXT_HEIGHT - TEXT_Y_PAD)
 -- entity constants
 --
 PLAYER_WALK_SPEED = 60
+-- XXX for testing/dev
+PLAYER_WALK_SPEED = 300
 
 -- Bar game constants
 -- paddle movement speed

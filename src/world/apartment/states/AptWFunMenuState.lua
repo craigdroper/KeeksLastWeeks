@@ -1,7 +1,9 @@
 
 AptWFunMenuState = Class{__includes = BaseState}
 
-function AptWFunMenuState:init()
+function AptWFunMenuState:init(params)
+    self.apartment = params.apartment
+
     self.aptMenu = Menu {
         items = {
             {
@@ -12,7 +14,7 @@ function AptWFunMenuState:init()
                     -- Pop AptSitState
                     gStateStack:pop()
                     -- Transition to leave state
-                    gStateStack:push(AptWLeaveState())
+                    gStateStack:push(AptWExitState({apartment = self.apartment}))
                 end
             },
         }

@@ -8,7 +8,7 @@
 
 Apartment = Class{}
 
-function Apartment:init(player)
+function Apartment:init()
     self.name = 'apartment'
 
     self.floortiles = {}
@@ -16,8 +16,6 @@ function Apartment:init(player)
 
     self.furniture = {}
     self:generateFurniture()
-
-    self.player = player
 end
 
 function Apartment:generateFloorTiles()

@@ -1,12 +1,12 @@
 
-AptWPrimaryState = Class{__includes = BaseState}
+AptWStationaryState = Class{__includes = BaseState}
 
-function AptWPrimaryState:init()
-    self.apartment = gGlobalObjs['apartment']
+function AptWStationaryState:init(params)
     self.player = gGlobalObjs['player']
+    self.apartment = params.apartment
 end
 
-function AptWPrimaryState:enter()
+function AptWStationaryState:enter()
     -- Explicitly set the player's X & Y coordinates to be sitting on the couch
     local horzCouchWidth = gFramesInfo['apartment'][gAPT_HORZ_COUCH_NAME]['width']
     local horzCouchHeight = gFramesInfo['apartment'][gAPT_HORZ_COUCH_NAME]['height']
@@ -18,11 +18,11 @@ function AptWPrimaryState:enter()
     self.player:changeAnimation('idle-down')
 end
 
-function AptWPrimaryState:update(dt)
+function AptWStationaryState:update(dt)
     self.player:update(dt)
 end
 
-function AptWPrimaryState:render()
+function AptWStationaryState:render()
     self.apartment:render()
     if self.player then
         self.player:render()

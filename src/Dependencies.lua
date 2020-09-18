@@ -29,9 +29,10 @@ require 'src/gui/Textbox'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
-require 'src/world/apartment/states/AptWPrimaryState'
-require 'src/world/apartment/states/AptWLeaveState'
-require 'src/world/apartment/states/AptWBaseMenuState'
+require 'src/world/apartment/states/AptWStationaryState'
+require 'src/world/apartment/states/AptWEnterState'
+require 'src/world/apartment/states/AptWExitState'
+require 'src/world/apartment/states/AptWInitialMenuState'
 require 'src/world/apartment/states/AptWFunMenuState'
 
 -- Bar Breakout Game requirements

@@ -1,21 +1,23 @@
 
-AptWBaseMenuState = Class{__includes = BaseState}
+AptWInitialMenuState = Class{__includes = BaseState}
 
-function AptWBaseMenuState:init()
+function AptWInitialMenuState:init(params)
+    self.apartment = params.apartment
+
     self.aptMenu = Menu {
         items = {
             {
                 text = 'Have Fun',
                 onSelect = function()
-                    -- Pop off AptWBaseMenuState
+                    -- Pop off AptWInitialMenuState
                     gStateStack:pop()
-                    gStateStack:push(AptWFunMenuState())
+                    gStateStack:push(AptWFunMenuState({apartment = self.apartment}))
                 end
             },
             {
                 text = 'Stock Up',
                 onSelect = function()
-                    -- Pop off AptWBaseMenuState
+                    -- Pop off AptWInitialMenuState
                     gStateStack:pop()
                     -- TODO pop AptSit State then
                     -- push Leave Apartment to Drug Alley or Car
@@ -24,7 +26,7 @@ function AptWBaseMenuState:init()
             {
                 text = 'Recover',
                 onSelect = function()
-                    -- Pop off AptWBaseMenuState
+                    -- Pop off AptWInitialMenuState
                     gStateStack:pop()
                     -- TODO push AptWRecoverMenuState
                 end
@@ -33,13 +35,13 @@ function AptWBaseMenuState:init()
     }
 end
 
-function AptWBaseMenuState:enter()
+function AptWInitialMenuState:enter()
 end
 
-function AptWBaseMenuState:update(dt)
+function AptWInitialMenuState:update(dt)
     self.aptMenu:update(dt)
 end
 
-function AptWBaseMenuState:render()
+function AptWInitialMenuState:render()
     self.aptMenu:render()
 end

@@ -16,8 +16,8 @@ XXX I think I'm going to keep the screen scaled as is, then play around
 with draw scales since I think it'll give me more flexibility when playing
 around with such a wide variety of tilesets with different base tile sizes
 --]]
-VIRTUAL_WIDTH = 1280
-VIRTUAL_HEIGHT = 720
+VIRTUAL_WIDTH = 700
+VIRTUAL_HEIGHT = 394
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720

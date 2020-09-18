@@ -21,10 +21,15 @@ require 'src/Util'
 require 'src/states/BaseState'
 require 'src/states/game/FadeInState'
 require 'src/states/game/FadeOutState'
+require 'src/states/game/DialogueState'
+require 'src/gui/Menu'
+require 'src/gui/Panel'
+require 'src/gui/Selection'
+require 'src/gui/Textbox'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
-require 'src/world/apartment/states/AptWMenuState'
+require 'src/world/apartment/states/AptWSitState'
 
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BGBall'

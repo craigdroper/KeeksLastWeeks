@@ -2,6 +2,7 @@
 AptWBaseMenuState = Class{__includes = BaseState}
 
 function AptWBaseMenuState:init()
+    print('Constructing AptWBaseState')
     self.aptMenu = Menu {
         items = {
             {

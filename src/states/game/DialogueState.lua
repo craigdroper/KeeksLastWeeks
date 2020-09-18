@@ -19,8 +19,12 @@ function DialogueState:update(dt)
     self.textbox:update(dt)
 
     if self.textbox:isClosed() then
-        self.callback()
+        -- self.callback()
         gStateStack:pop()
+        -- Want to callback after we've popped the current dialogue state
+        -- in case the callback is intending to push other new states onto
+        -- the stack
+        self.callback()
     end
 end
 

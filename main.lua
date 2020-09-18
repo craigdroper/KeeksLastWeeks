@@ -59,11 +59,14 @@ function love.load()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             gStateStack:push(AptWSitState())
-            gStateStack:push(AptWBaseMenuState())
             gStateStack:push(DialogueState(
-                'Welcome home\n\nWhat would you like to do next?'))
+                'Welcome home\n\nWhat would you like to do next?',
+                function()
+                    gStateStack:push(AptWBaseMenuState())
+                end))
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
-        function() end))
+                function()
+                end))
     end))
 
     love.keyboard.keysPressed = {}

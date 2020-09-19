@@ -118,7 +118,6 @@ function Bar:generateBarArea()
     local curStoolY = BAR_STOOL_GAP
     local curStoolCounter = 1
     while (curStoolY + stoolHeight) < (barBaseY + barBaseHeight) do
-        print('Adding Stool'..curStoolCounter..' with X '..stoolX)
         self.furniture['barstool-'..curStoolCounter] = {gTextures[self.name],
             gFrames[self.name][gBAR_LEFT_CHAIR],
             stoolX, curStoolY}
@@ -145,7 +144,7 @@ function Bar:generateTableArea()
     for y = 1, 3 do
         for x = 1, 3 do
             self:generateSingleTable(
-                y * 3 + x,
+                (y - 1) * 3 + x,
                 stoolsX + tableXInterval * x,
                 tableYInterval * y )
         end
@@ -158,10 +157,6 @@ function Bar:generateSingleTable(tableNum, centerX, centerY)
     local vertTableHeight = gFramesInfo[self.name][gBAR_VERT_TABLE]['height']
     local rightChairWidth = gFramesInfo[self.name][gBAR_RIGHT_CHAIR]['width']
     local leftChairWidth = gFramesInfo[self.name][gBAR_LEFT_CHAIR]['width']
-    --[[
-    local rightChairHeight = gFramesInfo[self.name][gBAR_RIGHT_CHAIR]['height']
-    local leftChairHeight = gFramesInfo[self.name][gBAR_LEFT_CHAIR]['height']
-    --]]
 
     local vertTableX = centerX - vertTableWidth / 2
     local vertTableY = centerY - vertTableHeight / 2

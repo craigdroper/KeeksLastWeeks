@@ -1,6 +1,8 @@
 
 BarWEnterState = Class{__includes = BaseState}
 
+local FURNITURE_BUFFER = 8
+
 function BarWEnterState:init()
     self.player = gGlobalObjs['player']
     self.bar = Bar()
@@ -12,11 +14,12 @@ function BarWEnterState:enter()
     self.player.scaleX = 0.75
     self.player.scaleY = 0.75
     -- Explicitly set the player's X & Y coordinates to be just outside
-    -- of the right frame in line to walk into the apartment
+    -- of the right frame in line to walk into the bar withouth
+    -- hitting any of the tables
     local botTableY = self.bar.furniture['vert-table-9'][4]
     local vertTableHeight = gFramesInfo['bar'][gBAR_VERT_TABLE]['height']
-    self.player.x = VIRTUAL_WIDTH + 1
-    self.player.y = botTableY + vertTableHeight + self.player.height
+    self.player.x = VIRTUAL_WIDTH + 10
+    self.player.y = botTableY + vertTableHeight + FURNITURE_BUFFER
     -- Setup tween entrance
     self:tweenEnter()
 end
@@ -38,10 +41,10 @@ function BarWEnterState:tweenEnter()
 
     -- Come in through the door, walk just under the lowest tables to
     -- the bar portion
-    local walkPixels = self.player.x - (stoolX + stoolWidth)
+    local walkPixels = self.player.x - (stoolX + stoolWidth + FURNITURE_BUFFER)
     self.player:changeAnimation('walk-left')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
-        [self.player] = {x = stoolX + stoolWidth}
+        [self.player] = {x = stoolX + stoolWidth + FURNITURE_BUFFER}
     }):finish(
         function()
     -- Walk high enough to be in line with the target barstool

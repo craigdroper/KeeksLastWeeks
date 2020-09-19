@@ -12,8 +12,8 @@ function Player:init(def)
     Entity.init(self, {
         animations = ENTITY_DEFS['keeks'].animations,
         walkSpeed = ENTITY_DEFS['keeks'].walkSpeed,
-        width = 77,
-        height = 77,
+        width = 36,
+        height = 58,
         x = (VIRTUAL_WIDTH - 77) / 2,
         y = (VIRTUAL_HEIGHT - 77) / 2
     })

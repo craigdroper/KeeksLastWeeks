@@ -1,6 +1,10 @@
 
 AptWExitState = Class{__includes = BaseState}
 
+local FURNITURE_BUFFER = 8
+local ARMREST_OFFSET = 7
+local TOP_COUCH_OFFSET = 12
+
 function AptWExitState:init(params)
     self.player = gGlobalObjs['player']
     self.apartment = params.apartment
@@ -17,31 +21,31 @@ function AptWExitState:tweenExit()
     local tableY = self.apartment.furniture['coffee-table'][4]
     local counterX = self.apartment.furniture['vertical-long-counter'][3]
     local chairY = self.apartment.furniture['desk-chair'][4]
-    local wallX = VIRTUAL_WIDTH + 1
+    local wallX = VIRTUAL_WIDTH + 10
 
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
     -- Get off couch and walk to limit of coffee table
-    local walkPixels = tableY - self.player.y - self.player.height
+    local walkPixels = tableY - self.player.y - self.player.height - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
-        [self.player] = {y = tableY - self.player.height}
+        [self.player] = {y = tableY - self.player.height - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = counterX - self.player.x - self.player.width
+    walkPixels = counterX - self.player.x - self.player.width - FURNITURE_BUFFER
     self.player:changeAnimation('walk-right')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
-        [self.player] = {x = counterX - self.player.width}
+        [self.player] = {x = counterX - self.player.width - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = chairY - self.player.y - self.player.height
+    walkPixels = chairY - self.player.y - self.player.height - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
-        [self.player] = {y = chairY - self.player.height}
+        [self.player] = {y = chairY - self.player.height - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = wallX
+    walkPixels = wallX - self.player.x + self.player.width
     self.player:changeAnimation('walk-right')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
         [self.player] = {x = wallX}

@@ -7,6 +7,10 @@ function AptWEnterState:init()
 end
 
 function AptWEnterState:enter()
+    -- Set the player entity's scale factors to the correct values
+    -- for this room's tile sizes
+    self.player.scaleX = 1.
+    self.player.scaleY = 1.
     -- Explicitly set the player's X & Y coordinates to be just outside
     -- of the right frame in line to walk into the apartment
     local chairY = self.apartment.furniture['desk-chair'][4]

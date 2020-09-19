@@ -24,6 +24,12 @@ function Entity:init(def)
     self.offsetX = def.offsetX or 0
     self.offsetY = def.offsetY or 0
 
+    self.orientation = def.orientation or 0
+
+    -- drawing scale factors for world rooms with differe
+    self.scaleX = def.scaleX or 1
+    self.scaleY = def.scaleY or 1
+
     self.walkSpeed = def.walkSpeed
 
     -- XXX Not used

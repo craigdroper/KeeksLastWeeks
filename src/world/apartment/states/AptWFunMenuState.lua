@@ -14,7 +14,11 @@ function AptWFunMenuState:init(params)
                     -- Pop AptSitState
                     gStateStack:pop()
                     -- Transition to leave state
-                    gStateStack:push(AptWExitState({apartment = self.apartment}))
+                    gStateStack:push(AptWExitState(
+                        {
+                            apartment = self.apartment,
+                            nextGameState = BarWEnterState({bar = Bar()})
+                        }))
                 end
             },
         }

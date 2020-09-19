@@ -38,12 +38,13 @@ function AptWEnterState:tweenEnter()
     gSounds['footsteps']:play()
 
     -- Come in through door and walk to just passed the counter
-    local walkPixels = self.player.x - counterX - self.player.width
+    local walkPixels = self.player.x - counterX + self.player.width
     self.player:changeAnimation('walk-left')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
         [self.player] = {x = counterX - self.player.width}
     }):finish(
         function()
+    -- Walk up high enough to clear the top part of the coffee table
     walkPixels = self.player.y - tableY + self.player.height
     self.player:changeAnimation('walk-up')
     Timer.tween(walkPixels / PLAYER_WALK_SPEED, {

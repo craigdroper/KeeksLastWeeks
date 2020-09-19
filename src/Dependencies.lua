@@ -35,6 +35,11 @@ require 'src/world/apartment/states/AptWExitState'
 require 'src/world/apartment/states/AptWInitialMenuState'
 require 'src/world/apartment/states/AptWFunMenuState'
 
+-- Bar World requirements
+require 'src/world/bar/Bar'
+require 'src/world/bar/states/BarWStationaryState'
+require 'src/world/bar/states/BarWEnterState'
+
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BGBall'
 require 'src/games/bar/src/BGBrick'

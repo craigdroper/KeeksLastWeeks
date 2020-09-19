@@ -16,6 +16,12 @@ function AptWStationaryState:enter()
     self.player.x = (horzCouchX + horzCouchWidth/2) - self.player.width/2 - ARMREST_OFFSET
     self.player.y = horzCouchY
     self.player:changeAnimation('idle-down')
+
+    gStateStack:push(DialogueState(
+        'Welcome home\n\nWhat would you like to do next?',
+        function()
+            gStateStack:push(AptWInitialMenuState({apartment = self.apartment}))
+    end))
 end
 
 function AptWStationaryState:update(dt)

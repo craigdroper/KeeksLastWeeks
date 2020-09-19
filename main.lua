@@ -59,17 +59,9 @@ function love.load()
     player:changeState('idle')
     gGlobalObjs['player'] = player
 
-    -- TODO delete once the first state is enter apartment
-    apartment = Apartment()
-
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            gStateStack:push(AptWStationaryState({apartment = apartment}))
-            gStateStack:push(DialogueState(
-                'Welcome home\n\nWhat would you like to do next?',
-                function()
-                    gStateStack:push(AptWInitialMenuState({apartment = apartment}))
-                end))
+            gStateStack:push(AptWEnterState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

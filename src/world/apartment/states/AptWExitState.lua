@@ -8,10 +8,10 @@ function AptWExitState:init(params)
 end
 
 function AptWExitState:enter()
-    self:tweenLeave()
+    self:tweenExit()
 end
 
-function AptWExitState:tweenLeave()
+function AptWExitState:tweenExit()
     -- Setup the tween action to animate the player walking from the
     -- couch out of the apartment
     local tableY = self.apartment.furniture['coffee-table'][4]

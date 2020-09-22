@@ -48,6 +48,7 @@ require 'src/games/bar/src/BarGLevelMaker'
 require 'src/games/bar/src/BarGPaddle'
 require 'src/games/bar/src/BarGPowerUp'
 require 'src/games/bar/src/BarGBackground'
+require 'src/games/bar/src/BarGBeerBrick'
 require 'src/games/bar/src/states/BarGGameOverState'
 require 'src/games/bar/src/states/BarGPlayState'
 require 'src/games/bar/src/states/BarGServeState'
@@ -174,10 +175,12 @@ gSounds = {
 
 gBGTextures = {
     ['background'] = love.graphics.newImage('src/games/bar/graphics/background.png'),
-    ['main'] = love.graphics.newImage('src/games/bar/graphics/breakout.png'),
     ['arrows'] = love.graphics.newImage('src/games/bar/graphics/arrows.png'),
+    -- TODO nothing above here is in use
+    ['main'] = love.graphics.newImage('src/games/bar/graphics/breakout.png'),
     ['hearts'] = love.graphics.newImage('src/games/bar/graphics/hearts.png'),
-    ['particle'] = love.graphics.newImage('src/games/bar/graphics/particle.png')
+    ['particle'] = love.graphics.newImage('src/games/bar/graphics/particle.png'),
+    ['beer'] = love.graphics.newImage('src/games/bar/graphics/beer.png'),
 }
 
 gBGFrames = {
@@ -186,6 +189,7 @@ gBGFrames = {
     ['balls'] = GenerateQuadsBalls(gBGTextures['main']),
     ['bricks'] = GenerateQuadsBricks(gBGTextures['main']),
     ['lock_brick'] = GenerateQuadsLockBrick(gBGTextures['main']),
+    -- TODO nothing above here is in use
     ['hearts'] = GenerateQuads(gBGTextures['hearts'], 10, 9),
     ['powerups'] = GenerateQuadsPowerups(gBGTextures['main']),
 }

@@ -138,7 +138,9 @@ function BarGPlayState:update(dt)
     if isBallCollided then
         local isBrickInPlay = false
         for k, brick in pairs(self.bricks) do
-            isBrickInPlay = isBrickInPlay or brick.inPlay
+            if brick.inPlay and not brick.isBeerBrick then
+                isBrickInPlay = true
+            end
         end
         -- We have not found a brick that's in play, so allow the player
         -- to bounce through the bar to the top of the screen

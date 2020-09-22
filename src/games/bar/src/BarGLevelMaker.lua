@@ -38,6 +38,16 @@ function BarGLevelMaker.createMap(level, barBackground)
     local brickWidth = tmpBrick.width
     local brickHeight = tmpBrick.height
 
+    -- create a temporary brick to retrieve its width and height
+    local tmpBeerBrick = BarGBeerBrick(0, 0)
+    local beerBrickWidth = tmpBeerBrick.width
+    local beerBrickHeight = tmpBeerBrick.height
+    local beerBrick = BarGBeerBrick(
+        (VIRTUAL_WIDTH - beerBrickWidth) / 2,
+        0)
+
+    table.insert(bricks, beerBrick)
+
     local BRICK_PADDING = 4
 
     -- randomly choose the number of rows

@@ -1,5 +1,7 @@
 
 local HORZ_CHAIR_TABLE_OFFSET = 5
+local SHELF_Y_SHRINK = 0.75
+local SHELF_GAP = 10
 
 BarGBackground = Class{}
 
@@ -54,10 +56,8 @@ function BarGBackground:generateBarArea()
 
     -- There are 2 glass shelves and 4 wine shelves that should be horizontally
     -- centered
-    local SHELF_GAP = 10
     local totalWidth = 2 * glassWidth + 4 * wineWidth + 5 * SHELF_GAP
     local LEFT_PADDING = (VIRTUAL_WIDTH - totalWidth)/2
-    local SHELF_Y_SHRINK = 0.75
 
     local glassX = LEFT_PADDING
     local glassY = 0
@@ -89,7 +89,6 @@ function BarGBackground:generateBarArea()
         glassX, glassY, 0, 1, SHELF_Y_SHRINK}
 
     -- Build a bar across the width of the screen, with a gap from the shelves
-    local SHELF_GAP = 10
     local barWidth = gFramesInfo[self.name][gBAR_HORZ_TABLE]['width']
     local barHeight = gFramesInfo[self.name][gBAR_HORZ_TABLE]['height']
     local numBarExts = VIRTUAL_WIDTH / barWidth + 1
@@ -122,4 +121,9 @@ end
 function BarGBackground:getBarBottomY()
     return self.furniture['horizontal-table-1'][4] +
         gFramesInfo[self.name][gBAR_HORZ_TABLE]['height']
+end
+
+function BarGBackground:getShelfBottomY()
+    return self.furniture['wine-shelf-2'][4] +
+        gFramesInfo[self.name][gBAR_WINE_SHELF]['height'] * SHELF_Y_SHRINK
 end

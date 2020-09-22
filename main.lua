@@ -109,6 +109,7 @@ function love.update(dt)
 
     Timer.update(dt)
     gStateStack:update(dt)
+    gGlobalObjs['filter']:update(dt)
 
     love.keyboard.keysPressed = {}
 end
@@ -116,6 +117,7 @@ end
 function love.draw()
     push:start()
     gStateStack:render()
+    gGlobalObjs['filter']:render()
     push:finish()
 end
 

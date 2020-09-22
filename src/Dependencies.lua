@@ -65,11 +65,6 @@ require 'src/games/coke/src/states/CokeGPlayState'
 require 'src/games/coke/src/states/CokeGScoreState'
 require 'src/games/coke/src/states/CokeGTitleScreenState'
 
--- TODO will be deleted since we're not borrowing from Zelda right now
-require 'src/world/Doorway'
-require 'src/world/Dungeon'
-require 'src/world/Room'
-
 require 'src/states/entity/EntityIdleState'
 require 'src/states/entity/EntityWalkState'
 

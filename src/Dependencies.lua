@@ -102,6 +102,12 @@ gTextures = {
     ['cursor'] = love.graphics.newImage('graphics/cursor.png'),
 }
 
+gTOTAL_CHAR_COUNT = 4
+
+for charCount = 1, gTOTAL_CHAR_COUNT do
+    gTextures['character-'..charCount] = love.graphics.newImage('graphics/characters/character_'..charCount..'.png')
+end
+
 gFrames = {
     -- TODO delete legacy code from here
     ['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
@@ -129,6 +135,12 @@ gFramesInfo['bar'] = retDict['info']
 retDict = GenerateKeeksQuadsandInfo(gTextures['keeks-walk'])
 gFrames['keeks-frames'] = retDict['quads']
 gFramesInfo['keeks-frames'] = retDict['info']
+
+for charCount = 1, gTOTAL_CHAR_COUNT do
+    retDict = GenerateCharacterQuandsAndInfo(gTextures['character-'..charCount])
+    gFrames['character-'..charCount] = retDict['quads']
+    gFramesInfo['character-'..charCount] = retDict['info']
+end
 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),

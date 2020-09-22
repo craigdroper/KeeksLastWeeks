@@ -27,6 +27,10 @@ function BarGBall:init(skin)
     -- X and Y axis, since the ball can move in two dimensions
     self.dy = 0
     self.dx = 0
+
+    -- During different phases of the game, we may want to limit the minimum
+    -- Y coordinate that the player can reach
+    self.curMinY = 0
 end
 
 --[[
@@ -71,14 +75,14 @@ function BarGBall:update(dt)
         gBGSounds['wall-hit']:play()
     end
 
-    if self.x >= VIRTUAL_WIDTH - 8 then
-        self.x = VIRTUAL_WIDTH - 8
+    if self.x >= VIRTUAL_WIDTH - self.width then
+        self.x = VIRTUAL_WIDTH - self.width
         self.dx = -self.dx
         gBGSounds['wall-hit']:play()
     end
 
-    if self.y <= 0 then
-        self.y = 0
+    if self.y <= self.curMinY then
+        self.y = self.curMinY
         self.dy = -self.dy
         gBGSounds['wall-hit']:play()
     end

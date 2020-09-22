@@ -43,13 +43,16 @@ function BarGPlayState:init(params)
     -- if threshold has been reached for player to have earned a larger paddle
     self.paddleGrowThreshold = PADDLE_GROW_THRESHOLD
     -- self.highScores = params.highScores
-    -- Initialized the balls table to only be tracking the single serve state ball 
+    -- Initialized the balls table to only be tracking the single serve state ball
     self.balls = {}
     table.insert(self.balls, params.ball)
     self.level = params.level
 
     self.recoverPoints = 5000
 
+    -- Initialize the "ball" to not be able to bounce passed the bar
+    -- until all bricks are cleared
+    self.balls[1].curMinY = self.background:getBarBottomY()
     -- give ball random starting velocity
     self.balls[1].dx = math.random(-200, 200)
     self.balls[1].dy = math.random(-50, -60)
@@ -73,7 +76,7 @@ function BarGPlayState:update(dt)
     if self.paused then
         if love.keyboard.wasPressed('space') then
             self.paused = false
-            gSounds['pause']:play()
+            gBGSounds['pause']:play()
             -- prevent paused time to count towards next power up
             self.powerUpAlarm = math.random(15,30)
         else
@@ -81,7 +84,7 @@ function BarGPlayState:update(dt)
         end
     elseif love.keyboard.wasPressed('space') then
         self.paused = true
-        gSounds['pause']:play()
+        gBGSounds['pause']:play()
         return
     end
 
@@ -116,10 +119,10 @@ function BarGPlayState:update(dt)
         self:checkBallPaddleCollision(ball, self.paddle)
     end
 
+    local isBallCollided = false
     -- detect collision across all bricks with the ball
     for i, ball in pairs(self.balls) do
         -- only allow ball colliding with one brick, for corners
-        local isBallCollided = false
         for k, brick in pairs(self.bricks) do
             if not isBallCollided then
                 if self:checkBallBrickCollision(ball, brick) then
@@ -128,6 +131,25 @@ function BarGPlayState:update(dt)
             end
         end
     end
+
+    -- If there has been a collision, inspect all of the bricks, and
+    -- if all of them are gone, let the player pass to the bar to retrieve
+    -- the victory brick
+    if isBallCollided then
+        local isBrickInPlay = false
+        for k, brick in pairs(self.bricks) do
+            isBrickInPlay = isBrickInPlay or brick.inPlay
+        end
+        -- We have not found a brick that's in play, so allow the player
+        -- to bounce through the bar to the top of the screen
+        if not isBrickInPlay then
+            print('Setting cur min to 0')
+            for i, ball in pairs(self.balls) do
+                ball.curMinY = 0
+            end
+        end
+    end
+
 
     -- If any of the balls goes below bounds, remove it from the table of
     -- balls
@@ -141,7 +163,7 @@ function BarGPlayState:update(dt)
     -- if ball goes below bounds, revert to serve state and decrease health
     if #self.balls == 0 then
         self.health = self.health - 1
-        gSounds['hurt']:play()
+        gBGSounds['hurt']:play()
         -- shrink the paddle when a heart is lost
         self.paddle:shrink()
 
@@ -215,7 +237,7 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
     self:updateBallAfterBrickCollision(ball, brick)
 
     if brick.isLocked and not self.hasKey.val then
-        gSounds['hurt']:play()
+        gBGSounds['hurt']:play()
         return false
     end
 
@@ -223,13 +245,14 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
     if brick.isLocked then
         brickScore = 50000
     else
-        brickScore = brick.tier * 200 + brick.color * 25
+        -- TODO some more dynamic scoring
+        brickScore = 1000
     end
     self.score = self.score + brickScore
     -- update paddle grow threshold and check if threshold has been reached
     self.paddleGrowThreshold = self.paddleGrowThreshold - brickScore
     if self.paddleGrowThreshold < 0 then
-        gSounds['powerup']:play()
+        gBGSounds['powerup']:play()
         self.paddle:grow()
         self.paddleGrowThreshold = PADDLE_GROW_THRESHOLD
     end
@@ -246,12 +269,12 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
         self.recoverPoints = math.min(100000, self.recoverPoints * 2)
 
         -- play recover sound effect
-        gSounds['recover']:play()
+        gBGSounds['recover']:play()
     end
 
     -- go to our victory screen if there are no more bricks left
     if self:checkVictory() then
-        gSounds['victory']:play()
+        gBGSounds['victory']:play()
         -- Design decision is to keep any changes in the paddle sizes
         -- local to each level, so always reset the paddle before
         -- going onto the next level
@@ -282,35 +305,35 @@ function BarGPlayState:updateBallAfterBrickCollision(ball, brick)
     -- we check to see if the opposite side of our velocity is outside of the brick;
     -- if it is, we trigger a collision on that side. else we're within the X + width of
     -- the brick and should check to see if the top or bottom edge is outside of the brick,
-    -- colliding on the top or bottom accordingly 
+    -- colliding on the top or bottom accordingly
     --
 
     -- left edge; only check if we're moving right, and offset the check by a couple of pixels
     -- so that flush corner hits register as Y flips, not X flips
     if ball.x + 2 < brick.x and ball.dx > 0 then
-        
+
         -- flip x velocity and reset position outside of brick
         ball.dx = -ball.dx
         ball.x = brick.x - 8
-    
+
     -- right edge; only check if we're moving left, , and offset the check by a couple of pixels
     -- so that flush corner hits register as Y flips, not X flips
     elseif ball.x + 6 > brick.x + brick.width and ball.dx < 0 then
-        
+
         -- flip x velocity and reset position outside of brick
         ball.dx = -ball.dx
         ball.x = brick.x + 32
-    
+
     -- top edge if no X collisions, always check
     elseif ball.y < brick.y then
-        
+
         -- flip y velocity and reset position outside of brick
         ball.dy = -ball.dy
         ball.y = brick.y - 8
-    
+
     -- bottom edge if no X collisions or top collision, last possibility
     else
-        
+
         -- flip y velocity and reset position outside of brick
         ball.dy = -ball.dy
         ball.y = brick.y + 16
@@ -358,7 +381,7 @@ function BarGPlayState:checkVictory()
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             return false
-        end 
+        end
     end
 
     return true

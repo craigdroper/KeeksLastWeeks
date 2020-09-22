@@ -14,7 +14,7 @@ function BarGStartState:init()
     self.background = BarGBackground()
     self.paddle = BarGPaddle(1)
     self.level = 1
-    self.bricks = BarGLevelMaker.createMap(self.level)
+    self.bricks = BarGLevelMaker.createMap(self.level, self.background)
     self.recoverPoints = 5000
 end
 

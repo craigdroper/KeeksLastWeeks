@@ -22,14 +22,17 @@ function BarGVictoryState:init(params)
     self.health = params.health
     self.ball = params.ball
     self.recoverPoints = params.recoverPoints
+    -- init the new ball in the middle of the paddle
+    self.ball.x = self.paddle.x + self.paddle.width/2 - self.ball.width/2
+    self.ball.y = self.paddle.y - self.ball.height
 end
 
 function BarGVictoryState:update(dt)
     self.paddle:update(dt)
 
     -- have the ball track the player
-    self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
-    self.ball.y = self.paddle.y - 8
+    self.ball.x = self.paddle.x + self.paddle.width/2 - self.ball.width/2
+    self.ball.y = self.paddle.y - self.ball.height
 
     -- go to play screen if the player presses Enter
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
@@ -39,7 +42,7 @@ function BarGVictoryState:update(dt)
         gStateStack:push(BarGServeState({
             background = self.background,
             level = self.level + 1,
-            bricks = BarGLevelMaker.createMap(self.level + 1),
+            bricks = BarGLevelMaker.createMap(self.level + 1, self.background),
             paddle = self.paddle,
             health = self.health,
             score = self.score,

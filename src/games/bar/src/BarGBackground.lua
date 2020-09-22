@@ -118,3 +118,8 @@ function BarGBackground:render()
     self:renderFloorTiles()
     self:renderFurniture()
 end
+
+function BarGBackground:getBarBottomY()
+    return self.furniture['horizontal-table-1'][4] +
+        gFramesInfo[self.name][gBAR_HORZ_TABLE]['height']
+end

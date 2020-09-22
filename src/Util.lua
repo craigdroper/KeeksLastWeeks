@@ -179,6 +179,23 @@ function GenerateKeeksQuadsandInfo(atlas)
     return {['quads'] = sheet, ['info'] = info}
 end
 
+function GenerateCharacterQuandsAndInfo(atlas)
+    local sheet = {}
+    local info = {}
+
+    gCHARACTER_IDLE_DOWN = 'character_idle_down'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gKEEKS_IDLE_DOWN, 19, 15, 56, 78)
+
+    gCHARACTER_IDLE_UP = 'character_idle_up'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gCHARACTER_IDLE_UP, 19, 246, 56, 308)
+
+
+    return {['quads'] = sheet, ['info'] = info}
+end
+
+
 
 --[[
     Recursive table printing function.

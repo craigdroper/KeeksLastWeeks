@@ -15,15 +15,15 @@
 BarGGameOverState = Class{__includes = BaseState}
 
 function BarGGameOverState:init(params)
+    self.background = params.background
     self.score = params.score
-    -- self.highScores = params.highScores
 end
 
 function BarGGameOverState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- see if score is higher than any in the high scores table
         local highScore = false
-        
+
         -- keep track of what high score ours overwrites, if any
         local scoreIndex = 11
 
@@ -42,14 +42,17 @@ function BarGGameOverState:update(dt)
                 highScores = self.highScores,
                 score = self.score,
                 scoreIndex = highScoreIndex
-            }) 
-        else 
+            })
+        else
         --]]
-        -- Set the BarWStationary isGamePlayed flag to true 
+        -- Currently the stack is as follows:
+        -- 1) BarWStationary
+        -- 2) BarGGameOver
+        -- Set the BarWStationary isGamePlayed flag to true
         barWStatState = gStateStack:getNPrevState(1)
         barWStatState.isGamePlayed = true
-        -- pop BarGGameOverState off to return to the stationary
-        -- bar state
+        -- pop BarGGameOverState off to
+        -- return to the stationary bar state
         gStateStack:pop()
         -- TODO we will also push an "update Player's scores" state here
         -- which takes the mini game player's stats and updates the world
@@ -58,6 +61,8 @@ function BarGGameOverState:update(dt)
 end
 
 function BarGGameOverState:render()
+    self.background:render()
+
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('GAME OVER', 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
     love.graphics.setFont(gFonts['medium'])

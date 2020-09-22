@@ -18,6 +18,7 @@ BarGServeState = Class{__includes = BaseState}
 
 function BarGServeState:init(params)
     -- grab game state from params
+    self.background = params.background
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
@@ -42,6 +43,7 @@ function BarGServeState:update(dt)
         -- with all the important state infor
         gStateStack:pop()
         gStateStack:push(BarGPlayState({
+            background = self.background,
             paddle = self.paddle,
             bricks = self.bricks,
             health = self.health,
@@ -56,6 +58,7 @@ function BarGServeState:update(dt)
 end
 
 function BarGServeState:render()
+    self.background:render()
     self.paddle:render()
     self.ball:render()
 

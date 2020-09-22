@@ -11,6 +11,7 @@
 BarGStartState = Class{__includes = BaseState}
 
 function BarGStartState:init()
+    self.background = BarGBackground()
     self.paddle = BarGPaddle(1)
     self.level = 1
     self.bricks = BarGLevelMaker.createMap(self.level)
@@ -28,6 +29,7 @@ function BarGStartState:enter()
             -- state and push on a serve state for level 1
             gStateStack:pop()
             gStateStack:push(BarGServeState({
+                background = self.background,
                 paddle = self.paddle,
                 bricks = self.bricks,
                 -- health = 3,
@@ -44,6 +46,7 @@ function BarGStartState:update(dt)
 end
 
 function BarGStartState:render()
+    self.background:render()
     self.paddle:render()
     self.ball:render()
 

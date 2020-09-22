@@ -41,3 +41,4 @@ luac.out
 
 # Dev artifacts
 *tmp*
+.DS_STORE

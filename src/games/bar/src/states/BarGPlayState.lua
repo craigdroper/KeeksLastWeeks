@@ -34,6 +34,7 @@ local PADDLE_GROW_THRESHOLD = 10000
 ]]
 
 function BarGPlayState:init(params)
+    self.background = params.background
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
@@ -148,6 +149,7 @@ function BarGPlayState:update(dt)
             -- Pop the current Play State and push a Game Over State
             gStateStack:pop()
             gStateStack:push(BarGGameOverState({
+                background = self.background,
                 score = self.score,
                 -- highScores = self.highScores
             }))
@@ -156,6 +158,7 @@ function BarGPlayState:update(dt)
             -- one of the remaining balls
             gStateStack:pop()
             gStateStack:push(BarGServeState({
+                background = self.background,
                 paddle = self.paddle,
                 bricks = self.bricks,
                 health = self.health,
@@ -258,6 +261,7 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
         -- info about the currenct level
         gStateStack:pop()
         gStateStack:push(BarGVictoryState({
+            background = self.background,
             level = self.level,
             paddle = self.paddle,
             health = self.health,
@@ -318,6 +322,8 @@ function BarGPlayState:updateBallAfterBrickCollision(ball, brick)
 end
 
 function BarGPlayState:render()
+    self.background:render()
+
     -- render bricks
     for k, brick in pairs(self.bricks) do
         brick:render()

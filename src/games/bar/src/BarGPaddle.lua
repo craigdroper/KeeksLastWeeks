@@ -21,8 +21,13 @@ BarGPaddle = Class{}
 ]]
 function BarGPaddle:init(skin)
     -- starting dimensions
+    --[[
     self.sizeWidths = {32, 64, 96, 128}
-    self:reset(skin)
+    ]]
+    -- Only have 1 width for now
+    self.width = gFramesInfo['bar'][gBAR_VERTICAL_BENCH]['width']
+    self.height = gFramesInfo['bar'][gBAR_VERTICAL_BENCH]['height']
+    self:reset()
 end
 
 function BarGPaddle:changeSize(deltaSize)
@@ -37,23 +42,25 @@ function BarGPaddle:changeSize(deltaSize)
 end
 
 function BarGPaddle:grow()
-    self:changeSize(1)
+    -- self:changeSize(1)
 end
 
 function BarGPaddle:shrink()
-    self:changeSize(-1)
+    -- self:changeSize(-1)
 end
 
 function BarGPaddle:reset(skin)
     -- x is placed in the middle
-    self.x = VIRTUAL_WIDTH / 2 - 32
+    self.x = (VIRTUAL_WIDTH - self.width) / 2
 
     -- y is placed a little above the bottom edge of the screen
-    self.y = VIRTUAL_HEIGHT - 32
+    local BOTTOM_BENCH_PAD = 2
+    self.y = VIRTUAL_HEIGHT - self.height - BOTTOM_BENCH_PAD
 
     -- start us off with no velocity
     self.dx = 0
 
+    --[[
     -- the variant is which of the four paddle sizes we currently are; 2
     -- is the starting size, as the smallest is too tough to start with
     self.size = 2
@@ -65,6 +72,7 @@ function BarGPaddle:reset(skin)
     -- the skin only has the effect of changing our color, used to offset us
     -- into the gBGPaddleSkins table later
     self.skin = skin and skin or 2
+    --]]
 end
 
 function BarGPaddle:update(dt)
@@ -97,6 +105,6 @@ end
     that corresponds to the proper skin and size.
 ]]
 function BarGPaddle:render()
-    love.graphics.draw(gBGTextures['main'], gBGFrames['paddles'][self.size + 4 * (self.skin - 1)],
+    love.graphics.draw(gTextures['bar'], gFrames['bar'][gBAR_VERTICAL_BENCH],
         self.x, self.y)
 end

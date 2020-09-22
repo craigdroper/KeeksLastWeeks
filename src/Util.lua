@@ -156,6 +156,10 @@ function GenerateBarQuadsAndInfo(atlas)
     addAptQuadInfoSmart(atlas, sheet, info,
         gBAR_WINE_SHELF, 128, 448, 192, 512)
 
+    gBAR_VERTICAL_BENCH = 'vertical_bench'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gBAR_VERTICAL_BENCH, 128, 230, 192, 254)
+
     return {['quads'] = sheet, ['info'] = info}
 end
 

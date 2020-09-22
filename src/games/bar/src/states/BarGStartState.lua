@@ -15,8 +15,6 @@ function BarGStartState:init()
     self.paddle = BarGPaddle(1)
     self.level = 1
     self.bricks = BarGLevelMaker.createMap(self.level)
-    self.ball = BarGBall()
-    self.ball.skin = math.random(7)
     self.recoverPoints = 5000
 end
 
@@ -38,7 +36,7 @@ function BarGStartState:enter()
                 score = 0,
                 level = self.level,
                 recoverPoints = self.recoverPoints,
-                ball = self.ball}))
+                }))
         end))
 end
 
@@ -48,7 +46,6 @@ end
 function BarGStartState:render()
     self.background:render()
     self.paddle:render()
-    self.ball:render()
 
     for k, brick in pairs(self.bricks) do
         brick:render()

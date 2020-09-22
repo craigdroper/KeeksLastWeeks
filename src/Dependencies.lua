@@ -126,6 +126,10 @@ retDict = GenerateBarQuadsAndInfo(gTextures['bar'])
 gFrames['bar'] = retDict['quads']
 gFramesInfo['bar'] = retDict['info']
 
+retDict = GenerateKeeksQuadsandInfo(gTextures['keeks-walk'])
+gFrames['keeks-frames'] = retDict['quads']
+gFramesInfo['keeks-frames'] = retDict['info']
+
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),

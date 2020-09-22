@@ -163,6 +163,23 @@ function GenerateBarQuadsAndInfo(atlas)
     return {['quads'] = sheet, ['info'] = info}
 end
 
+function GenerateKeeksQuadsandInfo(atlas)
+    local sheet = {}
+    local info = {}
+
+    gKEEKS_IDLE_DOWN = 'keeks_idle_down'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gKEEKS_IDLE_DOWN, 20, 18, 57, 75)
+
+    gKEEKS_IDLE_UP = 'keeks_idle_up'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gKEEKS_IDLE_UP, 20, 249, 57, 305)
+
+
+    return {['quads'] = sheet, ['info'] = info}
+end
+
+
 --[[
     Recursive table printing function.
     https://coronalabs.com/blog/2014/09/02/tutorial-printing-table-contents/

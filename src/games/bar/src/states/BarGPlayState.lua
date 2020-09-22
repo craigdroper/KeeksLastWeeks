@@ -186,7 +186,7 @@ end
 function BarGPlayState:checkBallPaddleCollision(ball, paddle)
     if ball:collides(paddle) then
         -- raise ball above paddle in case it goes below it, then reverse dy
-        ball.y = paddle.y - 8
+        ball.y = paddle.y - ball.height
         ball.dy = -ball.dy
 
         --
@@ -202,7 +202,7 @@ function BarGPlayState:checkBallPaddleCollision(ball, paddle)
             ball.dx = 50 + (8 * math.abs(paddle.x + paddle.width / 2 - ball.x))
         end
 
-        gSounds['paddle-hit']:play()
+        gBGSounds['paddle-hit']:play()
     end
 end
 

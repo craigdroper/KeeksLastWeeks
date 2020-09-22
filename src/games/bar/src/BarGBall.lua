@@ -16,18 +16,17 @@
 BarGBall = Class{}
 
 function BarGBall:init(skin)
+    -- The graphic for the keeks "ball" is 77 x 77, has a width of 36
+    -- and a height of 58, and also has a y offset of 18 and x offset of 20
+    -- due to empty space in the sprite sheet
     -- simple positional and dimensional variables
-    self.width = 8
-    self.height = 8
+    self.width = 36
+    self.height = 58
 
     -- these variables are for keeping track of our velocity on both the
     -- X and Y axis, since the ball can move in two dimensions
     self.dy = 0
     self.dx = 0
-
-    -- this will effectively be the color of our ball, and we will index
-    -- our table of Quads relating to the global block texture using this
-    self.skin = skin
 end
 
 --[[
@@ -45,7 +44,7 @@ function BarGBall:collides(target)
     -- edge of the other
     if self.y > target.y + target.height or target.y > self.y + self.height then
         return false
-    end 
+    end
 
     -- if the above aren't true, they're overlapping
     return true
@@ -88,6 +87,15 @@ end
 function BarGBall:render()
     -- gTexture is our global texture for all blocks
     -- gBGBallFrames is a table of quads mapping to each individual ball skin in the texture
-    love.graphics.draw(gBGTextures['main'], gBGFrames['balls'][self.skin],
-        self.x, self.y)
+    if self.dy > 0 then
+        love.graphics.draw(
+            gTextures['keeks-walk'],
+            gFrames['keeks-frames'][gKEEKS_IDLE_DOWN],
+            self.x, self.y)
+    else
+        love.graphics.draw(
+            gTextures['keeks-walk'],
+            gFrames['keeks-frames'][gKEEKS_IDLE_UP],
+            self.x, self.y)
+    end
 end

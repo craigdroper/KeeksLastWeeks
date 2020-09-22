@@ -28,15 +28,18 @@ function BarGServeState:init(params)
     self.recoverPoints = params.recoverPoints
 
     -- init new ball (random color for fun)
-    self.ball = params.ball
-    self.ball.skin = params.ball.skin
+    self.ball = BarGBall()
+    -- self.ball.skin = params.ball.skin
+    -- init the new ball in the middle of the paddle
+    self.ball.x = self.paddle.x + self.paddle.width/2 - self.ball.width/2
+    self.ball.y = self.paddle.y - self.ball.height
 end
 
 function BarGServeState:update(dt)
     -- have the ball track the player
     self.paddle:update(dt)
-    self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
-    self.ball.y = self.paddle.y - 8
+    self.ball.x = self.paddle.x + self.paddle.width/2 - self.ball.width/2
+    self.ball.y = self.paddle.y - self.ball.height
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- Pop off the current Serve state, and push a new PlayState

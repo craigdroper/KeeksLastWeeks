@@ -55,5 +55,5 @@ function CokeGBird:update(dt)
 end
 
 function CokeGBird:render()
-    love.graphics.draw(self.image, self.x, self.y)
+    love.graphics.filterDrawD(self.image, self.x, self.y)
 end

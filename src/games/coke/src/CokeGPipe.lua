@@ -22,14 +22,14 @@ function CokeGPipe:init(orientation, y)
 end
 
 function CokeGPipe:update(dt)
-    
+
 end
 
 function CokeGPipe:render()
-    love.graphics.draw(gCokeGImages['pipe'], self.x, 
+    love.graphics.filterDrawD(gCokeGImages['pipe'], self.x,
 
         -- shift pipe rendering down by its height if flipped vertically
-        (self.orientation == 'top' and self.y + COKEG_PIPE_HEIGHT or self.y), 
+        (self.orientation == 'top' and self.y + COKEG_PIPE_HEIGHT or self.y),
 
         -- scaling by -1 on a given axis flips (mirrors) the image on that axis
         0, 1, self.orientation == 'top' and -1 or 1)

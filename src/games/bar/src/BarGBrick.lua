@@ -175,7 +175,7 @@ end
 
 function BarGBrick:render()
     if self.inPlay then
-        love.graphics.draw(
+        love.graphics.filterDrawQ(
             gTextures[self.charName],
             gFrames[self.charName][self.charFrame],
             self.x, self.y)
@@ -187,6 +187,6 @@ end
     otherwise, some bricks would render over other bricks' particle systems.
 ]]
 function BarGBrick:renderParticles()
-    -- love.graphics.draw(self.psystem, self.x + 16, self.y + 8)
-    love.graphics.draw(self.psystem, self.x + self.width, self.y + self.height)
+    -- love.graphics.filterDrawQ(self.psystem, self.x + 16, self.y + 8)
+    love.graphics.filterDrawQ(self.psystem, self.x + self.width, self.y + self.height)
 end

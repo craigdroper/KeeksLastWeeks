@@ -88,7 +88,7 @@ end
 
 function PlayerLiftState:render()
     local anim = self.player.currentAnimation
-    love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
+    love.graphics.filterDrawQ(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
 
     -- debug for player and hurtbox collision rects

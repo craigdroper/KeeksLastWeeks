@@ -59,6 +59,8 @@ function love.load()
     player:changeState('idle')
     gGlobalObjs['player'] = player
 
+    gGlobalObjs['filter'] = NoFilter()
+
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- gStateStack:push(AptWEnterState())
@@ -115,4 +117,30 @@ function love.draw()
     push:start()
     gStateStack:render()
     push:finish()
+end
+
+function love.graphics.filterDrawD(d, x, y, r, sx, sy, ox, oy, kx, ky)
+    x = x or 0
+    y = y or 0
+    r = r or 0
+    sx = sx or 1
+    sy = sy or sx
+    ox = ox or 0
+    oy = oy or 0
+    kx = kx or 0
+    ky = ky or 0
+    gGlobalObjs['filter']:drawD(d, x, y, r, sx, sy, ox, oy, kx, ky)
+end
+
+function love.graphics.filterDrawQ(t, q, x, y, r, sx, sy, ox, oy, kx, ky)
+    x = x or 0
+    y = y or 0
+    r = r or 0
+    sx = sx or 1
+    sy = sy or sx
+    ox = ox or 0
+    oy = oy or 0
+    kx = kx or 0
+    ky = ky or 0
+    gGlobalObjs['filter']:drawQ(t, q, x, y, r, sx, sy, ox, oy, kx, ky)
 end

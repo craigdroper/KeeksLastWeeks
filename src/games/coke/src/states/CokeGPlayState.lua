@@ -132,7 +132,7 @@ end
 
 function CokeGPlayState:render()
     -- Draw scrolling background
-    love.graphics.draw(gCokeGImages['background'], -self.backgroundScroll, 0)
+    love.graphics.filterDrawD(gCokeGImages['background'], -self.backgroundScroll, 0)
 
     for k, pair in pairs(self.pipePairs) do
         pair:render()
@@ -146,7 +146,7 @@ function CokeGPlayState:render()
     -- if the play state is currently paused, display the pause image
     --[[
     if self.isPaused then
-        love.graphics.draw(
+        love.graphics.filterDrawD(
             self.pauseImage,
             VIRTUAL_WIDTH/2 - self.pauseImage:getWidth()/2,
             VIRTUAL_HEIGHT/2 - self.pauseImage:getHeight()/2)
@@ -154,7 +154,7 @@ function CokeGPlayState:render()
     --]]
 
     -- Finally draw scrolling ground
-    love.graphics.draw(gCokeGImages['ground'], -self.groundScroll, VIRTUAL_HEIGHT - 16)
+    love.graphics.filterDrawD(gCokeGImages['ground'], -self.groundScroll, VIRTUAL_HEIGHT - 16)
 end
 
 --[[

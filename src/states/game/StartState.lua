@@ -70,5 +70,5 @@ function StartState:render()
     love.graphics.ellipse('fill', VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 + 32, 72, 24)
 
     love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.draw(gTextures[self.sprite], self.spriteX, self.spriteY)
+    love.graphics.filterDrawQ(gTextures[self.sprite], self.spriteX, self.spriteY)
 end

@@ -109,7 +109,7 @@ end
 
 function BarGBeerBrick:render()
     if self.inPlay then
-        love.graphics.draw(
+        love.graphics.filterDrawD(
             gBGTextures['beer'],
             self.x,
             self.y)
@@ -121,5 +121,5 @@ end
     otherwise, some bricks would render over other bricks' particle systems.
 ]]
 function BarGBeerBrick:renderParticles()
-    love.graphics.draw(self.psystem, self.x, self.y)
+    love.graphics.filterDrawD(self.psystem, self.x, self.y)
 end

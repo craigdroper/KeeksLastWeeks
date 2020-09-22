@@ -105,6 +105,6 @@ end
     that corresponds to the proper skin and size.
 ]]
 function BarGPaddle:render()
-    love.graphics.draw(gTextures['bar'], gFrames['bar'][gBAR_VERTICAL_BENCH],
+    love.graphics.filterDrawQ(gTextures['bar'], gFrames['bar'][gBAR_VERTICAL_BENCH],
         self.x, self.y)
 end

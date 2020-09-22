@@ -27,6 +27,9 @@ require 'src/gui/Panel'
 require 'src/gui/Selection'
 require 'src/gui/Textbox'
 
+-- Drug filters
+require 'src/filters/NoFilter'
+
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
 require 'src/world/apartment/states/AptWStationaryState'

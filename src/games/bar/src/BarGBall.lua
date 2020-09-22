@@ -92,12 +92,12 @@ function BarGBall:render()
     -- gTexture is our global texture for all blocks
     -- gBGBallFrames is a table of quads mapping to each individual ball skin in the texture
     if self.dy > 0 then
-        love.graphics.draw(
+        love.graphics.filterDrawQ(
             gTextures['keeks-walk'],
             gFrames['keeks-frames'][gKEEKS_IDLE_DOWN],
             self.x, self.y)
     else
-        love.graphics.draw(
+        love.graphics.filterDrawQ(
             gTextures['keeks-walk'],
             gFrames['keeks-frames'][gKEEKS_IDLE_UP],
             self.x, self.y)

@@ -18,7 +18,7 @@ end
 
 function CokeGTitleScreenState:render()
     -- Draw stationary background
-    love.graphics.draw(gCokeGImages['background'], 0, 0)
+    love.graphics.filterDrawD(gCokeGImages['background'], 0, 0)
 
     -- simple UI code
     love.graphics.setFont(gFonts['flappy-font'])
@@ -28,5 +28,5 @@ function CokeGTitleScreenState:render()
     love.graphics.printf('Press Enter', 0, 100, VIRTUAL_WIDTH, 'center')
 
     -- Finally draw stationary ground
-    love.graphics.draw(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
+    love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
 end

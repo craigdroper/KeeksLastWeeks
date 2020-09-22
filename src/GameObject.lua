@@ -38,6 +38,6 @@ end
 
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     local curFrame = self.states and self.states[self.state].frame or self.frame
-    love.graphics.draw(gTextures[self.texture], gFrames[self.texture][curFrame],
+    love.graphics.filterDrawQ(gTextures[self.texture], gFrames[self.texture][curFrame],
         self.x + adjacentOffsetX, self.y + adjacentOffsetY)
 end

@@ -75,7 +75,7 @@ end
 
 function BarGPowerUp:render()
     if self.isActive then
-        love.graphics.draw(gBGTextures['main'],
+        love.graphics.filterDrawQ(gBGTextures['main'],
                            gBGFrames['powerups'][self.powerUpIdx],
                            self.x,
                            self.y)

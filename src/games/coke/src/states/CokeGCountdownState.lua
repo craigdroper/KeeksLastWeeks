@@ -41,12 +41,12 @@ end
 
 function CokeGCountdownState:render()
     -- Draw stationary background
-    love.graphics.draw(gCokeGImages['background'], 0, 0)
+    love.graphics.filterDrawD(gCokeGImages['background'], 0, 0)
 
     -- render count big in the middle of the screen
     love.graphics.setFont(gFonts['huge-flappy-font'])
     love.graphics.printf(tostring(self.count), 0, 120, VIRTUAL_WIDTH, 'center')
 
     -- Finally draw stationary ground
-    love.graphics.draw(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
+    love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
 end

@@ -32,7 +32,7 @@ end
 
 function EntityIdleState:render()
     local anim = self.entity.currentAnimation
-    love.graphics.draw(
+    love.graphics.filterDrawQ(
         gTextures[anim.texture],
         gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX),

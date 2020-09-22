@@ -36,7 +36,7 @@ end
 
 function Apartment:renderFloorTiles()
     for _, tile in pairs(self.floortiles) do
-        love.graphics.draw(tile[1], tile[2], tile[3], tile[4])
+        love.graphics.filterDrawQ(tile[1], tile[2], tile[3], tile[4])
     end
 end
 
@@ -174,9 +174,9 @@ end
 function Apartment:renderFurniture()
     for name, furniture in pairs(self.furniture) do
         if #furniture == 4 then
-            love.graphics.draw(furniture[1], furniture[2], furniture[3], furniture[4])
+            love.graphics.filterDrawQ(furniture[1], furniture[2], furniture[3], furniture[4])
         elseif #furniture == 9 then
-            love.graphics.draw(furniture[1], furniture[2], furniture[3], furniture[4],
+            love.graphics.filterDrawQ(furniture[1], furniture[2], furniture[3], furniture[4],
                 furniture[5], furniture[6], furniture[7], furniture[8], furniture[9])
         else
             print(name)

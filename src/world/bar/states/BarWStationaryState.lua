@@ -5,8 +5,9 @@ function BarWStationaryState:init(params)
     self.player = gGlobalObjs['player']
     self.bar = params.bar
     -- The mini game that will be pushed on top of this state can
-    -- access this flag to indicate that the game is complete
-    self.isGamePlayed = false
+    -- access this data structure to indicate how the player
+    -- did in the game
+    self.gameStats = nil
 end
 
 function BarWStationaryState:enter()
@@ -20,10 +21,10 @@ function BarWStationaryState:enter()
 end
 
 function BarWStationaryState:update(dt)
-    if self.isGamePlayed then
+    if self.gameStats then
         gStateStack:push(DialogueState(
             'Bartender: Hope you enjoyed your time at the bar Keeks! ' ..
-            'Just kidding, I know you always do.' ..
+            ' Good job scoring ' .. self.gameStats.score .. '! ' ..
             'Now while I\'ve got you here, do you think we could settle up your tab?\n\n' ..
             'Keeks: Ummm...',
         function()

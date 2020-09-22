@@ -50,7 +50,7 @@ function BarGGameOverState:update(dt)
         -- 2) BarGGameOver
         -- Set the BarWStationary isGamePlayed flag to true
         barWStatState = gStateStack:getNPrevState(1)
-        barWStatState.isGamePlayed = true
+        barWStatState.gameStats = {score = self.score}
         -- pop BarGGameOverState off to
         -- return to the stationary bar state
         gStateStack:pop()

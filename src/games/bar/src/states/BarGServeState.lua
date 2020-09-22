@@ -37,10 +37,7 @@ function BarGServeState:update(dt)
     self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
     self.ball.y = self.paddle.y - 8
 
-    print('Updateing ServeState')
-
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        print('Enter or Return was pressed')
         -- Pop off the current Serve state, and push a new PlayState
         -- with all the important state infor
         gStateStack:pop()

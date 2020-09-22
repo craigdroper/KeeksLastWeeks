@@ -39,3 +39,7 @@ function StateStack:pop()
     self.states[#self.states]:exit()
     table.remove(self.states)
 end
+
+function StateStack:getNPrevState(n)
+    return self.states[#self.states - n]
+end

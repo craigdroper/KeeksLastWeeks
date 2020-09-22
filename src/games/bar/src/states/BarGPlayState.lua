@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGPlayState Class --
+    -- BarGPlayState Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -22,18 +22,18 @@ function BoolRef:init(val)
     self.val = val
 end
 
-BGPlayState = Class{__includes = BaseState}
+BarGPlayState = Class{__includes = BaseState}
 
 -- Number of points player needs to score in a given level to earn a larger
 -- paddle
 local PADDLE_GROW_THRESHOLD = 10000
 
 --[[
-    We initialize what's in our BGPlayState via a state table that we pass between
+    We initialize what's in our BarGPlayState via a state table that we pass between
     states as we go from playing to serving.
 ]]
 
-function BGPlayState:enter(params)
+function BarGPlayState:init(params)
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
@@ -53,7 +53,7 @@ function BGPlayState:enter(params)
     self.balls[1].dx = math.random(-200, 200)
     self.balls[1].dy = math.random(-50, -60)
 
-    self.powerUp = BGPowerUp()
+    self.powerUp = BarGPowerUp()
     self.powerUp.isActive = false
     self.powerUpAlarm = math.random(15,30)
     -- check if the current bricks in this level contain a locked brick
@@ -63,11 +63,11 @@ function BGPlayState:enter(params)
         self.isLockedBrick = self.isLockedBrick or
             (brick.isLocked and brick.inPlay)
     end
-    -- boolean that keeps track if the player has collected the Key BGPowerUp
+    -- boolean that keeps track if the player has collected the Key BarGPowerUp
     self.hasKey = BoolRef(false)
 end
 
-function BGPlayState:update(dt)
+function BarGPlayState:update(dt)
 
     if self.paused then
         if love.keyboard.wasPressed('space') then
@@ -85,10 +85,10 @@ function BGPlayState:update(dt)
     end
 
     self.powerUpAlarm = self.powerUpAlarm - dt
-    -- check if its time to create a BGPowerUp
+    -- check if its time to create a BarGPowerUp
     if self.powerUpAlarm < 0 then
-        -- BGPowerUp creation logic will be a combination of random selection
-        -- from BGPowerUps that are appropriate for the current play state
+        -- BarGPowerUp creation logic will be a combination of random selection
+        -- from BarGPowerUps that are appropriate for the current play state
         local powerUpCands = {}
         -- ExtraBallPowerUp always valid
         table.insert(powerUpCands, BGExtraBallsPowerUp())
@@ -145,12 +145,17 @@ function BGPlayState:update(dt)
         self.paddle:shrink()
 
         if self.health == 0 then
-            gStateMachine:change('bar-game-game-over', {
+            -- Pop the current Play State and push a Game Over State
+            gStateStack:pop()
+            gStateStack:push(BarGGameOverState({
                 score = self.score,
                 -- highScores = self.highScores
-            })
+            }))
         else
-            gStateMachine:change('bar-game-serve', {
+            -- Pop the current Play state and push a serve state using
+            -- one of the remaining balls
+            gStateStack:pop()
+            gStateStack:push(BarGServeState({
                 paddle = self.paddle,
                 bricks = self.bricks,
                 health = self.health,
@@ -158,7 +163,7 @@ function BGPlayState:update(dt)
                 -- highScores = self.highScores,
                 level = self.level,
                 recoverPoints = self.recoverPoints
-            })
+            }))
         end
     end
 
@@ -167,9 +172,6 @@ function BGPlayState:update(dt)
         brick:update(dt)
     end
 
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
 end
 
 --[[ Helper function that will check if a given
@@ -178,7 +180,7 @@ end
 
      Returns true if the ball has collided with a brick, false if no
 ]]
-function BGPlayState:checkBallPaddleCollision(ball, paddle)
+function BarGPlayState:checkBallPaddleCollision(ball, paddle)
     if ball:collides(paddle) then
         -- raise ball above paddle in case it goes below it, then reverse dy
         ball.y = paddle.y - 8
@@ -201,7 +203,7 @@ function BGPlayState:checkBallPaddleCollision(ball, paddle)
     end
 end
 
-function BGPlayState:checkBallBrickCollision(ball, brick)
+function BarGPlayState:checkBallBrickCollision(ball, brick)
     -- only check collision if we're in play
     if not brick.inPlay or not ball:collides(brick) then
         return false
@@ -252,7 +254,10 @@ function BGPlayState:checkBallBrickCollision(ball, brick)
         -- going onto the next level
         self.paddle:reset()
 
-        gStateMachine:change('bar-game-victory', {
+        -- Pop off the play state and push a victory state with the appropriate
+        -- info about the currenct level
+        gStateStack:pop()
+        gStateStack:push(BarGVictoryState({
             level = self.level,
             paddle = self.paddle,
             health = self.health,
@@ -260,12 +265,12 @@ function BGPlayState:checkBallBrickCollision(ball, brick)
             -- highScores = self.highScores,
             ball = ball,
             recoverPoints = self.recoverPoints
-        })
+        }))
     end
     return true
 end
 
-function BGPlayState:updateBallAfterBrickCollision(ball, brick)
+function BarGPlayState:updateBallAfterBrickCollision(ball, brick)
 
     --
     -- collision code for bricks
@@ -312,7 +317,7 @@ function BGPlayState:updateBallAfterBrickCollision(ball, brick)
     end
 end
 
-function BGPlayState:render()
+function BarGPlayState:render()
     -- render bricks
     for k, brick in pairs(self.bricks) do
         brick:render()
@@ -343,7 +348,7 @@ function BGPlayState:render()
     end
 end
 
-function BGPlayState:checkVictory()
+function BarGPlayState:checkVictory()
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             return false

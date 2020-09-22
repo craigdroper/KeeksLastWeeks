@@ -11,9 +11,9 @@
     Very similar to the ServeState, except here we increment the level 
 ]]
 
-BGVictoryState = Class{__includes = BaseState}
+BarGVictoryState = Class{__includes = BaseState}
 
-function BGVictoryState:enter(params)
+function BarGVictoryState:init(params)
     self.level = params.level
     self.score = params.score
     -- self.highScores = params.highScores
@@ -23,7 +23,7 @@ function BGVictoryState:enter(params)
     self.recoverPoints = params.recoverPoints
 end
 
-function BGVictoryState:update(dt)
+function BarGVictoryState:update(dt)
     self.paddle:update(dt)
 
     -- have the ball track the player
@@ -32,19 +32,22 @@ function BGVictoryState:update(dt)
 
     -- go to play screen if the player presses Enter
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('bar-game-serve', {
+        -- Pop off the current victory state, and push
+        -- a Serve state with a newly created level 
+        gStateStack:pop()
+        gStateStack:push(BarGServeState({
             level = self.level + 1,
-            bricks = BGLevelMaker.createMap(self.level + 1),
+            bricks = BarGLevelMaker.createMap(self.level + 1),
             paddle = self.paddle,
             health = self.health,
             score = self.score,
             -- highScores = self.highScores,
             recoverPoints = self.recoverPoints
-        })
+        }))
     end
 end
 
-function BGVictoryState:render()
+function BarGVictoryState:render()
     self.paddle:render()
     self.ball:render()
 

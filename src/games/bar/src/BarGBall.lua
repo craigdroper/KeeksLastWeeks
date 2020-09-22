@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGBall Class --
+    -- BarGBall Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -13,9 +13,9 @@
     for visual variety.
 ]]
 
-BGBall = Class{}
+BarGBall = Class{}
 
-function BGBall:init(skin)
+function BarGBall:init(skin)
     -- simple positional and dimensional variables
     self.width = 8
     self.height = 8
@@ -34,7 +34,7 @@ end
     Expects an argument with a bounding box, be that a paddle or a brick,
     and returns true if the bounding boxes of this and the argument overlap.
 ]]
-function BGBall:collides(target)
+function BarGBall:collides(target)
     -- first, check to see if the left edge of either is farther to the right
     -- than the right edge of the other
     if self.x > target.x + target.width or target.x > self.x + self.width then
@@ -54,14 +54,14 @@ end
 --[[
     Places the ball in the middle of the screen, with no movement.
 ]]
-function BGBall:reset()
+function BarGBall:reset()
     self.x = VIRTUAL_WIDTH / 2 - 2
     self.y = VIRTUAL_HEIGHT / 2 - 2
     self.dx = 0
     self.dy = 0
 end
 
-function BGBall:update(dt)
+function BarGBall:update(dt)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
 
@@ -85,7 +85,7 @@ function BGBall:update(dt)
     end
 end
 
-function BGBall:render()
+function BarGBall:render()
     -- gTexture is our global texture for all blocks
     -- gBGBallFrames is a table of quads mapping to each individual ball skin in the texture
     love.graphics.draw(gBGTextures['main'], gBGFrames['balls'][self.skin],

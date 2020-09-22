@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGPowerUp Class --
+    -- BarGPowerUp Class --
 
     Author: Craig Roper
 
@@ -11,15 +11,15 @@
     the player with a power up
 ]]
 
-BGPowerUp = Class{}
+BarGPowerUp = Class{}
 
-function BGPowerUp:init()
-    -- Only specialized BGPowerUp objects should ever be instantiated
+function BarGPowerUp:init()
+    -- Only specialized BarGPowerUp objects should ever be instantiated
     self.powerUpIdx = nil
     self:initPowerUp()
 end
 
-function BGPowerUp:initPowerUp()
+function BarGPowerUp:initPowerUp()
     self.width = 16
     self.height = 16
 
@@ -33,7 +33,7 @@ function BGPowerUp:initPowerUp()
     self.isActive = true
 end
 
-function BGPowerUp:update(dt)
+function BarGPowerUp:update(dt)
     self.y = self.y + self.dy * dt
     -- check if the power up has scrolled completely off screen, and
     -- deactivate it if it has
@@ -45,17 +45,17 @@ end
 --[[
     This function will perform two tasks at once:
     1) It will check if the power up image has collided with the paddle
-    2) If it has, then BGPowerUp will update the play state game's parameters
+    2) If it has, then BarGPowerUp will update the play state game's parameters
     appropriately, and will deactivate itself
 
-    Assumption: BGPowerUps will only be available during play state
+    Assumption: BarGPowerUps will only be available during play state
 
     This function requires all of the play state params to allow for
-    the BGPowerUp class to implement exactly the changes it needs to the play state
+    the BarGPowerUp class to implement exactly the changes it needs to the play state
     according to what type of power up was collected by the player
 ]]
 
-function BGPowerUp:check(playStateParams)
+function BarGPowerUp:check(playStateParams)
     if not self.isActive then
         return
     end
@@ -69,11 +69,11 @@ function BGPowerUp:check(playStateParams)
     end
     gBGSounds['powerup']:play()
     self:fire(playStateParams)
-    -- Deactivate this BGPowerUp
+    -- Deactivate this BarGPowerUp
     self.isActive = false
 end
 
-function BGPowerUp:render()
+function BarGPowerUp:render()
     if self.isActive then
         love.graphics.draw(gBGTextures['main'],
                            gBGFrames['powerups'][self.powerUpIdx],
@@ -82,7 +82,7 @@ function BGPowerUp:render()
     end
 end
 
-BGExtraBallsPowerUp = Class{__includes = BGPowerUp}
+BGExtraBallsPowerUp = Class{__includes = BarGPowerUp}
 
 function BGExtraBallsPowerUp:init()
     -- Index for extra ball power up sprite
@@ -105,7 +105,7 @@ function BGExtraBallsPowerUp:fire(playStateParams)
     end
 end
 
-BGKeyPowerUp = Class{__includes = BGPowerUp}
+BGKeyPowerUp = Class{__includes = BarGPowerUp}
 
 function BGKeyPowerUp:init()
     -- Index for extra ball power up sprite

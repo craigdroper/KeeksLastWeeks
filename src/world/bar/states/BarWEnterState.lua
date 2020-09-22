@@ -63,7 +63,7 @@ function BarWEnterState:tweenEnter()
         function()
     gSounds['footsteps']:stop()
     self.player:changeAnimation('idle-left')
-    -- Pop the Apt Enter State off, and push the stationary state
+    -- Pop the Bar Enter State off, and push the stationary state
     gStateStack:pop()
     gStateStack:push(BarWStationaryState({bar = self.bar}))
         end)

@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGLevelMaker Class --
+    -- BarGLevelMaker Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -23,14 +23,14 @@ ALTERNATE = 2       -- alternate colors
 SKIP = 3            -- skip every other block
 NONE = 4            -- no blocks this row
 
-BGLevelMaker = Class{}
+BarGLevelMaker = Class{}
 
 --[[
-    Creates a table of BGBricks to be returned to the main game, with different
+    Creates a table of BarGBricks to be returned to the main game, with different
     possible ways of randomizing rows and columns of bricks. Calculates the
     brick colors and tiers to choose based on the level passed in.
 ]]
-function BGLevelMaker.createMap(level)
+function BarGLevelMaker.createMap(level)
     local bricks = {}
 
     -- randomly choose the number of rows
@@ -91,7 +91,7 @@ function BGLevelMaker.createMap(level)
                 skipFlag = not skipFlag
             end
 
-            b = BGBrick(
+            b = BarGBrick(
                 -- x-coordinate
                 (x-1)                   -- decrement x by 1 because tables are 1-indexed, coords are 0
                 * 32                    -- multiply by 32, the brick width

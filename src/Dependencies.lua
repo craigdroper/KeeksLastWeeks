@@ -42,16 +42,17 @@ require 'src/world/bar/states/BarWEnterState'
 require 'src/world/bar/states/BarWExitState'
 
 -- Bar Breakout Game requirements
-require 'src/games/bar/src/BGBall'
-require 'src/games/bar/src/BGBrick'
-require 'src/games/bar/src/BGLevelMaker'
-require 'src/games/bar/src/BGPaddle'
-require 'src/games/bar/src/BGPowerUp'
-require 'src/games/bar/src/states/BGGameOverState'
-require 'src/games/bar/src/states/BGPlayState'
-require 'src/games/bar/src/states/BGServeState'
--- require 'src/games/bar/src/states/BGStartState'
-require 'src/games/bar/src/states/BGVictoryState'
+require 'src/games/bar/src/BarGBall'
+require 'src/games/bar/src/BarGBrick'
+require 'src/games/bar/src/BarGLevelMaker'
+require 'src/games/bar/src/BarGPaddle'
+require 'src/games/bar/src/BarGPowerUp'
+require 'src/games/bar/src/states/BarGGameOverState'
+require 'src/games/bar/src/states/BarGPlayState'
+require 'src/games/bar/src/states/BarGServeState'
+-- require 'src/games/bar/src/states/BarGStartState'
+require 'src/games/bar/src/states/BarGVictoryState'
+require 'src/games/bar/src/states/BarGStartState'
 
 -- Coke Flappy Bird Game requirements
 require 'src/games/coke/src/CokeGBird'
@@ -142,6 +143,7 @@ gSounds = {
     ['door'] = love.audio.newSource('sounds/door.wav'),
     ['blip'] = love.audio.newSource('sounds/blip.wav'),
     ['footsteps'] = love.audio.newSource('sounds/footsteps.wav'),
+    ['hurt'] = love.audio.newSource('sounds/hurt.wav'),
     -- Currently unused sounds
     ['music'] = love.audio.newSource('sounds/music.mp3'),
     ['sword'] = love.audio.newSource('sounds/sword.wav'),

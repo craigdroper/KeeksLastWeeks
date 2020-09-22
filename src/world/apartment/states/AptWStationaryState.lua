@@ -15,7 +15,6 @@ function AptWStationaryState:enter()
 end
 
 function AptWStationaryState:update(dt)
-    self.player:update(dt)
 end
 
 function AptWStationaryState:render()

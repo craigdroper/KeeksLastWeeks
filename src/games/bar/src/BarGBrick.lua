@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGBrick Class --
+    -- BarGBrick Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -14,7 +14,7 @@
     layout of bricks.
 ]]
 
-BGBrick = Class{}
+BarGBrick = Class{}
 
 -- some of the colors in our palette (to be used with particle systems)
 paletteColors = {
@@ -56,7 +56,7 @@ paletteColors = {
     },
 }
 
-function BGBrick:init(x, y, isLocked)
+function BarGBrick:init(x, y, isLocked)
     -- used for coloring and score calculation
     self.tier = 0
     self.color = 1
@@ -95,7 +95,7 @@ end
     Triggers a hit on the brick, taking it out of play if at 0 health or
     changing its color otherwise.
 ]]
-function BGBrick:hit()
+function BarGBrick:hit()
     -- set the particle system to interpolate between two colors; in this case, we give
     -- it our self.color but with varying alpha; brighter for higher tiers, fading to 0
     -- over the particle's lifetime (the second color)
@@ -146,11 +146,11 @@ function BGBrick:hit()
     end
 end
 
-function BGBrick:update(dt)
+function BarGBrick:update(dt)
     self.psystem:update(dt)
 end
 
-function BGBrick:render()
+function BarGBrick:render()
     if self.inPlay then
         -- check if brick is a lock brick, and if it is, render the lock brick
         -- graphic, do not consider color or tier when rendering the lock brick
@@ -172,6 +172,6 @@ end
     Need a separate render function for our particles so it can be called after all bricks are drawn;
     otherwise, some bricks would render over other bricks' particle systems.
 ]]
-function BGBrick:renderParticles()
+function BarGBrick:renderParticles()
     love.graphics.draw(self.psystem, self.x + 16, self.y + 8)
 end

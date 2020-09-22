@@ -2,30 +2,30 @@
     GD50
     Breakout Remake
 
-    -- BGPaddle Class --
+    -- BarGPaddle Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
 
     Represents a paddle that can move left and right. Used in the main
     program to deflect the ball toward the bricks; if the ball passes
-    the paddle, the player loses one heart. The BGPaddle can have a skin,
+    the paddle, the player loses one heart. The BarGPaddle can have a skin,
     which the player gets to choose upon starting the game.
 ]]
 
-BGPaddle = Class{}
+BarGPaddle = Class{}
 
 --[[
-    Our BGPaddle will initialize at the same spot every time, in the middle
+    Our BarGPaddle will initialize at the same spot every time, in the middle
     of the world horizontally, toward the bottom.
 ]]
-function BGPaddle:init(skin)
+function BarGPaddle:init(skin)
     -- starting dimensions
     self.sizeWidths = {32, 64, 96, 128}
     self:reset(skin)
 end
 
-function BGPaddle:changeSize(deltaSize)
+function BarGPaddle:changeSize(deltaSize)
     local prevSize = self.size
     local prevWidth = self.width
     self.size = math.max(1, math.min(self.size + deltaSize, 4))
@@ -36,15 +36,15 @@ function BGPaddle:changeSize(deltaSize)
     self.x = math.max(0, math.min(self.x + deltaX, VIRTUAL_WIDTH - self.width))
 end
 
-function BGPaddle:grow()
+function BarGPaddle:grow()
     self:changeSize(1)
 end
 
-function BGPaddle:shrink()
+function BarGPaddle:shrink()
     self:changeSize(-1)
 end
 
-function BGPaddle:reset(skin)
+function BarGPaddle:reset(skin)
     -- x is placed in the middle
     self.x = VIRTUAL_WIDTH / 2 - 32
 
@@ -67,12 +67,12 @@ function BGPaddle:reset(skin)
     self.skin = skin and skin or 2
 end
 
-function BGPaddle:update(dt)
+function BarGPaddle:update(dt)
     -- keyboard input
     if love.keyboard.isDown('left') then
-        self.dx = -PADDLE_SPEED
+        self.dx = -BG_PADDLE_SPEED
     elseif love.keyboard.isDown('right') then
-        self.dx = PADDLE_SPEED
+        self.dx = BG_PADDLE_SPEED
     else
         self.dx = 0
     end
@@ -96,7 +96,7 @@ end
     Render the paddle by drawing the main texture, passing in the quad
     that corresponds to the proper skin and size.
 ]]
-function BGPaddle:render()
+function BarGPaddle:render()
     love.graphics.draw(gBGTextures['main'], gBGFrames['paddles'][self.size + 4 * (self.skin - 1)],
         self.x, self.y)
 end

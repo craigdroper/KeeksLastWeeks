@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGServeState Class --
+    -- BarGServeState Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -14,9 +14,9 @@
     well as the level we're on.
 ]]
 
-BGServeState = Class{__includes = BaseState}
+BarGServeState = Class{__includes = BaseState}
 
-function BGServeState:enter(params)
+function BarGServeState:init(params)
     -- grab game state from params
     self.paddle = params.paddle
     self.bricks = params.bricks
@@ -27,19 +27,24 @@ function BGServeState:enter(params)
     self.recoverPoints = params.recoverPoints
 
     -- init new ball (random color for fun)
-    self.ball = BGBall()
-    self.ball.skin = math.random(7)
+    self.ball = params.ball
+    self.ball.skin = params.ball.skin
 end
 
-function BGServeState:update(dt)
+function BarGServeState:update(dt)
     -- have the ball track the player
     self.paddle:update(dt)
     self.ball.x = self.paddle.x + (self.paddle.width / 2) - 4
     self.ball.y = self.paddle.y - 8
 
+    print('Updateing ServeState')
+
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        -- pass in all important state info to the PlayState
-        gStateMachine:change('bar-game-play', {
+        print('Enter or Return was pressed')
+        -- Pop off the current Serve state, and push a new PlayState
+        -- with all the important state infor
+        gStateStack:pop()
+        gStateStack:push(BarGPlayState({
             paddle = self.paddle,
             bricks = self.bricks,
             health = self.health,
@@ -48,15 +53,12 @@ function BGServeState:update(dt)
             ball = self.ball,
             level = self.level,
             recoverPoints = self.recoverPoints
-        })
+        }))
     end
 
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
 end
 
-function BGServeState:render()
+function BarGServeState:render()
     self.paddle:render()
     self.ball:render()
 

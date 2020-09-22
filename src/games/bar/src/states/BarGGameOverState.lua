@@ -2,7 +2,7 @@
     GD50
     Breakout Remake
 
-    -- BGGameOverState Class --
+    -- BarGGameOverState Class --
 
     Author: Colton Ogden
     cogden@cs50.harvard.edu
@@ -12,14 +12,14 @@
     to the StartState.
 ]]
 
-BGGameOverState = Class{__includes = BaseState}
+BarGGameOverState = Class{__includes = BaseState}
 
-function BGGameOverState:enter(params)
+function BarGGameOverState:init(params)
     self.score = params.score
     -- self.highScores = params.highScores
 end
 
-function BGGameOverState:update(dt)
+function BarGGameOverState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- see if score is higher than any in the high scores table
         local highScore = false
@@ -45,20 +45,19 @@ function BGGameOverState:update(dt)
             }) 
         else 
         --]]
-        --TODO this will change to the "transition back to the bar"
-        -- state since the mini game will be over
-        gStateMachine:change('bar-game-serve', {
-            -- highScores = self.highScores
-        })
-        -- end
-    end
-
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
+        -- Set the BarWStationary isGamePlayed flag to true 
+        barWStatState = gStateStack:getNPrevState(1)
+        barWStatState.isGamePlayed = true
+        -- pop BarGGameOverState off to return to the stationary
+        -- bar state
+        gStateStack:pop()
+        -- TODO we will also push an "update Player's scores" state here
+        -- which takes the mini game player's stats and updates the world
+        -- game player's stats appropriately
     end
 end
 
-function BGGameOverState:render()
+function BarGGameOverState:render()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('GAME OVER', 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
     love.graphics.setFont(gFonts['medium'])

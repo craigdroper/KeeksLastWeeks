@@ -11,7 +11,7 @@ function AptWFunMenuState:init(params)
                 onSelect = function()
                     -- Pop AptWFunMenuState
                     gStateStack:pop()
-                    -- Pop AptSitState
+                    -- Pop AptStationaryState
                     gStateStack:pop()
                     -- Transition to leave state
                     gStateStack:push(AptWExitState(

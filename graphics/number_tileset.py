@@ -22,5 +22,7 @@ sheetHeight = math.ceil(imgH / tileheight)
 for y in range(sheetHeight):
     for x in range(sheetWidth):
         #draw.text((x*tilewidth, y*tileheight), '%d' % (x + y*sheetWidth), (255, 0, 0), font=font)
-        draw.text((x*tilewidth, y*tileheight), '%d' % (x + y*sheetWidth), (255, 0, 0))
+        # Within the lua Util class that generates quads in this project,
+        # the counters are 1 based
+        draw.text((x*tilewidth, y*tileheight), '%d' % (x + y*sheetWidth + 1), (255, 0, 0))
 img.save('%s_numbered.%s' % (basefile, ext))

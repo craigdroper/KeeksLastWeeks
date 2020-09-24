@@ -29,6 +29,7 @@ require 'src/gui/Textbox'
 
 -- Drug filters
 require 'src/filters/NoFilter'
+require 'src/filters/CokeFilter'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'

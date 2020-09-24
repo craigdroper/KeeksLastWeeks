@@ -23,30 +23,6 @@ function love.load()
 
     gStateStack = StateStack()
 
-    --[[ TODO delete
-    gStateMachine = StateMachine {
-            TODO one of the states should be the "Dirty Bit Productions" tweenin opacity
-            title and then it goes into the "Start" menu state
-        --TODO delete
-        ['start'] = function() return StartState() end,
-        ['play'] = function() return PlayState() end,
-        ['game-over'] = function() return GameOverState() end,
-        -- Add the apartment world states
-        ['apt-menu'] = function() return AptWMenuState() end,
-        -- Add Bar Mini Game States to global state machine
-        -- ['bar-game-start'] = function() return BGStartState() end,
-        ['bar-game-play'] = function() return BGPlayState() end,
-        ['bar-game-serve'] = function() return BGServeState() end,
-        ['bar-game-game-over'] = function() return BGGameOverState() end,
-        ['bar-game-game-victory'] = function() return BGVictoryState() end,
-        -- Add Coke Mini Game States to global state machine
-        ['coke-game-title'] = function() return CokeGTitleScreenState() end,
-        ['coke-game-countdown'] = function() return CokeGCountdownState() end,
-        ['coke-game-play'] = function() return CokeGPlayState() end,
-        ['coke-game-score'] = function() return CokeGScoreState() end
-    }
-        --]]
-
     gGlobalObjs = {}
     player = Player()
     player.stateMachine = StateMachine {

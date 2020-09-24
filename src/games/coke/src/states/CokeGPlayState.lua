@@ -105,9 +105,8 @@ function CokeGPlayState:update(dt)
                 gCokeSounds['explosion']:play()
                 gCokeSounds['hurt']:play()
 
-                gStateMachine:change('coke-game-score', {
-                    score = self.score
-                })
+                gStateStack:pop()
+                gStateStack:push(CokeGScoreState({score = self.score}))
             end
         end
     end
@@ -120,9 +119,8 @@ function CokeGPlayState:update(dt)
         gCokeSounds['explosion']:play()
         gCokeSounds['hurt']:play()
 
-        gStateMachine:change('coke-game-score', {
-            score = self.score
-        })
+        gStateStack:pop()
+        gStateStack:push(CokeGScoreState({score = self.score}))
     end
 
     -- Update scrolling parameters

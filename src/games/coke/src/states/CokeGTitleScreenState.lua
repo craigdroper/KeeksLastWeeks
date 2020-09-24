@@ -12,7 +12,8 @@ CokeGTitleScreenState = Class{__includes = BaseState}
 function CokeGTitleScreenState:update(dt)
     -- transition to countdown when enter/return are pressed
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('coke-game-countdown')
+        gStateStack:pop()
+        gStateStack:push(CokeGCountdownState())
     end
 end
 

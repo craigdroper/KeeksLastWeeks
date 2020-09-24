@@ -89,6 +89,7 @@ require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
 require 'src/world/alley/states/AlleyWEnterState'
 require 'src/world/alley/states/AlleyWExitState'
+require 'src/world/alley/states/AlleyWDrugMenuState'
 
 gTextures = {
     --TODO delete legacy code from here

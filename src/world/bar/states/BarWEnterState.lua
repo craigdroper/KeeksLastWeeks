@@ -13,6 +13,7 @@ function BarWEnterState:enter()
     -- for this room's tile sizes
     self.player.scaleX = 0.75
     self.player.scaleY = 0.75
+    self.player.opacity = 255
     -- Explicitly set the player's X & Y coordinates to be just outside
     -- of the right frame in line to walk into the bar withouth
     -- hitting any of the tables

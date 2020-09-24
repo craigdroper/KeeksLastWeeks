@@ -34,7 +34,8 @@ function CokeGCountdownState:update(dt)
 
         -- when 0 is reached, we should enter the CokeGPlayState
         if self.count == 0 then
-            gStateMachine:change('coke-game-play')
+            gStateStack:pop()
+            gStateStack:push(CokeGPlayState())
         end
     end
 end

@@ -14,14 +14,22 @@ CokeGScoreState = Class{__includes = BaseState}
     When we enter the score state, we expect to receive the score
     from the play state so we know what to render to the State.
 ]]
-function CokeGScoreState:enter(params)
+function CokeGScoreState:init(params)
     self.score = params.score
 end
 
 function CokeGScoreState:update(dt)
     -- go back to play if enter is pressed
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('coke-game-countdown')
+        -- Currently the stack is:
+        -- 1) AlleyWStationary
+        -- 2) CokeGScoreState
+        -- Set the AlleyWStationary game stats
+        alleyWStatState = gStateStack:getNPrevState(1)
+        alleyWStatState.gameStats = {multiplier = self.score}
+        -- pop off the coke game score state and return to the
+        -- stationary state
+        gStateStack:pop()
     end
 end
 

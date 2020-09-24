@@ -48,7 +48,7 @@ function BarGGameOverState:update(dt)
         -- Currently the stack is as follows:
         -- 1) BarWStationary
         -- 2) BarGGameOver
-        -- Set the BarWStationary isGamePlayed flag to true
+        -- Set the BarWStationary game stats 
         barWStatState = gStateStack:getNPrevState(1)
         barWStatState.gameStats = {score = self.score}
         -- pop BarGGameOverState off to

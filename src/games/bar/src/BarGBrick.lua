@@ -187,6 +187,5 @@ end
     otherwise, some bricks would render over other bricks' particle systems.
 ]]
 function BarGBrick:renderParticles()
-    -- love.graphics.filterDrawQ(self.psystem, self.x + 16, self.y + 8)
-    love.graphics.filterDrawQ(self.psystem, self.x + self.width, self.y + self.height)
+    love.graphics.filterDrawD(self.psystem, self.x + self.width, self.y + self.height)
 end

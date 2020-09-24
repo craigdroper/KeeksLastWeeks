@@ -25,4 +25,4 @@ for y in range(sheetHeight):
         # Within the lua Util class that generates quads in this project,
         # the counters are 1 based
         draw.text((x*tilewidth, y*tileheight), '%d' % (x + y*sheetWidth + 1), (255, 0, 0))
-img.save('%s_numbered.%s' % (basefile, ext))
+img.save('%s_numbered_ignore.%s' % (basefile, ext))

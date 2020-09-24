@@ -42,3 +42,4 @@ luac.out
 # Dev artifacts
 *tmp*
 .DS_Store
+*ignore.png*

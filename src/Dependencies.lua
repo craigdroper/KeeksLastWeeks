@@ -84,6 +84,10 @@ require 'src/states/game/GameOverState'
 require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
 
+-- Drug Alley World requirements
+require 'src/world/alley/Alley'
+require 'src/world/alley/states/AlleyWStationary'
+
 gTextures = {
     --TODO delete legacy code from here
     ['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
@@ -100,6 +104,7 @@ gTextures = {
     ['bar'] = love.graphics.newImage('graphics/sets/interior3.png'),
     ['keeks-walk'] = love.graphics.newImage('graphics/characters/kiki_walk.png'),
     ['cursor'] = love.graphics.newImage('graphics/cursor.png'),
+    ['city'] = love.graphics.newImage('graphics/sets/urban1.png'),
 }
 
 gTOTAL_CHAR_COUNT = 4
@@ -120,6 +125,7 @@ gFrames = {
     ['switches'] = GenerateQuads(gTextures['switches'], 16, 18),
     -- TODO to here
     ['keeks-walk'] = GenerateQuads(gTextures['keeks-walk'], 77, 77),
+    ['city'] = GenerateQuads(gTextures['city'], 16, 16, {right=1, down=1}, false),
 }
 
 gFramesInfo = {}

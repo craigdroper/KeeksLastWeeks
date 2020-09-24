@@ -15,9 +15,23 @@
     width and a height for the tiles therein, split the texture into
     all of the quads by simply dividing it evenly.
 ]]
-function GenerateQuads(atlas, tilewidth, tileheight)
-    local sheetWidth = atlas:getWidth() / tilewidth
-    local sheetHeight = atlas:getHeight() / tileheight
+function GenerateQuads(atlas, tilewidth, tileheight, padding, lastTilePadded)
+    -- Note currently doesn't support up or left padded tilesheets
+    padding = padding or {}
+    padding.right = padding.right or 0
+    padding.down = padding.down or 0
+    lastTilePadded = lastTilePadded or false
+
+    local totalAtlasWidth = atlas:getWidth()
+    local totalAtlasHeight = atlas:getHeight()
+    if not lastTilePadded then
+        totalAtlasWidth = totalAtlasWidth + padding.right
+        totalAtlasHeight = totalAtlasHeight + padding.down
+    end
+    local sheetWidth = (totalAtlasWidth)/
+                       (tilewidth + padding.right)
+    local sheetHeight = (totalAtlasHeight)/
+                        (tileheight + padding.down)
 
     local sheetCounter = 1
     local spritesheet = {}
@@ -25,8 +39,12 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     for y = 0, sheetHeight - 1 do
         for x = 0, sheetWidth - 1 do
             spritesheet[sheetCounter] =
-                love.graphics.newQuad(x * tilewidth, y * tileheight, tilewidth,
-                tileheight, atlas:getDimensions())
+                love.graphics.newQuad(
+                    x * (tilewidth + padding.right),
+                    y * (tileheight + padding.down),
+                    tilewidth,
+                    tileheight,
+                    atlas:getDimensions())
             sheetCounter = sheetCounter + 1
         end
     end

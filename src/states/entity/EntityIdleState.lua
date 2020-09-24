@@ -36,8 +36,8 @@ function EntityIdleState:render()
     love.graphics.filterDrawQ(
         gTextures[anim.texture],
         gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX),
-        math.floor(self.entity.y - self.entity.offsetY),
+        math.floor(self.entity.x - self.entity.offsetX * self.entity.scaleX),
+        math.floor(self.entity.y - self.entity.offsetY * self.entity.scaleY),
         self.entity.orientation,
         self.entity.scaleX,
         self.entity.scaleY)

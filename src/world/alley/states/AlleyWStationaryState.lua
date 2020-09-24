@@ -7,12 +7,18 @@ function AlleyWStationaryState:init(params)
 end
 
 function AlleyWStationaryState:enter()
-    --[[
     gStateStack:push(DialogueState(
         'Keeks: Mikhail! So good to see you comrade...',
         function()
+            -- Pop off the AlleyWStationary state,
+            -- and push the AlleyExitState with the correct
+            -- next state as determined by this stationary state
+            gStateStack:pop()
+            gStateStack:push(AlleyWExitState({
+                        alley = self.alley,
+                        nextState = AptWEnterState()}))
+
         end))
-        --]]
 end
 
 function AlleyWStationaryState:update(dt)

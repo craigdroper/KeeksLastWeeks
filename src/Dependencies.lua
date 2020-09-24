@@ -86,7 +86,9 @@ require 'src/states/game/StartState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
-require 'src/world/alley/states/AlleyWStationary'
+require 'src/world/alley/states/AlleyWStationaryState'
+require 'src/world/alley/states/AlleyWEnterState'
+require 'src/world/alley/states/AlleyWExitState'
 
 gTextures = {
     --TODO delete legacy code from here

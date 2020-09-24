@@ -16,7 +16,7 @@ function Alley:init()
 
     self.aptX = 0
     self.aptY = 0
-    self.aptNumFloors =  6
+    self.aptNumFloors =  5
     self.aptNumApts = 5
     self.aptTileWidth = 4
     self.aptTileHeight = 2
@@ -35,6 +35,25 @@ function Alley:init()
     self:generateBrickBuilding(self.aptBotY, self.alleyRightX)
 
     self:generateDrugCar()
+end
+
+function Alley:getBorderCoords(tiles)
+    local minX = 1e13
+    local maxX = 0
+    local minY = 1e13
+    local maxY = 0
+    for _, tile in pairs(tiles) do
+        tileWidth = self.tWidth
+        tileHeight = self.tHeight
+        tileX = tile[3]
+        tileY = tile[4]
+        minX = (tileX < minX) and tileX or minX
+        maxX = (tileX + tileWidth > maxX) and tileX + tileWidth or maxX
+        minY = (tileY < minY) and tileY or minY
+        maxY = (tileY + tileHeight > maxY) and tileY + tileHeight or maxY
+    end
+
+    return minX, maxX, minY, maxY, (maxX - minX)/2 + minX, (maxY - minY)/2 + minY
 end
 
 function Alley:generatePavements(aptBotY, aptRightX)
@@ -238,6 +257,7 @@ function Alley:generateApartment(x, y, numFloors, numApts)
     genDoors(lastLayerY)
     self.buildings['apartment'] = aptTiles
     self.aptBotY = y + (numFloors + 1) * self.aptTileHeight * self.tHeight
+    print('AptBotY='..self.aptBotY)
     self.aptRightX = x + numApts * self.aptTileWidth * self.tWidth
 end
 

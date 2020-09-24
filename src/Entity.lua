@@ -41,6 +41,22 @@ function Entity:init(def)
     -- self.dead = false
 end
 
+function Entity:getY()
+    return self.y
+end
+
+function Entity:getX()
+    return self.x
+end
+
+function Entity:getWidth()
+    return self.scaleX * self.width
+end
+
+function Entity:getHeight()
+    return self.scaleY * self.height
+end
+
 function Entity:createAnimations(animations)
     local animationsReturned = {}
 

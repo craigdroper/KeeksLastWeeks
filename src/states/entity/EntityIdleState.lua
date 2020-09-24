@@ -32,6 +32,7 @@ end
 
 function EntityIdleState:render()
     local anim = self.entity.currentAnimation
+    love.graphics.setColor(255, 255, 255, self.entity.opacity)
     love.graphics.filterDrawQ(
         gTextures[anim.texture],
         gFrames[anim.texture][anim:getCurrentFrame()],
@@ -40,6 +41,7 @@ function EntityIdleState:render()
         self.entity.orientation,
         self.entity.scaleX,
         self.entity.scaleY)
+    love.graphics.setColor(255, 255, 255, 255)
 
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.entity.x, self.entity.y, self.entity.width, self.entity.height)

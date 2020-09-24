@@ -30,6 +30,8 @@ function Entity:init(def)
     self.scaleX = def.scaleX or 1
     self.scaleY = def.scaleY or 1
 
+    self.opacity = 255
+
     self.walkSpeed = def.walkSpeed
 
     -- XXX Not used

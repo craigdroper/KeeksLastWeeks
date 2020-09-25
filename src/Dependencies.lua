@@ -226,6 +226,7 @@ gCokeGImages = {
     ['pipe'] = love.graphics.newImage('src/games/coke/graphics/pipe.png'),
     ['bird'] = love.graphics.newImage('src/games/coke/graphics/bird.png'),
     ['pause'] = love.graphics.newImage('src/games/coke/graphics/pause.png'),
+    ['nose'] = love.graphics.newImage('src/games/coke/graphics/nose.png'),
 }
 
 gCokeSounds = {
@@ -234,5 +235,7 @@ gCokeSounds = {
     ['hurt'] = love.audio.newSource('src/games/coke/sounds/hurt.wav', 'static'),
     ['score'] = love.audio.newSource('src/games/coke/sounds/score.wav', 'static'),
     ['pause'] = love.audio.newSource('src/games/coke/sounds/pause.wav', 'static'),
-    ['music'] = love.audio.newSource('src/games/coke/sounds/marios_way.mp3', 'static')
+    ['music'] = love.audio.newSource('src/games/coke/sounds/marios_way.mp3', 'static'),
+    ['sniff'] = love.audio.newSource('src/games/coke/sounds/sniff.mp3', 'static'),
+    ['sneeze'] = love.audio.newSource('src/games/coke/sounds/sneeze.wav', 'static'),
 }

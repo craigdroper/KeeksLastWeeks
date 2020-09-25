@@ -257,7 +257,6 @@ function Alley:generateApartment(x, y, numFloors, numApts)
     genDoors(lastLayerY)
     self.buildings['apartment'] = aptTiles
     self.aptBotY = y + (numFloors + 1) * self.aptTileHeight * self.tHeight
-    print('AptBotY='..self.aptBotY)
     self.aptRightX = x + numApts * self.aptTileWidth * self.tWidth
 end
 

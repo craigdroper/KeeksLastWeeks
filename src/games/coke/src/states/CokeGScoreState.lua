@@ -16,9 +16,13 @@ CokeGScoreState = Class{__includes = BaseState}
 ]]
 function CokeGScoreState:init(params)
     self.score = params.score
+    self.bird = params.bird
 end
 
 function CokeGScoreState:update(dt)
+    -- update bird (mainly for its sneeze)
+    self.bird:update(dt)
+
     -- go back to play if enter is pressed
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- Currently the stack is:
@@ -51,4 +55,7 @@ function CokeGScoreState:render()
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
+
+    -- Keep the nose in for its sneeze particle system effect
+    self.bird:render()
 end

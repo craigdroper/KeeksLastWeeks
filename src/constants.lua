@@ -38,6 +38,12 @@ PLAYER_WALK_SPEED = 60
 -- XXX for testing/dev
 PLAYER_WALK_SPEED = 600
 
+TIME_RGB = {r=0, g=0, b=255}
+HEALTH_RGB = {r=255, g=0, b=0}
+MONEY_RGB = {r=0, g=255, b=0}
+FUN_RGB = {r=255, g=255, b=0}
+
+
 -- Bar game constants
 -- paddle movement speed
 BG_PADDLE_SPEED = 200

@@ -7,11 +7,16 @@ function AptWStationaryState:init(params)
 end
 
 function AptWStationaryState:enter()
+    gStateStack:push(UpdatePlayerStatsState({player = self.player,
+        stats = {time = -10}, callback =
+    function()
     gStateStack:push(DialogueState(
         'Welcome home\n\nWhat would you like to do next?',
         function()
             gStateStack:push(AptWInitialMenuState({apartment = self.apartment}))
-    end))
+        end))
+
+    end}))
 end
 
 function AptWStationaryState:update(dt)

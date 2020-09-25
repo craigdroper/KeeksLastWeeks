@@ -27,7 +27,7 @@ function AlleyWStationaryState:update(dt)
         if self.alley.drugName == 'coke' then
             gGlobalObjs['filter'] = CokeFilter({multiplier = self.gameStats.multiplier})
         else
-            print('XXX MISSING NAME FOR FILTER SELECTION')
+            error('Unrecognized drug name')
         end
 
         gStateStack:push(DialogueState(

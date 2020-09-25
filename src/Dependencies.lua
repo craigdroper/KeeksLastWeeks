@@ -22,6 +22,7 @@ require 'src/states/BaseState'
 require 'src/states/game/FadeInState'
 require 'src/states/game/FadeOutState'
 require 'src/states/game/DialogueState'
+require 'src/states/game/UpdatePlayerStatsState'
 require 'src/gui/Menu'
 require 'src/gui/Panel'
 require 'src/gui/Selection'
@@ -158,6 +159,7 @@ gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['huge'] = love.graphics.newFont('fonts/font.ttf', 64),
     ['medium-flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 14),
     ['flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 28),
     ['huge-flappy-font'] = love.graphics.newFont('src/games/coke/fonts/flappy.ttf', 56),

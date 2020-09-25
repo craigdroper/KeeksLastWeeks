@@ -8,11 +8,19 @@ function AlleyWDrugMenuState:init(params)
         items = {
             {
                 text = 'Coke',
-                onSelect = function()
+                onSelect =
+                function()
+                    self.alley.drugName = 'coke'
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
                     -- Pop AlleyWDrugMenuState
                     gStateStack:pop()
                     -- Transition to coke game
                     gStateStack:push(CokeGTitleScreenState())
+                    gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        end))
+                        end))
                 end
             },
         }

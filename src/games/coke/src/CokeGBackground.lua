@@ -30,18 +30,22 @@ end
 function CokeGBackground:update(dt)
     if self.isScrolling then
         self.backgroundScroll =
-        (self.backgroundScroll + self.backgroundScrollSpeed * dt) 
+        (self.backgroundScroll + self.backgroundScrollSpeed * dt)
         % self.backgroundLoopPoint
     end
     -- The initial image has scrolled out of frame
     if self.backgroundScroll > self.initImgAdjW then
-        self.backgroundShift = self.initImgAdjW 
+        self.backgroundShift = self.initImgAdjW
         self.backgroundScroll = 0
         self.backgroundLoopPoint = VIRTUAL_WIDTH
     end
 end
 
 function CokeGBackground:render()
+    love.graphics.setColor(0, 0, 0, 255)
+    love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    love.graphics.setColor(255, 255, 255, 255)
+
     love.graphics.filterDrawD(self.initImg,
         -self.backgroundScroll - self.backgroundShift,
         0,

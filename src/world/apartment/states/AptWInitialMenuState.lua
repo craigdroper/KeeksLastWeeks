@@ -19,8 +19,13 @@ function AptWInitialMenuState:init(params)
                 onSelect = function()
                     -- Pop off AptWInitialMenuState
                     gStateStack:pop()
-                    -- TODO pop AptSit State then
-                    -- push Leave Apartment to Drug Alley or Car
+                    -- Pop off the AptWStationaryState
+                    gStateStack:pop()
+                    -- Push the Apt Exit state, with the AlleyWEnter state
+                    -- as next state
+                    gStateStack:push(AptWExitState({
+                        apartment = self.apartment,
+                        nextGameState = AlleyWEnterState()}))
                 end
             },
             {

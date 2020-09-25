@@ -21,6 +21,15 @@ end
 
 function AlleyWStationaryState:update(dt)
     if self.gameStats then
+        --[[ Do something special here for all drugs if multiplier is 0,
+             maybe say "This is Shit!" and then sulk back to the apartment
+        --]]
+        if self.alley.drugName == 'coke' then
+            gGlobalObjs['filter'] = CokeFilter({multiplier = self.gameStats.multiplier})
+        else
+            print('XXX MISSING NAME FOR FILTER SELECTION')
+        end
+
         gStateStack:push(DialogueState(
             'Keeks:WOOOOOOOOOO! I am feeling '..self.gameStats.multiplier..' times better!\n'..
             'No way I can go back to my apartment now. Hey Mikhail?\n\n'..
@@ -32,8 +41,8 @@ function AlleyWStationaryState:update(dt)
         function()
             -- Pop the stationary state, push the exit state
             gStateStack:pop()
-            gStateStack:push(AlleyWExitState(
-                {alley = self.alley, nextState = AptWEnterState()})) 
+            gStateStack:push(AlleyWExitCarState(
+                {alley = self.alley}))
         end))
     end
 end

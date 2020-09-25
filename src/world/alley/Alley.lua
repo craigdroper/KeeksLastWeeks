@@ -5,6 +5,7 @@ Alley = Class{}
 
 function Alley:init()
     self.name = 'city'
+    self.drugName = nil
     self.tWidth = 16
     self.tHeight = 16
     self.numTilesWide = VIRTUAL_WIDTH / self.tWidth + 1

@@ -36,7 +36,7 @@ TEXT_Y = (VIRTUAL_HEIGHT - TEXT_HEIGHT - TEXT_Y_PAD)
 --
 PLAYER_WALK_SPEED = 60
 -- XXX for testing/dev
-PLAYER_WALK_SPEED = 300
+-- PLAYER_WALK_SPEED = 600
 
 -- Bar game constants
 -- paddle movement speed

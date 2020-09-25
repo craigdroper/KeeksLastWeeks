@@ -96,31 +96,32 @@ function love.draw()
     push:start()
     gStateStack:render()
     gGlobalObjs['filter']:render()
+    gGlobalObjs['player']:renderStats()
     push:finish()
 end
 
 function love.graphics.filterDrawD(d, x, y, r, sx, sy, ox, oy, kx, ky)
-    x = x or 0
-    y = y or 0
-    r = r or 0
-    sx = sx or 1
-    sy = sy or sx
-    ox = ox or 0
-    oy = oy or 0
-    kx = kx or 0
-    ky = ky or 0
-    gGlobalObjs['filter']:drawD(d, x, y, r, sx, sy, ox, oy, kx, ky)
+    gGlobalObjs['filter']:drawD(d,
+    x or 0,
+    y or 0,
+    r or 0,
+    sx or 1,
+    sy or sx,
+    ox or 0,
+    oy or 0,
+    kx or 0,
+    ky or 0)
 end
 
 function love.graphics.filterDrawQ(t, q, x, y, r, sx, sy, ox, oy, kx, ky)
-    x = x or 0
-    y = y or 0
-    r = r or 0
-    sx = sx or 1
-    sy = sy or sx
-    ox = ox or 0
-    oy = oy or 0
-    kx = kx or 0
-    ky = ky or 0
-    gGlobalObjs['filter']:drawQ(t, q, x, y, r, sx, sy, ox, oy, kx, ky)
+    gGlobalObjs['filter']:drawQ(t, q,
+    x or 0,
+    y or 0,
+    r or 0,
+    sx or 1,
+    sy or sx,
+    ox or 0,
+    oy or 0,
+    kx or 0,
+    ky or 0)
 end

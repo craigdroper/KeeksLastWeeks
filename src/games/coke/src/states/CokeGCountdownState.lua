@@ -13,9 +13,10 @@ CokeGCountdownState = Class{__includes = BaseState}
 -- takes 1 second to count down each time
 COUNTDOWN_TIME = 0.75
 
-function CokeGCountdownState:init()
+function CokeGCountdownState:init(params)
     self.count = 3
     self.timer = 0
+    self.background = params.background
 end
 
 --[[
@@ -35,14 +36,14 @@ function CokeGCountdownState:update(dt)
         -- when 0 is reached, we should enter the CokeGPlayState
         if self.count == 0 then
             gStateStack:pop()
-            gStateStack:push(CokeGPlayState())
+            gStateStack:push(CokeGPlayState({background = self.background}))
         end
     end
 end
 
 function CokeGCountdownState:render()
     -- Draw stationary background
-    love.graphics.filterDrawD(gCokeGImages['background'], 0, 0)
+    self.background:render()
 
     -- render count big in the middle of the screen
     love.graphics.setFont(gFonts['huge-flappy-font'])

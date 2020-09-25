@@ -17,6 +17,8 @@ CokeGScoreState = Class{__includes = BaseState}
 function CokeGScoreState:init(params)
     self.score = params.score
     self.bird = params.bird
+    self.background = params.background
+    self.background:setIsScrolling(false)
 end
 
 function CokeGScoreState:update(dt)
@@ -39,7 +41,10 @@ end
 
 function CokeGScoreState:render()
     -- Draw stationary background
-    love.graphics.filterDrawD(gCokeGImages['background'], 0, 0)
+    self.background:render()
+
+    -- Keep the nose in for its sneeze particle system effect
+    self.bird:render()
 
     -- simply render the score to the middle of the screen
     love.graphics.setFont(gFonts['flappy-font'])
@@ -55,7 +60,4 @@ function CokeGScoreState:render()
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
-
-    -- Keep the nose in for its sneeze particle system effect
-    self.bird:render()
 end

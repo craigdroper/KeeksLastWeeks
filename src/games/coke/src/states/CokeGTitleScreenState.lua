@@ -9,17 +9,21 @@
 
 CokeGTitleScreenState = Class{__includes = BaseState}
 
+function CokeGTitleScreenState:init()
+    self.background = CokeGBackground()
+end
+
 function CokeGTitleScreenState:update(dt)
     -- transition to countdown when enter/return are pressed
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateStack:pop()
-        gStateStack:push(CokeGCountdownState())
+        gStateStack:push(CokeGCountdownState({background = self.background}))
     end
 end
 
 function CokeGTitleScreenState:render()
     -- Draw stationary background
-    love.graphics.filterDrawD(gCokeGImages['background'], 0, 0)
+    self.background:render()
 
     -- simple UI code
     love.graphics.setFont(gFonts['flappy-font'])

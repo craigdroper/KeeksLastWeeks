@@ -64,6 +64,7 @@ require 'src/games/bar/src/states/BarGStartState'
 require 'src/games/coke/src/CokeGBird'
 require 'src/games/coke/src/CokeGPipe'
 require 'src/games/coke/src/CokeGPipePair'
+require 'src/games/coke/src/CokeGBackground'
 require 'src/games/coke/src/states/CokeGCountdownState'
 require 'src/games/coke/src/states/CokeGPlayState'
 require 'src/games/coke/src/states/CokeGScoreState'
@@ -227,6 +228,8 @@ gCokeGImages = {
     ['bird'] = love.graphics.newImage('src/games/coke/graphics/bird.png'),
     ['pause'] = love.graphics.newImage('src/games/coke/graphics/pause.png'),
     ['nose'] = love.graphics.newImage('src/games/coke/graphics/nose.png'),
+    ['background-base'] = love.graphics.newImage('src/games/coke/graphics/cocaine_pile.png'),
+    ['background-ext'] = love.graphics.newImage('src/games/coke/graphics/cocaine_lines.jpg'),
 }
 
 gCokeSounds = {

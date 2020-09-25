@@ -10,8 +10,10 @@
 
 CokeGPlayState = Class{__includes = BaseState}
 
-function CokeGPlayState:init()
+function CokeGPlayState:init(params)
     self.bird = CokeGBird()
+    self.background = params.background
+    self.background:setIsScrolling(true)
     self.pipePairs = {}
     self.pipeAlarm = 0
     self.score = 0
@@ -23,8 +25,6 @@ function CokeGPlayState:init()
     -- XXX For now commenting out pause functionality
     -- self.isPaused = false
     -- self.pauseImage = gCokeGImages['pause']
-
-    self.backgroundScroll = 0
     self.groundScroll = 0
 end
 
@@ -105,7 +105,9 @@ function CokeGPlayState:update(dt)
                 self.bird:sneeze()
 
                 gStateStack:pop()
-                gStateStack:push(CokeGScoreState({score = self.score, bird = self.bird}))
+                gStateStack:push(CokeGScoreState({
+                    score = self.score, bird = self.bird,
+                    background = self.background}))
             end
         end
     end
@@ -118,17 +120,18 @@ function CokeGPlayState:update(dt)
         self.bird:sneeze()
 
         gStateStack:pop()
-        gStateStack:push(CokeGScoreState({score = self.score, bird = self.bird}))
+        gStateStack:push(CokeGScoreState({score = self.score, bird = self.bird,
+            background = self.background}))
     end
 
     -- Update scrolling parameters
-    self.backgroundScroll = (self.backgroundScroll + COKEG_BACKGROUND_SCROLL_SPEED * dt) % COKEG_BACKGROUND_LOOPING_POINT
+    self.background:update(dt)
 
 end
 
 function CokeGPlayState:render()
     -- Draw scrolling background
-    love.graphics.filterDrawD(gCokeGImages['background'], -self.backgroundScroll, 0)
+    self.background:render()
 
     for k, pair in pairs(self.pipePairs) do
         pair:render()

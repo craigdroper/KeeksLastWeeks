@@ -20,7 +20,7 @@ function Selection:init(def)
 
     self.height = def.height
     self.width = def.width
-    self.font = def.font or gFonts['small']
+    self.font = def.font or gFonts['medium']
 
     self.gapHeight = self.height / #self.items
 
@@ -67,6 +67,7 @@ function Selection:render()
         end
 
         -- Pad the txt for room with the cursor
+        love.graphics.setFont(self.font)
         love.graphics.printf(self.items[i].text, self.x, paddedY, self.width, 'center')
 
         currentY = currentY + self.gapHeight

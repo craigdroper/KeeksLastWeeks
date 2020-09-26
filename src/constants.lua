@@ -39,9 +39,13 @@ PLAYER_WALK_SPEED = 60
 PLAYER_WALK_SPEED = 600
 
 TIME_RGB = {r=0, g=0, b=255}
+TIME_NAME = 'time'
 HEALTH_RGB = {r=255, g=0, b=0}
+HEALTH_NAME = 'health'
 MONEY_RGB = {r=0, g=255, b=0}
+MONEY_NAME = 'money'
 FUN_RGB = {r=255, g=255, b=0}
+FUN_NAME = 'fun'
 
 
 -- Bar game constants

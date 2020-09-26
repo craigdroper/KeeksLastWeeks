@@ -22,6 +22,7 @@ function Player:init(def)
     self.health = 100
     self.money = 1000
     self.fun = 0
+    self.statsFont = gFonts['large']
 end
 
 function Player:update(dt)
@@ -51,35 +52,67 @@ function Player:adjustSolidCollision(object, dt)
     end
 end
 
--- Called in main.lua since we always want this to be displayed
-function Player:renderStats()
-    local font = gFonts['large']
-    love.graphics.setFont(font)
+function Player:genStatsDisp()
+    local statsDisp = {}
 
     local strTime = string.format('%s', self.time)
-    local timeText = string.format('T:%4s', strTime)
-    local textH = font:getHeight()
-    local textW = font:getWidth(timeText)
-    love.graphics.setColor(TIME_RGB.r, TIME_RGB.g, TIME_RGB.b, 255)
-    love.graphics.print(timeText, VIRTUAL_WIDTH - textW, 0)
+    local text = string.format('T:%4s', strTime)
+    local textH = self.statsFont:getHeight()
+    local textW = self.statsFont:getWidth(text)
+    statsDisp[TIME_NAME] =
+        {text = text, x = VIRTUAL_WIDTH - textW,
+         y = 0, height = textH, width = textW}
 
     local strHealth = string.format('%s', self.health)
-    local healthText = string.format('H:%4s', strHealth)
-    local textW = font:getWidth(healthText)
-    love.graphics.setColor(HEALTH_RGB.r, HEALTH_RGB.g, HEALTH_RGB.b, 255)
-    love.graphics.print(healthText, VIRTUAL_WIDTH - textW, textH)
+    local text = string.format('H:%4s', strHealth)
+    local textW = self.statsFont:getWidth(text)
+    statsDisp[HEALTH_NAME] =
+        {text = text, x = VIRTUAL_WIDTH - textW,
+         y = textH, height = textH, width = textW}
 
     local strMoney = string.format('%s', self.money)
-    local moneyText = string.format('M:%4s', strMoney)
-    local textW = font:getWidth(moneyText)
-    love.graphics.setColor(MONEY_RGB.r, MONEY_RGB.g, MONEY_RGB.b)
-    love.graphics.print(moneyText, VIRTUAL_WIDTH - textW, 2*textH)
+    local text = string.format('M:%4s', strMoney)
+    local textW = self.statsFont:getWidth(text)
+    statsDisp[MONEY_NAME] =
+        {text = text, x = VIRTUAL_WIDTH - textW,
+         y = 2*textH, height = textH, width = textW}
 
     local strFun = string.format('%s', self.fun)
-    local funText = string.format('F:%4s', strFun)
-    local textW = font:getWidth(funText)
+    local text = string.format('F:%4s', strFun)
+    local textW = self.statsFont:getWidth(text)
+    statsDisp[FUN_NAME] =
+        {text = text, x = VIRTUAL_WIDTH - textW,
+         y = 3*textH, height = textH, width = textW}
+
+     return statsDisp
+end
+
+function Player:getStatMidCoords(statName)
+    statsDisp = self:genStatsDisp()
+    disp = statsDisp[statName]
+    return disp.x + disp.width/2, disp.y + disp.height/2
+end
+
+-- Called in main.lua since we always want this to be displayed
+function Player:renderStats()
+    statsDisp = self:genStatsDisp()
+    love.graphics.setFont(self.statsFont)
+
+    disp = statsDisp[TIME_NAME]
+    love.graphics.setColor(TIME_RGB.r, TIME_RGB.g, TIME_RGB.b, 255)
+    love.graphics.print(disp.text, disp.x, disp.y)
+
+    disp = statsDisp[HEALTH_NAME]
+    love.graphics.setColor(HEALTH_RGB.r, HEALTH_RGB.g, HEALTH_RGB.b, 255)
+    love.graphics.print(disp.text, disp.x, disp.y)
+
+    disp = statsDisp[MONEY_NAME]
+    love.graphics.setColor(MONEY_RGB.r, MONEY_RGB.g, MONEY_RGB.b)
+    love.graphics.print(disp.text, disp.x, disp.y)
+
+    disp = statsDisp[FUN_NAME]
     love.graphics.setColor(FUN_RGB.r, FUN_RGB.g, FUN_RGB.b, 255)
-    love.graphics.print(funText, VIRTUAL_WIDTH - textW, 3*textH)
+    love.graphics.print(disp.text, disp.x, disp.y)
 
     love.graphics.setColor(255, 255, 255, 255)
 end

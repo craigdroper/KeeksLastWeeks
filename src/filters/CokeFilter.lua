@@ -12,6 +12,10 @@ function CokeFilter:init(params)
     self:tweenShake()
 end
 
+function CokeFilter:getMultiplier()
+    return self.multiplier
+end
+
 function CokeFilter:update(dt)
     -- For filters that will tween their own overlaid graphics
     -- Coke filter will not be adding its own overlaid graphics

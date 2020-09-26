@@ -2,6 +2,13 @@
 NoFilter = Class{}
 
 function NoFilter:init()
+    -- nil values differentiates not having a multiplier with
+    -- a filter that does have a multiplier with a value of 1
+    self.multiplier = nil
+end
+
+function NoFilter:getMultiplier()
+    return self.multiplier
 end
 
 function NoFilter:update(dt)

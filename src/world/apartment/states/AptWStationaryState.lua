@@ -8,7 +8,7 @@ end
 
 function AptWStationaryState:enter()
     gStateStack:push(UpdatePlayerStatsState({player = self.player,
-        stats = {time = -10}, callback =
+        stats = {time = -10, health = -5, money = 0, fun = 1000}, callback =
     function()
     gStateStack:push(DialogueState(
         'Welcome home\n\nWhat would you like to do next?',

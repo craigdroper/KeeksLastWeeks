@@ -14,15 +14,28 @@ function UpdatePlayerStatsState:init(params)
     self.font = gFonts['huge']
     self.fontRGB = {}
 
+    self.tweenTime = 2
+
     -- Stat update text fields
+    self.curVal = nil
     self.text = nil
     self.textW = nil
     self.textH = nil
-    self.opacity = nil
-    self.x = nil
-    self.y = nil
-    self.sx = nil
-    self.sy = nil
+    self.textOpacity = nil
+    self.textX = nil
+    self.textY = nil
+    self.textSX = nil
+    self.textSY = nil
+    -- Stat multiplier text field
+    self.curMult = gGlobalObjs['filter']:getMultiplier()
+    self.mult = nil
+    self.multW = nil
+    self.multH = nil
+    self.multOpacity = nil
+    self.multX = nil
+    self.multY = nil
+    self.multSX = nil
+    self.multSY = nil
     -- The mid x and mid y points of a given stat's display in the upper
     -- right hand corner of the screen. This is the target for the tweening
     -- text, and the center point of the particle system
@@ -32,6 +45,8 @@ function UpdatePlayerStatsState:init(params)
     -- Particle system for when the graphic has tweened into the stats area
     -- and the player's stats are actually updated
     self.psystem = love.graphics.newParticleSystem(gBGTextures['particle'], 64)
+    self.psysX = nil
+    self.psysY = nil
     self.psystemMinTime = 0.5
     self.psystemMaxTime = 1
     self.psystem:setParticleLifetime(self.psystemMinTime, self.psystemMaxTime)
@@ -46,15 +61,16 @@ end
 function UpdatePlayerStatsState:checkStats()
     if #self.statsKeys > 0 then
         local statName = table.remove(self.statsKeys)
-        local statVal = self.stats[statName]
+        self.curVal = self.stats[statName]
+        self.totVal = self.curVal * (self.curMult ~= nil and self.curMult or 1)
         if statName == TIME_NAME then
-            self:tweenTimeUpdate(statVal)
+            self:tweenTimeUpdate()
         elseif statName == HEALTH_NAME then
-            self:tweenHealthUpdate(statVal)
+            self:tweenHealthUpdate()
         elseif statName == MONEY_NAME then
-            self:tweenMoneyUpdate(statVal)
+            self:tweenMoneyUpdate()
         elseif statName == FUN_NAME then
-            self:tweenFunUpdate(statVal)
+            self:tweenFunUpdate()
         else
             error('Unhandled stat name: '..statName)
         end
@@ -66,64 +82,118 @@ function UpdatePlayerStatsState:checkStats()
     end
 end
 
-function UpdatePlayerStatsState:tweenTimeUpdate(val)
+function UpdatePlayerStatsState:tweenTimeUpdate()
     self.fontRGB = TIME_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(TIME_NAME)
-    self:tweenUpdate(val, function() self.player.time = self.player.time + val end)
+    self:tweenUpdate(function() self.player.time = self.player.time + self.totVal end)
 end
 
-function UpdatePlayerStatsState:tweenHealthUpdate(val)
+function UpdatePlayerStatsState:tweenHealthUpdate()
     self.fontRGB = HEALTH_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(HEALTH_NAME)
-    self:tweenUpdate(val, function() self.player.health = self.player.health + val end)
+    self:tweenUpdate(function() self.player.health = self.player.health + self.totVal end)
 end
 
-function UpdatePlayerStatsState:tweenMoneyUpdate(val)
+function UpdatePlayerStatsState:tweenMoneyUpdate()
     self.fontRGB = MONEY_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(MONEY_NAME)
-    self:tweenUpdate(val, function() self.player.money = self.player.money + val end)
+    self:tweenUpdate(function() self.player.money = self.player.money + self.totVal end)
 end
 
-function UpdatePlayerStatsState:tweenFunUpdate(val)
+function UpdatePlayerStatsState:tweenFunUpdate()
     self.fontRGB = FUN_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(FUN_NAME)
-    self:tweenUpdate(val, function() self.player.fun = self.player.fun + val end)
+    self:tweenUpdate(function() self.player.fun = self.player.fun + self.totVal end)
 end
 
-function UpdatePlayerStatsState:tweenUpdate(val, statUpdFunc)
-    self.text = string.format('%s%s', (val<0) and '' or '+', val)
+function UpdatePlayerStatsState:setTextMembers(val)
+    self.text = string.format('%s%d', (val<0) and '' or '+', val)
     self.textW = self.font:getWidth(self.text)
     self.textH = self.font:getHeight()
-    self.opacity = 0
-    self.x = (VIRTUAL_WIDTH - self.textW)/2
-    self.y = (VIRTUAL_HEIGHT - self.textH)/2
-    self.sx = 1
-    self.sy = 1
+    self.textX = (VIRTUAL_WIDTH - self.textW)/2
+    self.textY = (VIRTUAL_HEIGHT - self.textH)/2
+end
+
+function UpdatePlayerStatsState:tweenUpdate(statUpdFunc)
+    self:setTextMembers(self.curVal)
+    self.textOpacity = 0
+    self.textSX = 1
+    self.textSY = 1
     self.psystem:setColors(
         self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, 128,
         self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, 0
     )
 
-    Timer.tween(2, {
-        [self] = {opacity = 255}
-    })
-    :finish(function()
-        Timer.tween(2, {
-        [self] = {x = self.statDispMidX, y = self.statDispMidY, sx = 0, sy = 0}
+    if self.curMult ~= nil then
+        self.mult = string.format('x%d', self.curMult)
+        self.multW = self.font:getWidth(self.mult)
+        self.multH = self.font:getHeight()
+        self.multOpacity = 0
+        self.multX = (VIRTUAL_WIDTH - self.multW)/2
+        self.multY = self.textY + self.textH
+        self.multSX = 1
+        self.multSY = 1
+    end
+
+    self:tweenStatDisp(
+    function()
+        if self.curMult ~= nil then
+            self:tweenMultDisp(function() self:tweenStatUpd(statUpdFunc) end)
+        else
+            self:tweenStatUpd(statUpdFunc)
+        end
+    end)
+end
+
+function UpdatePlayerStatsState:tweenStatDisp(callback)
+    Timer.tween(self.tweenTime, {
+        [self] = {textOpacity = 255}
+    }):finish(function() callback() end)
+end
+
+function UpdatePlayerStatsState:tweenMultDisp(callback)
+    Timer.tween(self.tweenTime, {
+        [self] = {multOpacity = 255}
+    }):finish(
+    function()
+        Timer.tween(self.tweenTime/2, {
+            [self] = {multY = self.textY}
+    }):finish(
+    function()
+        self.multOpacity = 0
+        self:setTextMembers(self.totVal)
+        self.psysX = self.textX + self.textW/2
+        self.psysY = self.textY + self.textH/2
+        self.psystem:emit(64)
+        Timer.after(self.psystemMaxTime,
+    function()
+        callback()
+    end)
+    end)
+    end)
+end
+
+function UpdatePlayerStatsState:tweenStatUpd(statUpdFunc)
+    Timer.tween(self.tweenTime, {
+        [self] = {textX = self.statDispMidX,
+                  textY = self.statDispMidY,
+                  textSX = 0,
+                  textSY = 0}
     })
     :finish(function()
         statUpdFunc()
+        self.psysX = self.statDispMidX
+        self.psysY = self.statDispMidY
         self.psystem:emit(64)
         Timer.after(self.psystemMaxTime,
             function()
         -- Timer tween "after" call for check stats to give the particle
         -- system time to render
         self:checkStats()
-            end)
             end)
             end)
 end
@@ -134,10 +204,15 @@ end
 
 function UpdatePlayerStatsState:render()
     love.graphics.setFont(self.font)
-    love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.opacity)
-    love.graphics.print(self.text, self.x, self.y, 0, self.sx, self.sy)
+
+    love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.textOpacity)
+    love.graphics.print(self.text, self.textX, self.textY, 0, self.textSX, self.textSY)
+
+    love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.multOpacity)
+    love.graphics.print(self.mult, self.multX, self.multY, 0, self.multSX, self.multSY)
+
     love.graphics.setColor(255, 255, 255, 255)
 
     -- Render psystem after/over any of the text
-    love.graphics.filterDrawD(self.psystem, self.statDispMidX, self.statDispMidY)
+    love.graphics.filterDrawD(self.psystem, self.psysX, self.psysY)
 end

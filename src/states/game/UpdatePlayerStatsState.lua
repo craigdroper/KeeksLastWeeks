@@ -14,7 +14,7 @@ function UpdatePlayerStatsState:init(params)
     self.font = gFonts['huge']
     self.fontRGB = {}
 
-    self.tweenTime = 2
+    self.tweenTime = 1.5
 
     -- Stat update text fields
     self.curVal = nil
@@ -62,7 +62,7 @@ function UpdatePlayerStatsState:checkStats()
     if #self.statsKeys > 0 then
         local statName = table.remove(self.statsKeys)
         self.curVal = self.stats[statName]
-        self.totVal = self.curVal * (self.curMult ~= nil and self.curMult or 1)
+        self.curMult = gGlobalObjs['filter']:getMultiplier()
         if statName == TIME_NAME then
             self:tweenTimeUpdate()
         elseif statName == HEALTH_NAME then
@@ -83,6 +83,8 @@ function UpdatePlayerStatsState:checkStats()
 end
 
 function UpdatePlayerStatsState:tweenTimeUpdate()
+    -- Time stats will never be affected by any drug multipliers
+    self.curMult = nil
     self.fontRGB = TIME_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(TIME_NAME)
@@ -97,6 +99,8 @@ function UpdatePlayerStatsState:tweenHealthUpdate()
 end
 
 function UpdatePlayerStatsState:tweenMoneyUpdate()
+    -- Money stats will never be affected by any drug multipliers
+    self.curMult = nil
     self.fontRGB = MONEY_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(MONEY_NAME)
@@ -137,7 +141,11 @@ function UpdatePlayerStatsState:tweenUpdate(statUpdFunc)
         self.multY = self.textY + self.textH
         self.multSX = 1
         self.multSY = 1
+    else
+        -- To satisfy print call in render
+        self.mult = ''
     end
+    self.totVal = self.curVal * (self.curMult ~= nil and self.curMult or 1)
 
     self:tweenStatDisp(
     function()
@@ -208,7 +216,8 @@ function UpdatePlayerStatsState:render()
     love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.textOpacity)
     love.graphics.print(self.text, self.textX, self.textY, 0, self.textSX, self.textSY)
 
-    love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.multOpacity)
+    -- Multiplier will always be black
+    love.graphics.setColor(0, 0, 0, self.multOpacity)
     love.graphics.print(self.mult, self.multX, self.multY, 0, self.multSX, self.multSY)
 
     love.graphics.setColor(255, 255, 255, 255)

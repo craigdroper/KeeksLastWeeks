@@ -23,6 +23,10 @@ function Player:init(def)
     self.money = 1000
     self.fun = 0
     self.statsFont = gFonts['large']
+
+    -- This is used to indicate that the player is just beginning the
+    -- game and is entering his first state
+    self.isFirstScene = true
 end
 
 function Player:update(dt)

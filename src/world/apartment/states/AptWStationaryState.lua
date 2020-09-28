@@ -7,16 +7,24 @@ function AptWStationaryState:init(params)
 end
 
 function AptWStationaryState:enter()
-    gStateStack:push(UpdatePlayerStatsState({player = self.player,
-        stats = {time = -10, health = -5, money = 0, fun = 1000}, callback =
-    function()
+    if not self.player.isFirstScene then
+        gStateStack:push(UpdatePlayerStatsState({player = self.player,
+            stats = {time = -10}, callback =
+        function()
+            self:pushWelcomeDialogue()
+        end}))
+    else
+        self.player.isFirstScene = false
+        self:pushWelcomeDialogue()
+    end
+end
+
+function AptWStationaryState:pushWelcomeDialogue()
     gStateStack:push(DialogueState(
         'Welcome home\n\nWhat would you like to do next?',
         function()
             gStateStack:push(AptWInitialMenuState({apartment = self.apartment}))
         end))
-
-    end}))
 end
 
 function AptWStationaryState:update(dt)

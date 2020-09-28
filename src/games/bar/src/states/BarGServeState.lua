@@ -25,7 +25,7 @@ function BarGServeState:init(params)
     self.score = params.score
     -- self.highScores = params.highScores
     self.level = params.level
-    self.recoverPoints = params.recoverPoints
+    -- self.recoverPoints = params.recoverPoints
 
     -- init new ball (random color for fun)
     self.ball = BarGBall()
@@ -54,7 +54,7 @@ function BarGServeState:update(dt)
             -- highScores = self.highScores,
             ball = self.ball,
             level = self.level,
-            recoverPoints = self.recoverPoints
+            -- recoverPoints = self.recoverPoints
         }))
     end
 

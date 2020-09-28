@@ -57,9 +57,9 @@ function CokeGPlayState:update(dt)
         -- modify the last Y coordinate we placed so pipe gaps aren't too far apart
         -- no higher than 10 pixels below the top edge of the screen,
         -- and no lower than the gap length
-        local gap = math.max(50, math.min(self.lastGap + math.random(-20,20), 150))
+        local gap = math.max(100, math.min(self.lastGap + math.random(-20,20), 150))
         -- print('Set pipe gap to ' .. tostring(gap) .. ' pixels')
-        local y = math.max(-COKEG_PIPE_HEIGHT + 10, 
+        local y = math.max(-COKEG_PIPE_HEIGHT + 10,
             math.min(self.lastY + math.random(-20, 20), VIRTUAL_HEIGHT - gap - COKEG_PIPE_HEIGHT))
         self.lastGap = gap
         self.lastY = y

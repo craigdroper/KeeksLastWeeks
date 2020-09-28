@@ -48,7 +48,7 @@ function BarGPlayState:init(params)
     table.insert(self.balls, params.ball)
     self.level = params.level
 
-    self.recoverPoints = 5000
+    -- self.recoverPoints = 5000
 
     -- Initialize the "ball" to not be able to bounce passed the bar
     -- until all bricks are cleared
@@ -57,9 +57,11 @@ function BarGPlayState:init(params)
     self.balls[1].dx = math.random(-200, 200)
     self.balls[1].dy = math.random(-50, -60)
 
+    --[[
     self.powerUp = BarGPowerUp()
     self.powerUp.isActive = false
     self.powerUpAlarm = math.random(15,30)
+    --]]
     -- check if the current bricks in this level contain a locked brick
     -- if so the player will need a Unlock power up at some point
     self.isLockedBrick = false
@@ -88,6 +90,7 @@ function BarGPlayState:update(dt)
         return
     end
 
+    --[[
     self.powerUpAlarm = self.powerUpAlarm - dt
     -- check if its time to create a BarGPowerUp
     if self.powerUpAlarm < 0 then
@@ -111,6 +114,7 @@ function BarGPlayState:update(dt)
             balls = self.balls,
             hasKey = self.hasKey, })
     end
+    --]]
 
     -- update positions based on velocity
     self.paddle:update(dt)
@@ -145,7 +149,6 @@ function BarGPlayState:update(dt)
         -- We have not found a brick that's in play, so allow the player
         -- to bounce through the bar to the top of the screen
         if not isBrickInPlay then
-            print('Setting cur min to 0')
             for i, ball in pairs(self.balls) do
                 ball.curMinY = 0
             end
@@ -175,6 +178,7 @@ function BarGPlayState:update(dt)
             gStateStack:push(BarGGameOverState({
                 background = self.background,
                 score = self.score,
+                levelsCleared = self.level - 1,
                 -- highScores = self.highScores
             }))
         else
@@ -189,7 +193,7 @@ function BarGPlayState:update(dt)
                 score = self.score,
                 -- highScores = self.highScores,
                 level = self.level,
-                recoverPoints = self.recoverPoints
+                -- recoverPoints = self.recoverPoints
             }))
         end
     end
@@ -263,6 +267,7 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
     brick:hit()
 
     -- if we have enough points, recover a point of health
+    --[[
     if self.score > self.recoverPoints then
         -- can't go above 3 health
         self.health = math.min(3, self.health + 1)
@@ -273,6 +278,7 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
         -- play recover sound effect
         gBGSounds['recover']:play()
     end
+    --]]
 
     -- go to our victory screen if there are no more bricks left
     if self:checkVictory() then
@@ -293,7 +299,7 @@ function BarGPlayState:checkBallBrickCollision(ball, brick)
             score = self.score,
             -- highScores = self.highScores,
             ball = ball,
-            recoverPoints = self.recoverPoints
+            -- recoverPoints = self.recoverPoints
         }))
     end
     return true

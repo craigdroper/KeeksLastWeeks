@@ -55,7 +55,7 @@ function CokeGScoreState:render()
     local scoreMsg = 'Score: ' .. tostring(self.score)
     love.graphics.printf(scoreMsg, 0, 100, VIRTUAL_WIDTH, 'center')
 
-    restartMsg = 'Press Enter to Play Again!'
+    restartMsg = 'Press Enter to End the Game'
     love.graphics.printf(restartMsg, 0, 200, VIRTUAL_WIDTH, 'center')
 
     -- Finally draw stationary ground

@@ -17,6 +17,7 @@ BarGGameOverState = Class{__includes = BaseState}
 function BarGGameOverState:init(params)
     self.background = params.background
     self.score = params.score
+    self.levelsCleared = params.levelsCleared
 end
 
 function BarGGameOverState:update(dt)
@@ -50,7 +51,7 @@ function BarGGameOverState:update(dt)
         -- 2) BarGGameOver
         -- Set the BarWStationary game stats 
         barWStatState = gStateStack:getNPrevState(1)
-        barWStatState.gameStats = {score = self.score}
+        barWStatState.gameStats = {score = self.levelsCleared}
         -- pop BarGGameOverState off to
         -- return to the stationary bar state
         gStateStack:pop()

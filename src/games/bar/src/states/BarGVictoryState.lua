@@ -21,7 +21,7 @@ function BarGVictoryState:init(params)
     self.paddle = params.paddle
     self.health = params.health
     self.ball = params.ball
-    self.recoverPoints = params.recoverPoints
+    -- self.recoverPoints = params.recoverPoints
     -- init the new ball in the middle of the paddle
     self.ball.x = self.paddle.x + self.paddle.width/2 - self.ball.width/2
     self.ball.y = self.paddle.y - self.ball.height
@@ -47,7 +47,7 @@ function BarGVictoryState:update(dt)
             health = self.health,
             score = self.score,
             -- highScores = self.highScores,
-            recoverPoints = self.recoverPoints
+            -- recoverPoints = self.recoverPoints
         }))
     end
 end

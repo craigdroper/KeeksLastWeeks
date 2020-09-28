@@ -22,9 +22,12 @@ end
 
 function BarWStationaryState:update(dt)
     if self.gameStats then
+        gStateStack:push(UpdatePlayerStatsState({player = self.player,
+            -- Bar mini game will give 100 fun for every level claered
+            stats = {fun = 100 * self.gameStats.score, money = -50}, callback =
+        function()
         gStateStack:push(DialogueState(
-            'Bartender: Hope you enjoyed your time at the bar Keeks! ' ..
-            ' Good job scoring ' .. self.gameStats.score .. '! ' ..
+            'Bartender: Hope you enjoyed your time at the bar Keeks!\n' ..
             'Now while I\'ve got you here, do you think we could settle up your tab?\n\n' ..
             'Keeks: Ummm...',
         function()
@@ -33,6 +36,7 @@ function BarWStationaryState:update(dt)
             gStateStack:push(BarWExitState(
                 {bar = self.bar, nextGameState = AptWEnterState()}))
         end))
+        end}))
     end
 end
 

@@ -15,13 +15,15 @@ function BarGStartState:init()
     self.paddle = BarGPaddle(1)
     self.level = 1
     self.bricks = BarGLevelMaker.createMap(self.level, self.background)
-    self.recoverPoints = 5000
+    -- self.recoverPoints = 5000
 end
 
 function BarGStartState:enter()
     -- Push a dialogue box with some simple instructions
     gStateStack:push(DialogueState(
-        '<Instructions for mini game>',
+        'There are lots of customers between Keeks and his beloved beer.\n\n'..
+        'Hit the other customers with Keeks to clear them away, and once all '..
+        'customers are gone, Keeks can finally cross over the bar and get his beer!',
         function()
             -- Once the dialogue state is closed, pop off the start
             -- state and push on a serve state for level 1
@@ -35,7 +37,7 @@ function BarGStartState:enter()
                 health = 1,
                 score = 0,
                 level = self.level,
-                recoverPoints = self.recoverPoints,
+                -- recoverPoints = self.recoverPoints,
                 }))
         end))
 end

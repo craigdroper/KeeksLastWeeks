@@ -30,6 +30,9 @@ function AlleyWStationaryState:update(dt)
             error('Unrecognized drug name')
         end
 
+        gStateStack:push(UpdatePlayerStatsState({player = self.player,
+            stats = {money = -100, health = -10}, callback =
+        function()
         gStateStack:push(DialogueState(
             'Keeks:WOOOOOOOOOO! I am feeling '..self.gameStats.multiplier..' times better!\n'..
             'No way I can go back to my apartment now. Hey Mikhail?\n\n'..
@@ -44,6 +47,7 @@ function AlleyWStationaryState:update(dt)
             gStateStack:push(AlleyWExitCarState(
                 {alley = self.alley}))
         end))
+        end}))
     end
 end
 

@@ -71,7 +71,12 @@ require 'src/world/club/states/ClubWExitState'
 require 'src/games/club/src/ClubGBackground'
 require 'src/games/club/src/ClubGArrow'
 require 'src/games/club/src/ClubGArrowTarget'
+require 'src/games/club/src/ClubGUtils'
 require 'src/games/club/src/states/ClubGStartState'
+require 'src/games/club/src/states/ClubGCountdownState'
+require 'src/games/club/src/states/ClubGPlayState'
+require 'src/games/club/src/states/ClubGVictoryState'
+require 'src/games/club/src/states/ClubGGameOverState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -279,5 +284,5 @@ gClubSounds = {
 }
 
 gClubGSongs = {
-    [1] = love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
 }

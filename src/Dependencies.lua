@@ -67,6 +67,12 @@ require 'src/world/club/states/ClubWEnterState'
 require 'src/world/club/states/ClubWStationaryState'
 require 'src/world/club/states/ClubWExitState'
 
+-- Club Game requirements
+require 'src/games/club/src/ClubGBackground'
+require 'src/games/club/src/ClubGArrow'
+require 'src/games/club/src/ClubGArrowTarget'
+require 'src/games/club/src/states/ClubGStartState'
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -251,4 +257,27 @@ gCokeSounds = {
     ['music'] = love.audio.newSource('src/games/coke/sounds/marios_way.mp3', 'static'),
     ['sniff'] = love.audio.newSource('src/games/coke/sounds/sniff.mp3', 'static'),
     ['sneeze'] = love.audio.newSource('src/games/coke/sounds/sneeze.wav', 'static'),
+}
+
+gClubGImages = {
+    ['background'] = love.graphics.newImage('src/games/club/graphics/background.jpg'),
+    ['arrow-outline'] = love.graphics.newImage('src/games/club/graphics/arrow_outline.png'),
+}
+
+gClubGTextures = {
+    ['arrows'] = love.graphics.newImage('src/games/club/graphics/arrows.png'),
+}
+
+gClubGFrames = {
+    ['arrows'] = GenerateQuads(gClubGTextures['arrows'], 30, 30),
+}
+
+gClubSounds = {
+    ['miss'] = love.audio.newSource('src/games/club/sounds/hurt.wav'),
+    ['hit'] = love.audio.newSource('src/games/club/sounds/select.wav'),
+    ['background'] = love.audio.newSource('src/games/club/sounds/muffled_club.mp3'),
+}
+
+gClubGSongs = {
+    [1] = love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
 }

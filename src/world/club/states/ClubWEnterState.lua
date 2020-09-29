@@ -22,6 +22,9 @@ function ClubWEnterState:enter()
     self.player.y = VIRTUAL_HEIGHT + 1
     -- Setup tween entrance
     self:tweenEnter()
+    -- Begin playing the club background music
+    gClubSounds['background']:setLooping(true)
+    gClubSounds['background']:play()
 end
 
 function ClubWEnterState:tweenEnter()

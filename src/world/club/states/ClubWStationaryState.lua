@@ -18,6 +18,7 @@ function ClubWStationaryState:enter()
         'DJ BJ: Well if that\'s true, you shouldn\'t have any trouble proving to '..
         'me you can cut a rug...',
         function()
+            gClubSounds['background']:stop()
             -- TODO with ClubGStartState() gStateStack:push(BarGStartState())
             self.gameStats = {score = 100}
         end))
@@ -25,6 +26,7 @@ end
 
 function ClubWStationaryState:update(dt)
     if self.gameStats then
+        gClubSounds['background']:play()
         gStateStack:push(UpdatePlayerStatsState({player = self.player,
             -- Club mini game will reward its own score that can be dropped right in here
             stats = {fun = self.gameStats.score, money = -100}, callback =

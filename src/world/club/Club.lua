@@ -103,6 +103,6 @@ function Club:renderSpotlights()
 end
 
 function Club:renderEffects()
-    -- self:renderGradientLight()
-    -- self:renderSpotlights()
+    self:renderGradientLight()
+    self:renderSpotlights()
 end

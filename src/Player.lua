@@ -18,6 +18,13 @@ function Player:init(def)
         y = (VIRTUAL_HEIGHT - 77) / 2
     })
 
+    -- A speed that can be set per scene to better accomodate different
+    -- scene pixel sizes
+    self.walkSpeed = nil
+    -- Purely used for DEV reasons when we want to test something besides
+    -- the players walking speed
+    self.walkSpeedMult = PLAYER_WALK_SPEED_MULT
+
     self.time = 100
     self.health = 100
     self.money = 1000
@@ -27,6 +34,10 @@ function Player:init(def)
     -- This is used to indicate that the player is just beginning the
     -- game and is entering his first state
     self.isFirstScene = true
+end
+
+function Player:getPixelWalkTime(numPixels)
+    return numPixels / (self.walkSpeed * self.walkSpeedMult)
 end
 
 function Player:update(dt)
@@ -46,13 +57,13 @@ function Player:adjustSolidCollision(object, dt)
     -- reset position with a little extra padding (2 pixels) to prevent
     -- buggy repositioning of character
     if self.direction == 'up' then
-        self.y = self.y + PLAYER_WALK_SPEED * dt
+        self.y = self.y + self.walkSpeed * self.walkSpeedMult * dt
     elseif self.direction == 'down' then
-        self.y = self.y - PLAYER_WALK_SPEED * dt
+        self.y = self.y - self.walkSpeed * self.walkSpeedMult * dt
     elseif self.direction == 'right' then
-        self.x = self.x - PLAYER_WALK_SPEED * dt
+        self.x = self.x - self.walkSpeed * self.walkSpeedMult * dt
     elseif self.direction == 'left' then
-        self.x = self.x + PLAYER_WALK_SPEED * dt
+        self.x = self.x + self.walkSpeed * self.walkSpeedMult * dt
     end
 end
 

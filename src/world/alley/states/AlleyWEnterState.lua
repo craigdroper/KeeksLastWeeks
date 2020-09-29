@@ -13,6 +13,7 @@ function AlleyWEnterState:enter()
     -- for this room's tile sizes
     self.player.scaleX = 0.5
     self.player.scaleY = 0.5
+    self.player.walkSpeed = 100
     -- Also set the player's opacity to 0, as we will fade him in to simulate
     -- hims stepping outdoors
     self.player.opacity = 0
@@ -42,7 +43,7 @@ function AlleyWEnterState:tweenEnter()
     -- Come out through the apartment door onto the sidewalk
     local walkPixels = (swMaxY - BUFFER) - self.player:getY() - self.player:getHeight()
     self.player:changeAnimation('walk-down')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = swMaxY - BUFFER - self.player:getHeight(),
                          opacity = 255}
     }):finish(
@@ -50,21 +51,21 @@ function AlleyWEnterState:tweenEnter()
     -- Walk over just far enough to clear the apartment and go into the alley
     walkPixels = (aptMaxX + BUFFER) - self.player:getX()
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = aptMaxX + BUFFER}
     }):finish(
         function()
     -- Walk up towards the left side of the car
     walkPixels = self.player.y - carMinY
     self.player:changeAnimation('walk-up')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = carMinY}
     }):finish(
         function()
     -- Turn right and simulate getting into the car by fading back to opacity 0
     walkPixels = (carMidX) - (self.player:getX()) - self.player:getWidth()/2
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = carMidX - self.player:getWidth()/2,
                          opacity = 0}
     }):finish(

@@ -14,6 +14,7 @@ function BarWEnterState:enter()
     self.player.scaleX = 0.75
     self.player.scaleY = 0.75
     self.player.opacity = 255
+    self.player.walkSpeed = 150
     -- Explicitly set the player's X & Y coordinates to be just outside
     -- of the right frame in line to walk into the bar withouth
     -- hitting any of the tables
@@ -44,21 +45,21 @@ function BarWEnterState:tweenEnter()
     -- the bar portion
     local walkPixels = self.player.x - (stoolX + stoolWidth + FURNITURE_BUFFER)
     self.player:changeAnimation('walk-left')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = stoolX + stoolWidth + FURNITURE_BUFFER}
     }):finish(
         function()
     -- Walk high enough to be in line with the target barstool
     walkPixels = self.player.y - stoolY
     self.player:changeAnimation('walk-up')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = stoolY}
     }):finish(
         function()
     -- Walk over "into" the chair, flush on the right side of the bar
     walkPixels = self.player.x - barX + barWidth
     self.player:changeAnimation('walk-left')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = barX + barWidth}
     }):finish(
         function()

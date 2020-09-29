@@ -26,19 +26,19 @@ function BarWExitState:tweenExit()
 
     local walkPixels = (stoolX + stoolWidth) - self.player.x
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = stoolX + stoolWidth + FURNITURE_BUFFER}
     }):finish(
         function()
     walkPixels = stoolY - self.player.y
     self.player:changeAnimation('walk-down')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = stoolY}
     }):finish(
         function()
     walkPixels = wallX - self.player.x
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = wallX}
     }):finish(
         function()

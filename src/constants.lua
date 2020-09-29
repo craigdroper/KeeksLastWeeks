@@ -34,9 +34,8 @@ TEXT_Y = (VIRTUAL_HEIGHT - TEXT_HEIGHT - TEXT_Y_PAD)
 --
 -- entity constants
 --
-PLAYER_WALK_SPEED = 60
--- XXX for testing/dev
-PLAYER_WALK_SPEED = 600
+
+PLAYER_WALK_SPEED_MULT = 1
 
 TIME_RGB = {r=0, g=0, b=255}
 TIME_NAME = 'time'

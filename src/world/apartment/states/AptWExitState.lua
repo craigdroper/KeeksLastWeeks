@@ -29,25 +29,25 @@ function AptWExitState:tweenExit()
     -- Get off couch and walk to limit of coffee table
     local walkPixels = tableY - self.player.y - self.player.height - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = tableY - self.player.height - FURNITURE_BUFFER}
     }):finish(
         function()
     walkPixels = counterX - self.player.x - self.player.width - FURNITURE_BUFFER
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = counterX - self.player.width - FURNITURE_BUFFER}
     }):finish(
         function()
     walkPixels = chairY - self.player.y - self.player.height - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = chairY - self.player.height - FURNITURE_BUFFER}
     }):finish(
         function()
     walkPixels = wallX - self.player.x + self.player.width
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = wallX}
     }):finish(
         function()

@@ -61,6 +61,19 @@ require 'src/games/bar/src/states/BarGServeState'
 require 'src/games/bar/src/states/BarGVictoryState'
 require 'src/games/bar/src/states/BarGStartState'
 
+-- Club World requirements
+require 'src/world/club/Club'
+require 'src/world/club/states/ClubWEnterState'
+
+-- Drug Alley World requirements
+require 'src/world/alley/Alley'
+require 'src/world/alley/states/AlleyWStationaryState'
+require 'src/world/alley/states/AlleyWEnterState'
+require 'src/world/alley/states/AlleyWExitState'
+require 'src/world/alley/states/AlleyWDrugMenuState'
+require 'src/world/alley/states/AlleyWExitCarState'
+require 'src/world/alley/states/AlleyWFunMenuState'
+
 -- Coke Flappy Bird Game requirements
 require 'src/games/coke/src/CokeGBird'
 require 'src/games/coke/src/CokeGPipe'
@@ -74,26 +87,12 @@ require 'src/games/coke/src/states/CokeGTitleScreenState'
 require 'src/states/entity/EntityIdleState'
 require 'src/states/entity/EntityWalkState'
 
+-- TODO delete start
 require 'src/states/entity/player/PlayerIdleState'
-require 'src/states/entity/player/PlayerSwingSwordState'
-require 'src/states/entity/player/PlayerWalkState'
-require 'src/states/entity/player/PlayerLiftState'
-require 'src/states/entity/player/PlayerPotWalk'
-require 'src/states/entity/player/PlayerPotIdleState'
-require 'src/states/entity/player/PlayerThrowState'
-
 require 'src/states/game/GameOverState'
 require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
-
--- Drug Alley World requirements
-require 'src/world/alley/Alley'
-require 'src/world/alley/states/AlleyWStationaryState'
-require 'src/world/alley/states/AlleyWEnterState'
-require 'src/world/alley/states/AlleyWExitState'
-require 'src/world/alley/states/AlleyWDrugMenuState'
-require 'src/world/alley/states/AlleyWExitCarState'
-require 'src/world/alley/states/AlleyWFunMenuState'
+-- TODO delete end
 
 gTextures = {
     --TODO delete legacy code from here
@@ -235,6 +234,11 @@ gCokeGImages = {
     ['background-base'] = love.graphics.newImage('src/games/coke/graphics/cocaine_pile.png'),
     ['background-ext'] = love.graphics.newImage('src/games/coke/graphics/cocaine_lines.jpg'),
 }
+
+gClubWImages = {
+    ['club-background'] = love.graphics.newImage('graphics/sets/mid_interior.jpg'),
+}
+
 
 gCokeSounds = {
     ['jump'] = love.audio.newSource('src/games/coke/sounds/jump.wav', 'static'),

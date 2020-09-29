@@ -22,7 +22,7 @@ function AlleyWExitState:tweenExit()
 
     local walkPixels = exitX - self.player:getX() 
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = exitX}
     }):finish(
         function()

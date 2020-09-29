@@ -32,6 +32,8 @@ function BarWStationaryState:update(dt)
             'Keeks: Ummm...',
         function()
             -- Pop the stationary state, push the exit state
+            -- Increase player walk speed like he's running out
+            self.player.walkSpeed = 500
             gStateStack:pop()
             gStateStack:push(BarWExitState(
                 {bar = self.bar, nextGameState = AptWEnterState()}))

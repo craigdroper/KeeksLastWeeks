@@ -30,14 +30,14 @@ function AlleyWExitCarState:tweenExit()
     -- Come out through the apartment door onto the sidewalk
     local walkPixels = (brickMinX + BUFFER - self.player:getWidth()) - self.player:getX()
     self.player:changeAnimation('walk-right')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = brickMinX - BUFFER - self.player:getWidth(),
                          opacity = 255}
     }):finish(
         function()
     walkPixels = swMaxY - BUFFER - self.player:getHeight() - self.player:getY()
     self.player:changeAnimation('walk-down')
-    Timer.tween(walkPixels / PLAYER_WALK_SPEED, {
+    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {y = swMaxY - BUFFER - self.player:getHeight()}
     }):finish(
         function()

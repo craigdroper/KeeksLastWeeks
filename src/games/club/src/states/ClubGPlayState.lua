@@ -68,13 +68,13 @@ function ClubGPlayState:update(dt)
 
     -- Check if any keys have been pressed, and if so, check if it was hit when
     -- an arrow was close to the target.
-    if love.keypressed('left') then
+    if love.keyboard.wasPressed('left') then
         self:checkForHitTarget('left')
-    elseif love.keypressed('up') then
+    elseif love.keyboard.wasPressed('up') then
         self:checkForHitTarget('up')
-    elseif love.keypressed('down') then
+    elseif love.keyboard.wasPressed('down') then
         self:checkForHitTarget('down')
-    elseif love.keypressed('right') then
+    elseif love.keyboard.wasPressed('right') then
         self:checkForHitTarget('right')
     end
 
@@ -106,6 +106,8 @@ function ClubGPlayState:update(dt)
         table.insert(self.arrows, ClubGArrow(
             self.targets[self.arrowDirs[math.random(#self.arrowDirs)]], self.level))
         self.arrowTimer = 0
+        -- DEVXXX REMOVE, meant to limit a single arrow to being created
+        self.genArrowsTime = 0
     end
 
     -- Clean up all out of play arrows from the table

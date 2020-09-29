@@ -23,8 +23,8 @@ function ClubGArrow:init(arrowTarget, level)
     -- The arrows progressively increase the bars available as they get
     -- closer to the arrow target
     self.curColIdx = 1
-    self.verticalQuadHeightToTarget = (arrowTarget.y - VIRTUAL_HEIGHT)/4
-    self.nextColY = self.verticalQuadHeightToTarget
+    self.verticalQuadHeightToTarget = (VIRTUAL_HEIGHT - arrowTarget.y)/3
+    self.nextColY = VIRTUAL_HEIGHT - self.verticalQuadHeightToTarget
     self.colArrowIdx = {2, 3, 4, 1}
 
     -- Select the correct row, and necessary rotation, of 4 arrows
@@ -58,6 +58,7 @@ function ClubGArrow:update(dt)
     -- if so, draw the arrow with the extra progress bar
     if self.y < self.nextColY and self.curColIdx < 4 then
         self.curColIdx = self.curColIdx + 1
+        self.nextColY = self.nextColY - self.verticalQuadHeightToTarget
     end
 end
 
@@ -65,7 +66,7 @@ function ClubGArrow:render()
     if self.inPlay then
         love.graphics.filterDrawQ(
             gClubGTextures['arrows'],
-            gClubGFrames['arrows'][4*(self.rowIdx - 1) + (self.colArrowIdx[self.curColIdx] - 1)],
+            gClubGFrames['arrows'][4*(self.rowIdx - 1) + (self.colArrowIdx[self.curColIdx])],
             self:getX(), self:getY(), self.rad,
             self.sx, self.sy, self.ox, self.oy)
     end

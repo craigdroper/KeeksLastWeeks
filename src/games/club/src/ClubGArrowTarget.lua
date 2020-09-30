@@ -19,8 +19,8 @@ function ClubGArrowTarget:init(x, y, dir)
 
     -- Particle system to be triggered when an arrow is hit on or
     -- close enough to the targe
-    self.psystem = love.graphics.newParticleSystem(gBGTextures['particle'], 32)
-    self.psystem:setParticleLifetime(0.25, 0.5)
+    self.psystem = love.graphics.newParticleSystem(gBGTextures['particle'], 64)
+    self.psystem:setParticleLifetime(0.9, 1.0)
     self.psystem:setLinearAcceleration(-15, 15, -15, 15)
     self.psystem:setAreaSpread('normal', 10, 10)
     -- Particle system for 3 levels of target, perfect will be gold,
@@ -32,9 +32,9 @@ function ClubGArrowTarget:init(x, y, dir)
     }
 
     self.absDist = {
-        ['perfect'] = 50,
-        ['great'] = 100,
-        ['good'] = 150,
+        ['perfect'] = 5,
+        ['great'] = 10,
+        ['good'] = 15,
     }
     self.maxHitDist = self.absDist['good']
 
@@ -89,8 +89,8 @@ function ClubGArrowTarget:hit(arrow)
     local grade = self:calcGrade(arrow)
     rgbDict = self.palette[grade]
     self.psystem:setColors(
-        rgbDict.r, rgbDict.g, rgbDict.b, 55,
-        rgbDict.r, rgbDict.g, rgbDict.b, 0)
+        rgbDict.r, rgbDict.g, rgbDict.b, 128,
+        rgbDict.r, rgbDict.g, rgbDict.b, 32)
     self.psystem:emit(32)
     gClubSounds['hit']:play()
 end

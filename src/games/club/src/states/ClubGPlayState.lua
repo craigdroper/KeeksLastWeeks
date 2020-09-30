@@ -14,7 +14,7 @@ function ClubGPlayState:init(params)
     self.genArrowsTime = self.songTime - self.timeToClearArrows
 
     self.arrows = {}
-    self.arrowFreq = 2
+    self.arrowFreq = 0.5
     self.arrowTimer = 0
     self.arrowDirs = {'left', 'down', 'up', 'right'}
 
@@ -106,8 +106,7 @@ function ClubGPlayState:update(dt)
     self.arrowTimer = self.arrowTimer + dt
     if self.arrowTimer > self.arrowFreq and self.levelPlayTime < self.genArrowsTime then
         table.insert(self.arrows, ClubGArrow(
-            -- DEBUG XXX self.targets[self.arrowDirs[math.random(#self.arrowDirs)]], self.level))
-            self.targets['left'], self.level))
+            self.targets[self.arrowDirs[math.random(#self.arrowDirs)]], self.level))
         self.arrowTimer = 0
     end
 
@@ -120,14 +119,18 @@ function ClubGPlayState:update(dt)
 end
 
 function ClubGPlayState:getClosestArrow(target)
+    -- Prioritize the arrow with the lowest Y (furthest up) in the lane as
+    -- the candidate that is potentially the closest
+    -- This treats the line of arrows more like a stack, giving the user a
+    -- "need to catch up" feeling if an arrow goes by the target
     local arrowCand = nil
-    local distCand = 1e13
+    local bestY = 1e10
     for _, arrow in pairs(self.arrows) do
         if arrow.inPlay and arrow.dir == target.dir then
-            local absDist = math.abs(target:getY() - arrow:getY())
-            if absDist < distCand then
+            local candY = arrow:getY()
+            if candY < bestY then 
                 arrowCand = arrow
-                distCand = absDist
+                bestY = candY
             end
         end
     end

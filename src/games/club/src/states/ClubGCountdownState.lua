@@ -13,7 +13,7 @@ function ClubGCountdownState:init(params)
     self.score = params.score
     self.level = params.level
     self.song = gClubGSongs[math.random(#gClubGSongs)]
-    self.song:play()
+    -- DEBUGXXX self.song:play()
 end
 
 --[[

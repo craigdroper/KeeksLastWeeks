@@ -5,6 +5,7 @@ function ClubGGameOverState:init(params)
     self.background = params.background
     self.score = params.score
     self.targets = params.targets
+    self.health = params.health
 end
 
 function ClubGGameOverState:update(dt)

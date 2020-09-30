@@ -32,13 +32,13 @@ function ClubGArrowTarget:init(x, y, dir)
     }
 
     self.absDist = {
-        ['perfect'] = 3,
-        ['great'] = 6,
-        ['good'] = 9,
+        ['perfect'] = 50,
+        ['great'] = 100,
+        ['good'] = 150,
     }
     self.maxHitDist = self.absDist['good']
 
-    self.score = {
+    self.hitScores = {
         ['perfect'] = 10,
         ['great'] = 5,
         ['good'] = 2,
@@ -68,6 +68,11 @@ function ClubGArrowTarget:checkIsHit(arrow)
     if arrow == nil then
         return false
     end
+    print('TargetY='..self:getY()..
+        ', TargetDir='..self.dir..
+        ', ArrowY='..arrow:getY()..
+        ', ArrowDir='..arrow.dir..
+        ', MaxHitDist='..self.maxHitDist)
     return math.abs(self:getY() - arrow:getY()) < self.maxHitDist
 end
 
@@ -82,7 +87,7 @@ function ClubGArrowTarget:calcGrade(arrow)
 end
 
 function ClubGArrowTarget:calcScore(arrow)
-    return self.scores[self:calcGrade(arrow)]
+    return self.hitScores[self:calcGrade(arrow)]
 end
 
 function ClubGArrowTarget:hit(arrow)

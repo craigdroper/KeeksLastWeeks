@@ -23,7 +23,7 @@ function ClubGArrow:init(arrowTarget, level)
     -- The arrows progressively increase the bars available as they get
     -- closer to the arrow target
     self.curColIdx = 1
-    self.verticalQuadHeightToTarget = (VIRTUAL_HEIGHT - arrowTarget.y)/3
+    self.verticalQuadHeightToTarget = (VIRTUAL_HEIGHT - arrowTarget:getY())/3
     self.nextColY = VIRTUAL_HEIGHT - self.verticalQuadHeightToTarget
     self.colArrowIdx = {2, 3, 4, 1}
 

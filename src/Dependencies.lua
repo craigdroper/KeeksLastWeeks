@@ -23,10 +23,12 @@ require 'src/states/game/FadeInState'
 require 'src/states/game/FadeOutState'
 require 'src/states/game/DialogueState'
 require 'src/states/game/UpdatePlayerStatsState'
+require 'src/states/game/UserInputState'
 require 'src/gui/Menu'
 require 'src/gui/Panel'
 require 'src/gui/Selection'
 require 'src/gui/Textbox'
+require 'src/gui/Inputbox'
 
 -- Drug filters
 require 'src/filters/NoFilter'
@@ -84,6 +86,17 @@ require 'src/world/casino/Casino'
 require 'src/world/casino/states/CasWEnterState'
 require 'src/world/casino/states/CasWStationaryState'
 require 'src/world/casino/states/CasWExitState'
+
+-- Casino game requirements
+require 'src/games/casino/src/CasGBackground'
+require 'src/games/casino/src/CasGCard'
+require 'src/games/casino/src/CasGDeck'
+require 'src/games/casino/src/CasGHand'
+require 'src/games/casino/src/CasGDealer'
+require 'src/games/casino/src/CasGTablePlayer'
+require 'src/games/casino/src/states/CasGStartState'
+require 'src/games/casino/src/states/CasGShuffleState'
+require 'src/games/casino/src/states/CasGBetState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -301,4 +314,16 @@ gClubSounds = {
 
 gClubGSongs = {
     love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
+}
+
+gCasGTextures = {
+    ['cards'] = love.graphics.newImage('src/games/casino/graphics/cards_tileset.jpg'),
+}
+
+gCasGFrames = {
+    ['cards'] = GenerateQuads(gCasGTextures['cards'], 48, 64),
+}
+
+gCasGImages = {
+    ['card-back'] = love.graphics.newImage('src/games/casino/graphics/card_back.png'),
 }

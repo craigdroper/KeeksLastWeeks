@@ -9,7 +9,7 @@ function UpdatePlayerStatsState:init(params)
     for key, _ in pairs(self.stats) do
         table.insert(self.statsKeys, key)
     end
-    self.callback = params.callback
+    self.callback = params.callback and params.callback or function() end
 
     self.font = gFonts['huge']
     self.fontRGB = {}

@@ -46,7 +46,8 @@ function love.load()
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())
-            gStateStack:push(CasWEnterState())
+            -- gStateStack:push(CasWEnterState())
+            gStateStack:push(CasGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
@@ -54,6 +55,7 @@ function love.load()
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
+    love.keyboard.textInput = ''
 end
 
 function love.resize(w, h)
@@ -62,6 +64,36 @@ end
 
 function love.keypressed(key)
     love.keyboard.keysPressed[key] = true
+    -- Additional logic to manage the textinput string
+    if key == 'backspace' then
+        --[[
+            From stack overflow, and may be overkill for the game
+        local byteoffset = utf8.offset(love.keyboard.textInput, -1)
+        if byteoffset then
+            -- remove the last UTF-8 character.
+            -- string.sub operates on bytes rather than
+            -- UTF-8 characters, so we couldn't do string.sub(text, 1, -2).
+            love.keyboard.textInput = string.sub(
+                love.keyboard.textInput, 1, byteoffset - 1)
+        end
+        --]]
+        if love.keyboard.textInput:len() then
+            love.keyboard.textInput = string.sub(
+                love.keyboard.textInput, 1, love.keyboard.textInput:len() - 1)
+        end
+    end
+end
+
+function love.textinput(t)
+    love.keyboard.textInput = love.keyboard.textInput .. t
+end
+
+function love.keyboard.getCurrentText()
+    return love.keyboard.textInput
+end
+
+function love.keyboard.clearCurrentText()
+    love.keyboard.textInput = ''
 end
 
 --[[
@@ -93,6 +125,7 @@ function love.update(dt)
     gGlobalObjs['filter']:update(dt)
 
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.draw()

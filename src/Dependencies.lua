@@ -79,6 +79,10 @@ require 'src/games/club/src/states/ClubGPlayState'
 require 'src/games/club/src/states/ClubGVictoryState'
 require 'src/games/club/src/states/ClubGGameOverState'
 
+-- Casino world requirements
+require 'src/world/casino/Casino'
+require 'src/world/casino/states/CasWEnterState'
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -256,6 +260,10 @@ gClubWImages = {
 gCasWImages = {
     ['casino-background'] = love.graphics.newImage('graphics/sets/rivers_interior.jpg'),
     ['table-background'] = love.graphics.newImage('graphics/sets/blackjack_table.png'),
+}
+
+gCasSounds = {
+    ['background'] = love.audio.newSource('sounds/casino_whitenoise.mp3'),
 }
 
 

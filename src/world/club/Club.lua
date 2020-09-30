@@ -1,11 +1,7 @@
 
-local HORZ_CHAIR_TABLE_OFFSET = 5
-
 Club = Class{}
 
 function Club:init()
-    self.name = 'club'
-
     -- Club background image info
     self.bkgrd = gClubWImages['club-background']
     self.bkgrdX = 0

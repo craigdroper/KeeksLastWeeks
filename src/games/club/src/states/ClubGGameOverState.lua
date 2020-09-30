@@ -14,8 +14,8 @@ function ClubGGameOverState:update(dt)
         -- 1) ClubWStationary
         -- 2) ClubGGameOver
         -- Set the ClubWStationary game stats
-        barWStatState = gStateStack:getNPrevState(1)
-        barWStatState.gameStats = {score = self.score}
+        clubWStatState = gStateStack:getNPrevState(1)
+        clubWStatState.gameStats = {score = self.score}
         -- pop ClubGGameOverState off to
         -- return to the stationary bar state
         gStateStack:pop()

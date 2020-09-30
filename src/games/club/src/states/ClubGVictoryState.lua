@@ -7,6 +7,7 @@ function ClubGVictoryState:init(params)
     self.score = params.score
     self.targets = params.targets
     self.health = params.health
+    self.song = params.song
 end
 
 function ClubGVictoryState:update(dt)
@@ -14,6 +15,7 @@ function ClubGVictoryState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         -- Pop off the current victory state, and push
         -- a Serve state with a newly created level
+        self.song:stop()
         gStateStack:pop()
         gStateStack:push(ClubGCountdownState({
             background = self.background,

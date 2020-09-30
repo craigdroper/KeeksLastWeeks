@@ -10,7 +10,11 @@ function ClubGPlayState:init(params)
     self.song = params.song
     self.songBPM = params.songBPM
     self.songTime = self.song:getDuration('seconds')
-    self.timeToClearArrows = 5
+    -- DEVXXXX
+    self.songTime = 30
+    local tmpArrow = ClubGArrow(self.targets['left'], self.level)
+    self.timeToClearArrows =
+        (VIRTUAL_HEIGHT - self.targets['left']:getY()) / (-tmpArrow.dy) + 1
     self.levelPlayTime = 0
     self.genArrowsTime = self.songTime - self.timeToClearArrows
 
@@ -27,7 +31,7 @@ function ClubGPlayState:init(params)
 end
 
 function ClubGPlayState:setEndOfLevelTimer()
-    Timer.after(self.songTime - self.timeToClearArrows,
+    Timer.after(self.songTime,
         function()
     -- Pop the play state off and move to the level's victory state
     gStateStack:pop()
@@ -37,6 +41,7 @@ function ClubGPlayState:setEndOfLevelTimer()
         score = self.score,
         targets = self.targets,
         health = self.health,
+        song = self.song,
         }))
         end)
 end
@@ -109,7 +114,8 @@ function ClubGPlayState:update(dt)
     -- Check if its time to generate a new random arrow
     self.levelPlayTime = self.levelPlayTime + dt
     self.arrowTimer = self.arrowTimer + dt
-    if self.arrowTimer > self.arrowFreq and self.levelPlayTime < self.genArrowsTime then
+    if self.arrowTimer > self.arrowFreq and
+       self.levelPlayTime < self.genArrowsTime then
         table.insert(self.arrows, ClubGArrow(
             self.targets[self.arrowDirs[math.random(#self.arrowDirs)]], self.level))
         self.arrowTimer = 0

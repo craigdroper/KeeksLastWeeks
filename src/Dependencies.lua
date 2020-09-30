@@ -253,6 +253,11 @@ gClubWImages = {
     ['club-background'] = love.graphics.newImage('graphics/sets/mid_interior.jpg'),
 }
 
+gCasWImages = {
+    ['casino-background'] = love.graphics.newImage('graphics/sets/rivers_interior.jpg'),
+    ['table-background'] = love.graphics.newImage('graphics/sets/blackjack_table.png'),
+}
+
 
 gCokeSounds = {
     ['jump'] = love.audio.newSource('src/games/coke/sounds/jump.wav', 'static'),
@@ -285,9 +290,5 @@ gClubSounds = {
 }
 
 gClubGSongs = {
-    {
-        song = love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
-        bpm = 126,
-    },
-
+    love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
 }

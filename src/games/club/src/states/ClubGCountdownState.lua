@@ -12,9 +12,18 @@ function ClubGCountdownState:init(params)
     self.health = 100
     self.score = params.score
     self.level = params.level
+    --[[
+        Leaving this code in place so gClubGSongs can be updated
+        to include both the song's audio source, and the bpm
     local songDef = gClubGSongs[math.random(#gClubGSongs)]
     self.song = songDef.song
     self.songBPM = songDef.bpm
+    --]]
+    self.song = gClubGSongs[math.random(#gClubGSongs)]
+    -- For now just approximate this, if we really get to the point where we
+    -- are micro-optimizing for +- 2 bpm per song, it can be implemented
+    -- later
+    self.songBPM = 126
     self.song:play()
 end
 

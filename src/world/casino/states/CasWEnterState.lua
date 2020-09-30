@@ -15,9 +15,9 @@ function CasWEnterState:enter()
     self.player.walkSpeed = 60
     -- Explicitly set the player's X & Y coordinates to be centered vertically
     -- and just out of frame on the right
-    local midY = (VIRTUAL_HEIGHT - self.player:getHeight()) / 2 + 30
+    local doorY = (VIRTUAL_HEIGHT - self.player:getHeight()) / 2 + 30
     self.player.x = VIRTUAL_WIDTH + 1
-    self.player.y = midY
+    self.player.y = doorY
     -- Setup tween entrance
     self:tweenEnter()
     -- Begin playing the casino background music
@@ -70,8 +70,8 @@ function CasWEnterState:tweenEnter()
     }):finish(
         function()
     -- Pop the casino Enter State off, and Push Casino stationary state
-    -- gStateStack:pop()
-    -- TODO gStateStack:push(CasWStationaryState({club = self.casino}))
+    gStateStack:pop()
+    gStateStack:push(CasWStationaryState({casino = self.casino}))
         end)
         end)
         end)

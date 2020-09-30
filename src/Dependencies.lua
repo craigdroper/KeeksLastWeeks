@@ -82,6 +82,8 @@ require 'src/games/club/src/states/ClubGGameOverState'
 -- Casino world requirements
 require 'src/world/casino/Casino'
 require 'src/world/casino/states/CasWEnterState'
+require 'src/world/casino/states/CasWStationaryState'
+require 'src/world/casino/states/CasWExitState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'

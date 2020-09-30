@@ -44,13 +44,8 @@ end
 
 function ClubGPlayState:checkForHitTarget(dir)
     local target = self.targets[dir]
-    print('TargetDirection='..target.dir)
     local closestArrow = self:getClosestArrow(target)
-    if closestArrow then
-        print('Closest Arrow Y='..closestArrow:getY())
-    end
     if target:checkIsHit(closestArrow) then
-        print('Arrow Score='..target:calcScore(closestArrow))
         self.score = self.score + target:calcScore(closestArrow)
         target:hit(closestArrow)
         closestArrow.inPlay = false
@@ -74,16 +69,12 @@ function ClubGPlayState:update(dt)
     -- Check if any keys have been pressed, and if so, check if it was hit when
     -- an arrow was close to the target.
     if love.keyboard.wasPressed('left') then
-        print('Left Pressed')
         self:checkForHitTarget('left')
     elseif love.keyboard.wasPressed('up') then
-        print('Up Pressed')
         self:checkForHitTarget('up')
     elseif love.keyboard.wasPressed('down') then
-        print('Down Pressed')
         self:checkForHitTarget('down')
     elseif love.keyboard.wasPressed('right') then
-        print('Right Pressed')
         self:checkForHitTarget('right')
     end
 
@@ -126,7 +117,6 @@ function ClubGPlayState:update(dt)
             table.remove(self.arrows, i)
         end
     end
-    print('Num arrows = '..#self.arrows)
 end
 
 function ClubGPlayState:getClosestArrow(target)
@@ -136,17 +126,10 @@ function ClubGPlayState:getClosestArrow(target)
         if arrow.inPlay and arrow.dir == target.dir then
             local absDist = math.abs(target:getY() - arrow:getY())
             if absDist < distCand then
-                print('Candidate found, TargetY='..target:getY()..
-                    ', ArrowY='..arrow:getY()..
-                    ', AbsDist='..absDist..
-                    ', DistCand='..distCand)
                 arrowCand = arrow
                 distCand = absDist
             end
         end
-    end
-    if arrowCand then
-        print('Final arrow candidate y='..arrowCand:getY())
     end
     return arrowCand
 end

@@ -68,11 +68,6 @@ function ClubGArrowTarget:checkIsHit(arrow)
     if arrow == nil then
         return false
     end
-    print('TargetY='..self:getY()..
-        ', TargetDir='..self.dir..
-        ', ArrowY='..arrow:getY()..
-        ', ArrowDir='..arrow.dir..
-        ', MaxHitDist='..self.maxHitDist)
     return math.abs(self:getY() - arrow:getY()) < self.maxHitDist
 end
 

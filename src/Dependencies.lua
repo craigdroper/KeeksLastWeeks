@@ -64,6 +64,7 @@ require 'src/games/bar/src/states/BarGStartState'
 -- Club World requirements
 require 'src/world/club/Club'
 require 'src/world/club/states/ClubWEnterState'
+require 'src/world/club/states/ClubWEnterFloorState'
 require 'src/world/club/states/ClubWStationaryState'
 require 'src/world/club/states/ClubWExitState'
 

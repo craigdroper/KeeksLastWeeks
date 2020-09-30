@@ -7,7 +7,7 @@ function AptWFunMenuState:init(params)
     self.aptMenu = Menu {
         items = {
             {
-                text = 'Hit the Bar',
+                text = 'Drink at the Bar',
                 onSelect = function()
                     -- Pop AptWFunMenuState
                     gStateStack:pop()
@@ -17,7 +17,22 @@ function AptWFunMenuState:init(params)
                     gStateStack:push(AptWExitState(
                         {
                             apartment = self.apartment,
-                            nextGameState = BarWEnterState({bar = Bar()})
+                            nextGameState = BarWEnterState()
+                        }))
+                end
+            },
+            {
+                text = 'Hit the Club',
+                onSelect = function()
+                    -- Pop AptWFunMenuState
+                    gStateStack:pop()
+                    -- Pop AptStationaryState
+                    gStateStack:pop()
+                    -- Transition to leave state
+                    gStateStack:push(AptWExitState(
+                        {
+                            apartment = self.apartment,
+                            nextGameState = ClubWEnterState()
                         }))
                 end
             },

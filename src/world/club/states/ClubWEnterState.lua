@@ -28,11 +28,8 @@ function ClubWEnterState:enter()
 end
 
 function ClubWEnterState:tweenEnter()
-    -- Since we're not building the background from a tilesheet, we're just
-    -- going to approximate and hard code these values
     local APRX_BOOTH_OFFSET = 30
-    local boothY = VIRTUAL_HEIGHT / 2 + APRX_BOOTH_OFFSET
-    local danceY = (VIRTUAL_HEIGHT - boothY) / 2 + boothY
+    local insideY = VIRTUAL_HEIGHT - self.player:getHeight()
 
     gSounds['door']:play()
     local doorDuration = gSounds['door']:getDuration()
@@ -42,43 +39,23 @@ function ClubWEnterState:tweenEnter()
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
-    -- Come in through the door, and walk to halfway through the club and
-    -- do a little "dance move" which just toggles between idle right
-    -- and idle left moves quickly
-    local walkPixels = self.player.y - danceY
+    -- Come just inside and subtract the door fee
+    local walkPixels = self.player.y - insideY
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = danceY}
-    }):finish(
-        function()
-    -- Tween together a couple little dance moves
-    self.player:changeAnimation('idle-up')
-    Timer.every(0.5,
-        function()
-    if self.playerDanceDir == 'right' then
-        self.player:changeAnimation('idle-left')
-        self.playerDanceDir = 'left'
-    else
-        self.player:changeAnimation('idle-right')
-        self.playerDanceDir = 'right'
-    end
-        end):limit(8)
-    :finish(
-        function()
-    -- Walk the rest of the way to the DJ booth
-    walkPixels = self.player.y - boothY
-    self.player:changeAnimation('walk-up')
-    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = boothY}
+        [self.player] = {y = insideY}
     }):finish(
         function()
     gSounds['footsteps']:stop()
-    self.player:changeAnimation('idle-up')
-    -- Pop the club Enter State off, and push the stationary state
+    gStateStack:push(UpdatePlayerStatsState({player = self.player,
+        -- Club mini game will reward its own score that can be dropped right in here
+        stats = {money = -100}, callback =
+        function()
+    -- Pop the club Enter State off, and push the player stats
+    -- update, and followed by the rest of the enter state
     gStateStack:pop()
-    gStateStack:push(ClubWStationaryState({club = self.club}))
-        end)
-        end)
+    gStateStack:push(ClubWEnterFloorState({club = self.club}))
+        end}))
         end)
         end)
 end

@@ -7,7 +7,7 @@ function AlleyWFunMenuState:init(params)
     self.funMenu = Menu {
         items = {
             {
-                text = 'Hit the Bar',
+                text = 'Drink at the Bar',
                 onSelect = function()
                     -- Pop AlleyWFunMenuState
                     gStateStack:pop()
@@ -17,7 +17,22 @@ function AlleyWFunMenuState:init(params)
                     gStateStack:push(AlleyWExitState(
                         {
                             alley = self.alley,
-                            nextState = BarWEnterState({bar = Bar()})
+                            nextState = BarWEnterState()
+                        }))
+                end
+            },
+            {
+                text = 'Hit the Club',
+                onSelect = function()
+                    -- Pop AlleyWFunMenuState
+                    gStateStack:pop()
+                    -- Pop AlleyWStationaryState
+                    gStateStack:pop()
+                    -- Transition to leave state
+                    gStateStack:push(AlleyWExitState(
+                        {
+                            alley = self.alley,
+                            nextState = ClubWEnterState()
                         }))
                 end
             },

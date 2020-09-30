@@ -8,14 +8,19 @@ function ClubGPlayState:init(params)
     self.score = params.score
     self.level = params.level
     self.song = params.song
+    self.songBPM = params.songBPM
     self.songTime = self.song:getDuration('seconds')
     self.timeToClearArrows = 5
     self.levelPlayTime = 0
     self.genArrowsTime = self.songTime - self.timeToClearArrows
 
     self.arrows = {}
-    self.arrowFreq = 0.5
-    self.arrowTimer = 0
+    -- Get a frequency that's close to the half beats per second
+    self.arrowFreq = self.songBPM / 60 / 4
+    -- Find how long to wait before the first arrow based on the bpm
+    -- and the 3 second countdown
+    self.arrowOffset = 3. % self.arrowFreq + self.arrowFreq
+    self.arrowTimer = self.arrowFreq - self.arrowOffset
     self.arrowDirs = {'left', 'down', 'up', 'right'}
 
     self:setEndOfLevelTimer()
@@ -120,17 +125,19 @@ end
 
 function ClubGPlayState:getClosestArrow(target)
     -- Prioritize the arrow with the lowest Y (furthest up) in the lane as
-    -- the candidate that is potentially the closest
+    -- the candidate that is potentially the closest, but it has to
+    -- be within the range of the max "hitable" distance
     -- This treats the line of arrows more like a stack, giving the user a
     -- "need to catch up" feeling if an arrow goes by the target
     local arrowCand = nil
     local bestY = 1e10
     for _, arrow in pairs(self.arrows) do
-        if arrow.inPlay and arrow.dir == target.dir then
-            local candY = arrow:getY()
-            if candY < bestY then 
+        if arrow.inPlay and
+           arrow.dir == target.dir and
+           math.abs(arrow:getY() - target:getY()) < target.maxHitDist then
+            if arrow:getY() < bestY then
                 arrowCand = arrow
-                bestY = candY
+                bestY = arrow:getY()
             end
         end
     end

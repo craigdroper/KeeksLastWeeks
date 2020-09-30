@@ -17,8 +17,9 @@ function ClubGArrow:init(arrowTarget, level)
 
     -- Speed that this will travel up towards target
     self.dyBase = -50
+    self.dyLevel = -20
     -- Arrows get linearly faster with each level
-    self.dy = level * self.dyBase
+    self.dy = self.dyBase + level * self.dyLevel
 
     -- The arrows progressively increase the bars available as they get
     -- closer to the arrow target

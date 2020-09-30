@@ -284,5 +284,9 @@ gClubSounds = {
 }
 
 gClubGSongs = {
-    love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
+    {
+        song = love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
+        bpm = 126,
+    },
+
 }

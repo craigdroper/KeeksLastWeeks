@@ -2,7 +2,7 @@
 ClubGCountdownState = Class{__includes = BaseState}
 
 -- takes 1 second to count down each time
-COUNTDOWN_TIME = 0.75
+COUNTDOWN_TIME = 1.0
 
 function ClubGCountdownState:init(params)
     self.count = 3
@@ -12,8 +12,10 @@ function ClubGCountdownState:init(params)
     self.health = 100
     self.score = params.score
     self.level = params.level
-    self.song = gClubGSongs[math.random(#gClubGSongs)]
-    -- DEBUGXXX self.song:play()
+    local songDef = gClubGSongs[math.random(#gClubGSongs)]
+    self.song = songDef.song
+    self.songBPM = songDef.bpm
+    self.song:play()
 end
 
 --[[
@@ -40,6 +42,7 @@ function ClubGCountdownState:update(dt)
                 health = self.health,
                 level = self.level,
                 song = self.song,
+                songBPM = self.songBPM,
                 }))
         end
     end

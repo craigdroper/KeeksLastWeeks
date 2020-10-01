@@ -4,11 +4,7 @@ CasGDispResState = Class{__includes = BaseState}
 function CasGDispResState:init(params)
     self.result = params.result
     self.font = gFonts['huge']
-    if self.result == 'WIN' then
-        self.rgb = {r=0, g=255, b=0}
-    else
-        self.rgb = {r=255, g=0, b=0}
-    end
+    self.rgb = params.rgb
     local textW = self.font:getWidth(self.result)
     local textH = self.font:getHeight()
     self.x = (VIRTUAL_WIDTH - textW)/2

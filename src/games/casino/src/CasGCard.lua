@@ -48,7 +48,7 @@ function CasGCard:init(valIdx, suitIdx, x, y)
     self.speed = 200
 
     self.val = CARD_VALS[self.valIdx]
-    self.hasSoftVal = (self.valIdx == 1)
+    self.isAce = (self.valIdx == 1)
     self.isFaceUp = false
     self.flipCardY = nil
 

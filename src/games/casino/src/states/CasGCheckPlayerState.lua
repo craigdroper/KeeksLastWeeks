@@ -22,7 +22,9 @@ function CasGCheckPlayerState:enter()
                         }))
         -- Push a DispResult State
         gStateStack:push(CasGDispResState({
-                    result = 'BUST'}))
+                    result = 'BUST',
+                    rgb = {r=255, g=0, b=0},
+                }))
         else
             -- Pop Check Player State
             gStateStack:pop()

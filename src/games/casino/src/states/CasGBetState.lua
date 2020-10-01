@@ -38,6 +38,7 @@ function CasGBetState:update(dt)
             return
         end
         self.tablePlayer.curBet = bet
+        self.tablePlayer.insureBet = 0
         gStateStack:push(UpdatePlayerStatsState({
             player = self.tablePlayer.player,
             stats = {money = -bet},
@@ -56,7 +57,7 @@ function CasGBetState:update(dt)
                         [3] = {['dest'] = self.dealer, ['faceUp'] = true},
                         [4] = {['dest'] = self.dealer, ['faceUp'] = false},
                     },
-                    nextState = CasGActMenuState({
+                    nextState = CasGCheckDealerBJState({
                                     background = self.background,
                                     dealer = self.dealer,
                                     tablePlayer = self.tablePlayer,

@@ -40,6 +40,7 @@ function CasGCheckDealerState:enter()
                         }))
         gStateStack:push(CasGDispResState({
                             result = 'WIN',
+                            rgb = {r=0, g=255, b=0},
                         }))
         else
             -- Pop Check Dealer State

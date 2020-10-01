@@ -34,10 +34,12 @@ function CasGCheckWinnerState:enter()
                         }))
         gStateStack:push(CasGDispResState({
                             result = 'WIN',
+                            rgb = {r=0, g=255, b=0},
                         }))
     else
         gStateStack:push(CasGDispResState({
                             result = 'LOSE',
+                            rgb = {r=255, g=0, b=0},
                         }))
     end
 end

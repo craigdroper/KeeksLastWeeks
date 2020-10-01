@@ -19,7 +19,6 @@ end
 function CasGCheckPlayerState:enter()
     local playVal = self.tablePlayer:getValue()
     local playSoftVal = self.tablePlayer:getSoftValue()
-    print('IsBust='..(self:isBust(playVal, playSoftVal) and 'true' or 'false'))
     if self:isBust(playVal, playSoftVal) then
         gStateStack:push(CasGDispResState({
                     result = 'BUST',

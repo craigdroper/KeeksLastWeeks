@@ -6,9 +6,7 @@ function CasGActMenuState:init(params)
     self.dealer = params.dealer
     self.tablePlayer = params.tablePlayer
     self.deck = params.deck
-end
 
-function CasGActMenuState:enter()
     self.actMenu = Menu {
         items = {
             {

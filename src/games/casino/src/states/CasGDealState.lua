@@ -20,6 +20,8 @@ function CasGDealState:checkDealCard()
     if self.curCardDefIdx > #self.dealCardDefs then
         -- Pop off DealState and Move to the next State
         gStateStack:pop()
+        print('Pushing what I think is act menu state, I think numstates should' ..
+            'be 0 after that pop....numStates='..#gStateStack.states)
         gStateStack:push(self.nextState)
         return
     end

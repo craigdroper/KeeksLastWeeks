@@ -55,7 +55,7 @@ function UpdatePlayerStatsState:init(params)
     self.psystem:setAreaSpread('normal', 10, 10)
 
 
-    self:checkStats()
+    self.isStatsChecked = false
 end
 
 function UpdatePlayerStatsState:checkStats()
@@ -207,21 +207,27 @@ function UpdatePlayerStatsState:tweenStatUpd(statUpdFunc)
 end
 
 function UpdatePlayerStatsState:update(dt)
+    if not self.isStatsChecked then
+        self:checkStats()
+        self.isStatsChecked = true
+    end
     self.psystem:update(dt)
 end
 
 function UpdatePlayerStatsState:render()
-    love.graphics.setFont(self.font)
+    if self.isStatsChecked then
+        love.graphics.setFont(self.font)
 
-    love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.textOpacity)
-    love.graphics.print(self.text, self.textX, self.textY, 0, self.textSX, self.textSY)
+        love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.textOpacity)
+        love.graphics.print(self.text, self.textX, self.textY, 0, self.textSX, self.textSY)
 
-    -- Multiplier will always be black
-    love.graphics.setColor(0, 0, 0, self.multOpacity)
-    love.graphics.print(self.mult, self.multX, self.multY, 0, self.multSX, self.multSY)
+        -- Multiplier will always be black
+        love.graphics.setColor(0, 0, 0, self.multOpacity)
+        love.graphics.print(self.mult, self.multX, self.multY, 0, self.multSX, self.multSY)
 
-    love.graphics.setColor(255, 255, 255, 255)
+        love.graphics.setColor(255, 255, 255, 255)
 
-    -- Render psystem after/over any of the text
-    love.graphics.filterDrawD(self.psystem, self.psysX, self.psysY)
+        -- Render psystem after/over any of the text
+        love.graphics.filterDrawD(self.psystem, self.psysX, self.psysY)
+    end
 end

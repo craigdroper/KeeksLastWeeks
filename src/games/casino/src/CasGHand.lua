@@ -39,22 +39,28 @@ end
 
 function CasGHand:getValue()
     local val = 0
-    for _, card in self.cards do
+    for _, card in pairs(self.cards) do
         val = val + card:getValue()
     end
+    print('Value='..val)
     return val
 end
 
 function CasGHand:getSoftValue()
     local val = 0
     local hasSoftVal = false
-    for _, card in self.cards do
+    for _, card in pairs(self.cards) do
         if card:getSoftValue() then
             hasSoftVal = true
             val = val + card:getSoftValue()
         else
             val = val + card:getValue()
         end
+    end
+    if hasSoftVal then
+        print('SoftValue='..val)
+    else
+        print('NoSoftValue')
     end
     return hasSoftVal and val or nil
 end

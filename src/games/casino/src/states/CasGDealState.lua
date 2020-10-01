@@ -8,6 +8,7 @@ function CasGDealState:init(params)
     self.deck = params.deck
     self.dealCardDefs = params.dealCardDefs
     self.curCardDefIdx = 1
+    self.nextState = params.nextState
 
     -- Deal specific member parameters
     self.dealtCardSpeed = 200
@@ -17,14 +18,9 @@ end
 
 function CasGDealState:checkDealCard()
     if self.curCardDefIdx > #self.dealCardDefs then
-        -- Pop off DealState and Move to the Player Action State
+        -- Pop off DealState and Move to the next State
         gStateStack:pop()
-        gStateStack:push(CasGPlayerActState({
-            background = self.background,
-            dealer = self.dealer,
-            tablePlayer = self.tablePlayer,
-            deck = self.deck,
-        }))
+        gStateStack:push(self.nextState)
         return
     end
     local cardDef = self.dealCardDefs[self.curCardDefIdx]

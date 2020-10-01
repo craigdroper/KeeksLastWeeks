@@ -12,9 +12,5 @@ function CasGTablePlayer:getValue()
 end
 
 function CasGTablePlayer:getSoftValue()
-    return self.hand:getValue()
-end
-
-function CasGTablePlayer:getNextAction()
-    -- Some user input
+    return self.hand:getSoftValue()
 end

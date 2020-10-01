@@ -36,8 +36,6 @@ function GenerateQuads(atlas, tilewidth, tileheight, padding, lastTilePadded)
     local sheetCounter = 1
     local spritesheet = {}
 
-    print('SheetWidth='..sheetWidth..', SheetHeight='..sheetHeight)
-
     for y = 0, sheetHeight - 1 do
         for x = 0, sheetWidth - 1 do
             spritesheet[sheetCounter] =

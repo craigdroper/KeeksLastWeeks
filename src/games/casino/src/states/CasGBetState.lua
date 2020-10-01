@@ -45,7 +45,13 @@ function CasGBetState:update(dt)
                         [2] = {['dest'] = self.tablePlayer, ['faceUp'] = true},
                         [3] = {['dest'] = self.dealer, ['faceUp'] = true},
                         [4] = {['dest'] = self.dealer, ['faceUp'] = false},
-                    }
+                    },
+                    nextState = CasGActMenuState({
+                                    background = self.background,
+                                    dealer = self.dealer,
+                                    tablePlayer = self.tablePlayer,
+                                    deck = self.deck,
+                                }),
                 }))
             end}))
     end

@@ -98,6 +98,9 @@ require 'src/games/casino/src/states/CasGStartState'
 require 'src/games/casino/src/states/CasGShuffleState'
 require 'src/games/casino/src/states/CasGBetState'
 require 'src/games/casino/src/states/CasGDealState'
+require 'src/games/casino/src/states/CasGActMenuState'
+require 'src/games/casino/src/states/CasGDispResState'
+require 'src/games/casino/src/states/CasGCheckPlayerState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -324,7 +327,6 @@ gCasGTextures = {
 gCasGFrames = {
     ['cards'] = GenerateQuads(gCasGTextures['cards'], 48, 64),
 }
-print('End gCasGFrames')
 
 gCasGImages = {
     ['card-back'] = love.graphics.newImage('src/games/casino/graphics/card_back.png'),

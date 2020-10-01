@@ -2,7 +2,7 @@
 CasGCard = Class{}
 
 local CARD_VALS = {
-    [1] = {1, 11}, -- ACE
+    [1] = {11, 1}, -- ACE
     [2] = {2},
     [3] = {3},
     [4] = {4},
@@ -40,7 +40,7 @@ function CasGCard:init(valIdx, suitIdx, x, y)
     self.flipCardY = nil
 
     self.faceTexture = gCasGTextures['cards']
-    self.faceQuad = gCasGFrames['cards'][valIdx + (#CARD_VALS * (suitIdx - 1))]
+    self.faceQuad = gCasGFrames['cards'][self.valIdx + (#CARD_VALS * (self.suitIdx - 1))]
 
     self.backImg = gCasGImages['card-back']
     self.backImgW, self.backImgH = self.backImg:getDimensions()

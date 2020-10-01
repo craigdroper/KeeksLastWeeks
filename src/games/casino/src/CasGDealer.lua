@@ -10,7 +10,7 @@ function CasGDealer:getValue()
 end
 
 function CasGDealer:getSoftValue()
-    return self.hand:getValue()
+    return self.hand:getSoftValue()
 end
 
 function CasGDealer:getNextAction()

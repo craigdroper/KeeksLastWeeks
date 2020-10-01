@@ -29,10 +29,20 @@ function CasGCard:init(valIdx, suitIdx, x, y)
     self.suitIdx = suitIdx
     self.x = x
     self.y = y
+    self.o = 0
+    self.sx = 1
+    self.sy = 1
     self.destX = nil
     self.destY = nil
     self.width = 48
     self.height = 64
+    self.ox = self.width/2
+    self.oy = self.height/2
+    self.offsetX = self.width/2
+    self.offsetY = self.height/2
+
+    self.sxMult = 1
+    self.syMult = 1
 
     self.val = CARD_VALS[self.valIdx]
     self.hasSoftVal = (self.valIdx == 1)
@@ -41,11 +51,52 @@ function CasGCard:init(valIdx, suitIdx, x, y)
 
     self.faceTexture = gCasGTextures['cards']
     self.faceQuad = gCasGFrames['cards'][self.valIdx + (#CARD_VALS * (self.suitIdx - 1))]
-
     self.backImg = gCasGImages['card-back']
-    self.backImgW, self.backImgH = self.backImg:getDimensions()
-    self.backImgSX = self.width / self.backImgW
-    self.backImgSY = self.height / self.backImgH
+    local testW, testH = self.backImg:getDimensions()
+    if testW ~= self.width or testH ~= self.height then
+        error('Class written under assumption card face and back images will '..
+            'be the same dimensions')
+    end
+end
+
+function CasGCard:getX()
+    return self.x + self.offsetX
+end
+
+function CasGCard:getY()
+    return self.y + self.offsetY
+end
+
+function CasGCard:getSX()
+    return self.sx * self.sxMult
+end
+
+function CasGCard:getSY()
+    return self.sy * self.syMult
+end
+
+function CasGCard:getOffsetX()
+    local curSX = nil
+    if self.isFaceUp then
+        curSX = self.sx * self.sxMult
+    else
+        curSX = self.backImgSX * self.sxMult
+    end
+    return self.width/2/curSX
+end
+
+function CasGCard:getOffsetY()
+    local curSY = nil
+    if self.isFaceUp then
+        curSY = self.sy * self.syMult
+    else
+        curSY = self.backImgSY * self.syMult
+    end
+    return self.height/2/curSY
+end
+
+function CasGCard:getIsFaceUp()
+    return self.isFaceUp
 end
 
 function CasGCard:getValue()
@@ -68,9 +119,13 @@ end
 function CasGCard:render()
     if self.isFaceUp and self.y > self.flipCardY then
         love.graphics.filterDrawQ(
-            self.faceTexture, self.faceQuad, self.x, self.y)
+            self.faceTexture, self.faceQuad, self:getX(), self:getY(),
+            self.o, self:getSX(), self:getSY(),
+            self.ox, self.oy)
     else
         love.graphics.filterDrawD(
-            self.backImg, self.x, self.y, 0, self.backImgSX, self.backImgSY)
+            self.backImg, self:getX(), self:getY(),
+            self.o, self:getSX(), self:getSY(),
+            self.ox, self.oy)
     end
 end

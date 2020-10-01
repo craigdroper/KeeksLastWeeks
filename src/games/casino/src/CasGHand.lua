@@ -27,6 +27,15 @@ function CasGHand:updateNextCardX()
     end
 end
 
+function CasGHand:getFaceDownCard()
+    for _, card in pairs(self.cards) do
+        if not card:getIsFaceUp() then
+            return card
+        end
+    end
+    return nil
+end
+
 function CasGHand:addNewCard(card)
     table.insert(self.cards, card)
     self:updateNextCardX()
@@ -42,7 +51,6 @@ function CasGHand:getValue()
     for _, card in pairs(self.cards) do
         val = val + card:getValue()
     end
-    print('Value='..val)
     return val
 end
 
@@ -56,11 +64,6 @@ function CasGHand:getSoftValue()
         else
             val = val + card:getValue()
         end
-    end
-    if hasSoftVal then
-        print('SoftValue='..val)
-    else
-        print('NoSoftValue')
     end
     return hasSoftVal and val or nil
 end

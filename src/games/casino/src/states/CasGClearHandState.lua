@@ -9,9 +9,10 @@ function CasGClearHandState:init(params)
 
     self.tableCards = #self.dealer.hand.cards + #self.tablePlayer.hand.cards
     self.clearedCards = 0
+    self.isCardsTweened = false
 end
 
-function CasGClearHandState:enter()
+function CasGClearHandState:tweenCards()
     for _, card in pairs(self.dealer.hand.cards) do
         self:tweenClearCard(card)
     end
@@ -32,6 +33,10 @@ function CasGClearHandState:tweenClearCard(card)
 end
 
 function CasGClearHandState:update(dt)
+    if not self.isCardsTweened then
+        self:tweenCards()
+        self.isCardsTweened = true
+    end
     if self.clearedCards == self.tableCards then
         -- Clear the underlying hand objects
         self.dealer.hand:clearCards()

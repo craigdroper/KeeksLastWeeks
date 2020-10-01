@@ -27,15 +27,27 @@ function CasGCheckWinnerState:enter()
         -- Push a UpdatePlayerStats state that will give the player
         -- the bet and the winnings back once it is the top state on
         -- the stack
-        gStateStack:push(UpdatePlayerStatsState({
-                            player = self.tablePlayer.player,
-                            stats = {money = 2*self.tablePlayer.curBet,
-                                     fun = 2*self.tablePlayer.curBet},
-                        }))
-        gStateStack:push(CasGDispResState({
-                            result = 'WIN',
-                            rgb = {r=0, g=255, b=0},
-                        }))
+        if self.tablePlayer.hand:isBlackJack() then
+            gStateStack:push(UpdatePlayerStatsState({
+                                player = self.tablePlayer.player,
+                                stats = {money = math.floor(2.5*self.tablePlayer.curBet),
+                                         fun = 5*self.tablePlayer.curBet},
+                            }))
+            gStateStack:push(CasGDispResState({
+                                result = 'BLACKJACK WIN',
+                                rgb = {r=0, g=255, b=0},
+                            }))
+        else
+            gStateStack:push(UpdatePlayerStatsState({
+                                player = self.tablePlayer.player,
+                                stats = {money = 2*self.tablePlayer.curBet,
+                                         fun = 2*self.tablePlayer.curBet},
+                            }))
+            gStateStack:push(CasGDispResState({
+                                result = 'WIN',
+                                rgb = {r=0, g=255, b=0},
+                            }))
+        end
     else
         gStateStack:push(CasGDispResState({
                             result = 'LOSE',

@@ -36,6 +36,13 @@ function CasGHand:getFaceDownCard()
     return nil
 end
 
+function CasGHand:isBlackJack()
+    if #self.cards ~= 2 then
+        return false
+    end
+    return self:getBestValue() == 21
+end
+
 function CasGHand:addNewCard(card)
     table.insert(self.cards, card)
     self:updateNextCardX()

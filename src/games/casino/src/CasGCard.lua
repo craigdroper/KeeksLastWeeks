@@ -103,14 +103,7 @@ function CasGCard:getIsFaceUp()
 end
 
 function CasGCard:getValue()
-    return self.val[1]
-end
-
-function CasGCard:getSoftValue()
-    if #self.val == 2 then
-        return self.val[2]
-    end
-    return nil
+    return self.val
 end
 
 function CasGCard:setDestCoords(destX, destY)

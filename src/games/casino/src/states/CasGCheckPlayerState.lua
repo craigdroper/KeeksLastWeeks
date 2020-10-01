@@ -8,18 +8,8 @@ function CasGCheckPlayerState:init(params)
     self.deck = params.deck
 end
 
-function CasGCheckPlayerState:isBust(playVal, playSoftVal)
-    if playSoftVal == nil then
-        return playVal > 21
-    else
-        return playVal > 21 and playSoftVal > 21
-    end
-end
-
 function CasGCheckPlayerState:enter()
-    local playVal = self.tablePlayer:getValue()
-    local playSoftVal = self.tablePlayer:getSoftValue()
-    if self:isBust(playVal, playSoftVal) then
+    if self.tablePlayer.hand:getBestValue() > 21 then
         -- Pop this base check player state
         gStateStack:pop()
         -- Push a new base clear hand state that won't be

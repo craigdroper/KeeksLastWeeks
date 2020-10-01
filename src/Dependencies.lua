@@ -104,6 +104,7 @@ require 'src/games/casino/src/states/CasGCheckPlayerState'
 require 'src/games/casino/src/states/CasGDealerFlipState'
 require 'src/games/casino/src/states/CasGClearHandState'
 require 'src/games/casino/src/states/CasGContinueMenuState'
+require 'src/games/casino/src/states/CasGCheckDealerState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'

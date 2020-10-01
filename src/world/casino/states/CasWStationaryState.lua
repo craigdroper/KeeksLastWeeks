@@ -4,10 +4,11 @@ CasWStationaryState = Class{__includes = BaseState}
 function CasWStationaryState:init(params)
     self.player = gGlobalObjs['player']
     self.casino = params.casino
-    -- The mini game that will be pushed on top of this state can
-    -- access this data structure to indicate how the player
-    -- did in the game
-    self.gameStats = nil
+    -- The mini game that will be updating the money and fun
+    -- stats as we go, hand by hand, so this will only
+    -- be a boolean to indicate the mini game is over and the
+    -- player should exit
+    self.gameOver = false
 end
 
 function CasWStationaryState:enter()
@@ -15,20 +16,12 @@ function CasWStationaryState:enter()
         'Keeks: Dealer, I got a stack burning a hole in my pocket, '..
         'shuffle \'em up!',
         function()
-            -- DEVXXX
-            self.gameStats = {score = 666}
-            -- TODO
-            -- gStateStack:push(CasinoGStartState())
+            gStateStack:push(CasGStartState())
         end))
 end
 
 function CasWStationaryState:update(dt)
-    if self.gameStats then
-        gStateStack:push(UpdatePlayerStatsState({player = self.player,
-            -- Casino mini game will reward its own score that can be
-            -- dropped right in here
-            stats = {fun = self.gameStats.score}, callback =
-        function()
+    if self.gameOver then
         gStateStack:push(DialogueState(
             'Keeks: Really though today was my day to finally take the house...' ..
             'Oh well, you know I\'ll be back!',
@@ -39,7 +32,6 @@ function CasWStationaryState:update(dt)
             gStateStack:push(CasWExitState(
                 {casino = self.casino, nextState = AptWEnterState()}))
         end))
-        end}))
     end
 end
 

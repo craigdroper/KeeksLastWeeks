@@ -33,10 +33,13 @@ end
 
 function CasGClearHandState:update(dt)
     if self.clearedCards == self.tableCards then
+        -- Clear the underlying hand objects
+        self.dealer.hand:clearCards()
+        self.tablePlayer.hand:clearCards()
         -- Pop CasGClearHandState
         gStateStack:pop()
         -- Push the CasGPlayerChoiceMenu
-        gStateStack:push(CasGChoiceMenu({
+        gStateStack:push(CasGContinueMenuState({
             background = self.background,
             dealer = self.dealer,
             tablePlayer = self.tablePlayer,

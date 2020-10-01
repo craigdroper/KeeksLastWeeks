@@ -43,6 +43,7 @@ luac.out
 *tmp*
 .DS_Store
 *ignore.png*
+.*.swp
 
 # Uneeded graphic files
 *.xcf

@@ -55,16 +55,13 @@ function CasGHand:getBestValue()
     for _, card in pairs(self.cards) do
         local cardVals = card:getValue()
         if #cardVals == 2 then
-            print('Found a card with delta of Value '..(cardVals[2] - cardVals[1]))
             table.insert(softDeltas, (cardVals[2] - cardVals[1])) 
         end
         val = val + cardVals[1]
     end
-    print('Basic hand value is '..val)
     local valCombos = {[1] = val}
     for _, delta in pairs(softDeltas) do
         val = val + delta
-        print('Additional delta hand value is '..val)
         table.insert(valCombos, val)
     end
     -- Attempt to find the highest value that is under 21 
@@ -72,16 +69,13 @@ function CasGHand:getBestValue()
     local bestVal = nil
     for _, val in pairs(valCombos) do
         if val <= 21 and (21 - val) < bestValDiff then
-            print('Found a best candidate below 21 value of '..val)
             bestVal = val
             bestValDiff = 21 - val
         end
     end
     if bestVal then
-        print('Returning under 21 Value '..bestVal)
         return bestVal
     else
-        print('Returning a over 21 Value '..valCombos[1])
         return valCombos[1]
     end
 end

@@ -6,15 +6,24 @@ function CasGDealerActState:init(params)
     self.dealer = params.dealer
     self.tablePlayer = params.tablePlayer
     self.deck = params.deck
+    self.actDelay = params.delay
 
-    self.actThresh = 17
+    self.stayThresh = 16
+    self.actTimer = 0
 end
 
-function CasGDealerActState:enter()
+function CasGDealerActState:update(dt)
+    self.actTimer = self.actTimer + dt
+    if self.actTimer > self.actDelay then
+        self:act()
+    end
+end
+
+function CasGDealerActState:act()
     -- CasGDealer assumes that CheckDealer has been called before it,
     -- where a bust would've been hit, so this Act state either needs to
     -- choose to hit or stay
-    if self.dealer.hand:getBestValue() <= 16 then
+    if self.dealer.hand:getBestValue() <= self.stayThresh then
         -- Pop this act state and hit another card
         gStateStack:pop()
         gStateStack:push(CasGDealState({

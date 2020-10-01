@@ -50,6 +50,7 @@ function CasGCheckDealerState:enter()
                                 dealer = self.dealer,
                                 tablePlayer = self.tablePlayer,
                                 deck = self.deck,
+                                delay = 1,
                                 }))
         end
 end

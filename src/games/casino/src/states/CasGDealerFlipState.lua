@@ -25,13 +25,12 @@ function CasGDealerFlipState:enter()
         function()
             -- Pop this dealer flip State off
             gStateStack:pop()
-            -- DEV this is not the next correct step, it will
-            -- be a CasGDealerActState
-            gStateStack:push(CasGCheckDealerState({
+            gStateStack:push(CasGDealerActState({
                                 background = self.background,
                                 dealer = self.dealer,
                                 tablePlayer = self.tablePlayer,
                                 deck = self.deck,
+                                delay = 0
                                 }))
         end
     )

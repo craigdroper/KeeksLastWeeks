@@ -1,0 +1,52 @@
+
+CasGClearHandState = Class{__includes = BaseState}
+
+function CasGClearHandState:init(params)
+    self.background = params.background
+    self.dealer = params.dealer
+    self.tablePlayer = params.tablePlayer
+    self.deck = params.deck
+
+    self.tableCards = #self.dealer.hand.cards + #self.tablePlayer.hand.cards
+    self.clearedCards = 0
+end
+
+function CasGClearHandState:enter()
+    for _, card in pairs(self.dealer.hand.cards) do
+        self:tweenClearCard(card)
+    end
+    for _, card in pairs(self.tablePlayer.hand.cards) do
+        self:tweenClearCard(card)
+    end
+end
+
+function CasGClearHandState:tweenClearCard(card)
+    local aprxPixelDist = math.abs(self.deck.discardY - card:getY())
+    Timer.tween(aprxPixelDist / card.speed, {
+        [card] = {x = self.deck.discardX, y = self.deck.discardY}
+    }):finish(
+        function()
+            self.clearedCards = self.clearedCards + 1
+        end
+    )
+end
+
+function CasGClearHandState:update(dt)
+    if self.clearedCards == self.tableCards then
+        -- Pop CasGClearHandState
+        gStateStack:pop()
+        -- Push the CasGPlayerChoiceMenu
+        gStateStack:push(CasGChoiceMenu({
+            background = self.background,
+            dealer = self.dealer,
+            tablePlayer = self.tablePlayer,
+            deck = self.deck,
+        }))
+    end
+end
+
+function CasGClearHandState:render()
+    self.background:render()
+    self.dealer.hand:render()
+    self.tablePlayer.hand:render()
+end

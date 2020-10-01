@@ -44,6 +44,9 @@ function CasGCard:init(valIdx, suitIdx, x, y)
     self.sxMult = 1
     self.syMult = 1
 
+    -- How fast it moves across the table
+    self.speed = 200
+
     self.val = CARD_VALS[self.valIdx]
     self.hasSoftVal = (self.valIdx == 1)
     self.isFaceUp = false

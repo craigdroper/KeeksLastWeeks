@@ -8,6 +8,7 @@ function CasGBetState:init(params)
     self.deck = params.deck
     -- Necessary to retrieve input from UserInputState
     self.userInput = nil
+    self.betMin = 25
 end
 
 function CasGBetState:enter()
@@ -25,6 +26,15 @@ function CasGBetState:update(dt)
         if bet == nil or bet <= 0 then
             self.userInput = {}
             self:enter()
+            return
+        end
+        if bet < self.betMin then
+            gStateStack:push(DialogueState(
+                    'C\'mon Keeks, you come here enough to know how to read '..
+                    'a table minimum card. Table Min $25 little man!',
+                    function()
+                        self:enter()
+                    end))
             return
         end
         self.tablePlayer.curBet = bet

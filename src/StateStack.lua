@@ -33,11 +33,21 @@ end
 function StateStack:push(state)
     table.insert(self.states, state)
     state:enter()
+    --[[DEBUG
+    print('StateStack:PUSH(), UpdatedNumStates='..#self.states)
+    print(debug.traceback())
+    print('\n')
+    --]]
 end
 
 function StateStack:pop()
     self.states[#self.states]:exit()
     table.remove(self.states)
+    --[[ DEBUG
+    print('StateStack:POP(), UpdatedNumStates='..#self.states)
+    print(debug.traceback())
+    print('\n')
+    --]]
 end
 
 function StateStack:getNPrevState(n)

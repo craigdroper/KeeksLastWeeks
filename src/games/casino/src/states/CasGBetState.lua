@@ -21,6 +21,13 @@ end
 function CasGBetState:update(dt)
     if self.userInput then
         local bet = tonumber(self.userInput)
+        -- Naive protection against negative or 0 bets
+        if bet == nil or bet <= 0 then
+            self.userInput = {}
+            self:enter()
+            return
+        end
+        self.tablePlayer.curBet = bet
         gStateStack:push(UpdatePlayerStatsState({
             player = self.tablePlayer.player,
             stats = {money = -bet},
@@ -31,13 +38,13 @@ function CasGBetState:update(dt)
                 gStateStack:push(CasGDealState({
                     background = self.background,
                     dealer = self.dealer,
-                    player = self.player,
+                    tablePlayer = self.tablePlayer,
                     deck = self.deck,
-                    dealCards = {
-                        [1] = {dest = self.player, faceUp = true},
-                        [2] = {dest = self.player, faceUp = true},
-                        [3] = {dest = self.dealer, faceUp = true},
-                        [4] = {dest = self.dealer, faceUp = false},
+                    dealCardDefs = {
+                        [1] = {['dest'] = self.tablePlayer, ['faceUp'] = true},
+                        [2] = {['dest'] = self.tablePlayer, ['faceUp'] = true},
+                        [3] = {['dest'] = self.dealer, ['faceUp'] = true},
+                        [4] = {['dest'] = self.dealer, ['faceUp'] = false},
                     }
                 }))
             end}))

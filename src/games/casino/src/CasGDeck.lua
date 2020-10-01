@@ -3,6 +3,13 @@ CasGDeck = Class{}
 
 function CasGDeck:init(numDecks)
     self.numDecks = numDecks and numDecks or 1
+
+    -- Coordinates where cards will go to and from
+    self.deckX = VIRTUAL_WIDTH / 2
+    self.deckY = -64
+    self.discardX = VIRTUAL_WIDTH / 4
+    self.discardY = -64
+    
     self.cards = {}
     self:reset()
 end
@@ -12,7 +19,7 @@ function CasGDeck:reset()
     for d = 1, self.numDecks do
         for v = 1, 13 do
             for s = 1, 4 do
-                table.insert(self.cards, CasGCard(v, s))
+                table.insert(self.cards, CasGCard(v, s, self.deckX, self.deckY))
             end
         end
     end

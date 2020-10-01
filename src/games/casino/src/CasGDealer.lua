@@ -2,7 +2,7 @@
 CasGDealer = Class{}
 
 function CasGDealer:init()
-    self.hand = CasGHand(VIRTUAL_WIDTH/2, 50)
+    self.hand = CasGHand(VIRTUAL_WIDTH/2, 60)
 end
 
 function CasGDealer:getValue()

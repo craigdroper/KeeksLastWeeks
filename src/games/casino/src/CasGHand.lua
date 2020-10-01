@@ -9,10 +9,9 @@ function CasGHand:init(midX, y)
     local tmpCard = CasGCard(1, 1)
     self.cardW = tmpCard.width
     self.cardH = tmpCard.height
-    self.cardPad = 6
 
-    self.firstCardX = self.midX - self.cardW + self.cardPad/2
-    self.nextCardX = firstCardX
+    self.firstCardX = self.midX - self.cardW
+    self.nextCardX = self.firstCardX
     self.nextCardY = self.y
 end
 
@@ -20,15 +19,15 @@ function CasGHand:updateNextCardX()
     if (#self.cards % 2 == 1) then
         -- Odd numbers, always even it out to the right across the x midline
         local curXOffset = self.midX - self.nextCardX
-        self.nextCardX = self.nextCardX + 2*curXOffset - self.cardW
+        self.nextCardX = self.midX + curXOffset - self.cardW
     else
         -- Even numbers, add a new one to the left
         local curXOffset = self.nextCardX + self.cardW - self.midX
-        self.nextCardX = self.midX - curXOffset - self.cardPad - self.cardW
+        self.nextCardX = self.midX - curXOffset - self.cardW
     end
 end
 
-function CasGHand:getNewCard(card)
+function CasGHand:addNewCard(card)
     table.insert(self.cards, card)
     self:updateNextCardX()
 end
@@ -61,7 +60,7 @@ function CasGHand:getSoftValue()
 end
 
 function CasGHand:render()
-    for _, card in self.cards do
+    for _, card in pairs(self.cards) do
         card:render()
     end
 end

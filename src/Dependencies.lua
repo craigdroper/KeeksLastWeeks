@@ -97,6 +97,7 @@ require 'src/games/casino/src/CasGTablePlayer'
 require 'src/games/casino/src/states/CasGStartState'
 require 'src/games/casino/src/states/CasGShuffleState'
 require 'src/games/casino/src/states/CasGBetState'
+require 'src/games/casino/src/states/CasGDealState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -317,12 +318,13 @@ gClubGSongs = {
 }
 
 gCasGTextures = {
-    ['cards'] = love.graphics.newImage('src/games/casino/graphics/cards_tileset.jpg'),
+    ['cards'] = love.graphics.newImage('src/games/casino/graphics/cards_tileset.png'),
 }
 
 gCasGFrames = {
     ['cards'] = GenerateQuads(gCasGTextures['cards'], 48, 64),
 }
+print('End gCasGFrames')
 
 gCasGImages = {
     ['card-back'] = love.graphics.newImage('src/games/casino/graphics/card_back.png'),

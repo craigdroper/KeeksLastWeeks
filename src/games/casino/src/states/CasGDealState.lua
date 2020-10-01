@@ -36,6 +36,7 @@ function CasGDealState:checkDealCard()
     local targetHand = cardDef.dest.hand
     local targetX = targetHand.nextCardX
     local targetY = targetHand.nextCardY
+    nextCard:setDestCoords(targetX, targetY)
     targetHand:addNewCard(nextCard)
     local aprxPixelDist = targetY - nextCard.y
     Timer.tween(aprxPixelDist / self.dealtCardSpeed, {

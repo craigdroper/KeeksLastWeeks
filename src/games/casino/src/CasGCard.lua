@@ -29,12 +29,15 @@ function CasGCard:init(valIdx, suitIdx, x, y)
     self.suitIdx = suitIdx
     self.x = x
     self.y = y
+    self.destX = nil
+    self.destY = nil
     self.width = 48
     self.height = 64
 
     self.val = CARD_VALS[self.valIdx]
     self.hasSoftVal = (self.valIdx == 1)
     self.isFaceUp = false
+    self.flipCardY = nil
 
     self.faceTexture = gCasGTextures['cards']
     self.faceQuad = gCasGFrames['cards'][valIdx + (#CARD_VALS * (suitIdx - 1))]
@@ -56,9 +59,14 @@ function CasGCard:getSoftValue()
     return nil
 end
 
+function CasGCard:setDestCoords(destX, destY)
+    self.destX = destX
+    self.destY = destY
+    self.flipCardY = self.destY/2
+end
+
 function CasGCard:render()
-    print('RenderCard -- Val='..self.valIdx..', Suit='..self.suitIdx..', QuadIdx='..self.valIdx + (#CARD_VALS * (self.suitIdx - 1)))
-    if self.isFaceUp then
+    if self.isFaceUp and self.y > self.flipCardY then
         love.graphics.filterDrawQ(
             self.faceTexture, self.faceQuad, self.x, self.y)
     else

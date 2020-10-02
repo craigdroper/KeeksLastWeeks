@@ -36,6 +36,21 @@ function AptWFunMenuState:init(params)
                         }))
                 end
             },
+            {
+                text = 'Gamble at the Casino',
+                onSelect = function()
+                    -- Pop AptWFunMenuState
+                    gStateStack:pop()
+                    -- Pop AptStationaryState
+                    gStateStack:pop()
+                    -- Transition to leave state
+                    gStateStack:push(AptWExitState(
+                        {
+                            apartment = self.apartment,
+                            nextGameState = CasWEnterState()
+                        }))
+                end
+            },
         }
     }
 end

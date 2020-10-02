@@ -36,6 +36,21 @@ function AlleyWFunMenuState:init(params)
                         }))
                 end
             },
+            {
+                text = 'Gamble at the Casino',
+                onSelect = function()
+                    -- Pop AlleyWFunMenuState
+                    gStateStack:pop()
+                    -- Pop AlleyWStationaryState
+                    gStateStack:pop()
+                    -- Transition to leave state
+                    gStateStack:push(AlleyWExitState(
+                        {
+                            alley = self.alley,
+                            nextState = CasWEnterState()
+                        }))
+                end
+            },
         }
     }
 end

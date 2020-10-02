@@ -6,8 +6,12 @@ function DateGBackground:init()
     self.bkgrdX = 0
     self.bkgrdY = 0
     self.bkgrdW, self.bkgrdH = self.bkgrd:getDimensions()
+    -- Shift the picture up a little and stretch to fit to cut out
+    -- some of the more boring ceiling part of the pictures
+    self.shiftY = 50
+    self.bkgrdY = self.bkgrdY - self.shiftY
     self.bkgrdSX = VIRTUAL_WIDTH / self.bkgrdW
-    self.bkgrdSY = VIRTUAL_HEIGHT / self.bkgrdH
+    self.bkgrdSY = (VIRTUAL_HEIGHT + self.shiftY) / self.bkgrdH
 end
 
 function DateGBackground:render()

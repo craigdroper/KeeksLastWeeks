@@ -4,7 +4,7 @@ DateWStationaryState = Class{__includes = BaseState}
 function DateWStationaryState:init(params)
     self.player = gGlobalObjs['player']
     self.rest = params.rest
-    self.gameStats = nil
+    self.isGameOver = false
 end
 
 function DateWStationaryState:enter()
@@ -13,12 +13,9 @@ function DateWStationaryState:enter()
         function()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            --[[DEV
             -- Keep the Stationary State on, and put the mini game
             -- on top of it
             gStateStack:push(DateGStartState())
-            --]]
-            self.gameStats = {score = 20}
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
@@ -27,11 +24,7 @@ function DateWStationaryState:enter()
 end
 
 function DateWStationaryState:update(dt)
-    if self.gameStats then
-        gStateStack:push(UpdatePlayerStatsState({player = self.player,
-            -- Club mini game will reward its own score that can be dropped right in here
-            stats = {time = self.gameStats.score}, callback =
-        function()
+    if self.isGameOver then
         gStateStack:push(DialogueState(
             'Keeks: Well, looks like its just you and me tonight Lefty...',
         function()
@@ -41,7 +34,6 @@ function DateWStationaryState:update(dt)
             gStateStack:push(DateWExitState(
                 {rest = self.rest}))
         end))
-        end}))
     end
 end
 

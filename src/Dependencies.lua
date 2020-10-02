@@ -121,7 +121,10 @@ require 'src/world/date/states/DateWExitState'
 
 -- Date Game requirements
 require 'src/games/date/src/DateGBackground'
+require 'src/games/date/src/DateGCouple'
 require 'src/games/date/src/states/DateGStartState'
+require 'src/games/date/src/states/DateGPlayState'
+require 'src/games/date/src/states/DateGLoseState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -361,4 +364,6 @@ gDateWImages = {
 
 gDateSounds = {
     ['background'] = love.audio.newSource('sounds/restaurant_whitenoise.mp3'),
+    ['mumble'] = love.audio.newSource('src/games/date/sounds/mumbling.mp3'),
 }
+

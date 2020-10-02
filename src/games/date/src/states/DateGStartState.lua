@@ -3,9 +3,8 @@ DateGStartState = Class{__includes = BaseState}
 
 function DateGStartState:init()
     self.background = DateGBackground()
-    -- TODO
-    -- self.keeks
-    -- self.date
+    self.couple = DateGCouple()
+    self.player = gGlobalObjs['player']
 end
 
 function DateGStartState:enter()
@@ -28,15 +27,13 @@ function DateGStartState:enter()
             gStateStack:pop()
             gStateStack:push(DateGPlayState({
                 background = self.background,
-                keeks = self.keeks,
-                date = self.date,
+                couple = self.couple,
+                player = self.player,
                 }))
         end))
 end
 
-function DateGStartState:update(dt)
-end
-
 function DateGStartState:render()
     self.background:render()
+    self.couple:render()
 end

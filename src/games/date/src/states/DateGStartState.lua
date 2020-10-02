@@ -3,8 +3,9 @@ DateGStartState = Class{__includes = BaseState}
 
 function DateGStartState:init()
     self.background = DateGBackground()
-    self.couple = DateGCouple()
     self.player = gGlobalObjs['player']
+    self.player:storeSnapshot()
+    self.couple = DateGCouple(player)
 end
 
 function DateGStartState:enter()

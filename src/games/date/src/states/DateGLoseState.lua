@@ -22,6 +22,7 @@ function DateGLoseState:enter()
                     function()
                     -- Pop DateGLoseState
                     gStateStack:pop()
+                    self.player:restoreSnapshot()
                     gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                         function()
                         end))

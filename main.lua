@@ -25,8 +25,7 @@ function love.load()
 
     gGlobalObjs = {}
 
-    player = Player()
-    player:changeState('idle')
+    player = createPlayer()
     gGlobalObjs['player'] = player
 
     gGlobalObjs['filter'] = NoFilter()

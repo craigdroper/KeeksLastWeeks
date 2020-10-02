@@ -370,3 +370,9 @@ end
 function renderScore(score)
     -- XXX stubbed out method for now to bet gar mini game up and running
 end
+
+function createPlayer()
+    player = Player()
+    player:changeState('idle')
+    return player
+end

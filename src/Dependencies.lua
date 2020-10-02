@@ -117,6 +117,11 @@ require 'src/world/date/states/DateWEnterLobbyState'
 require 'src/world/date/states/DateWHostWelcomeState'
 require 'src/world/date/states/DateWEnterRestState'
 require 'src/world/date/states/DateWStationaryState'
+require 'src/world/date/states/DateWExitState'
+
+-- Date Game requirements
+require 'src/games/date/src/DateGBackground'
+require 'src/games/date/src/states/DateGStartState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -351,6 +356,7 @@ gCasGImages = {
 gDateWImages = {
     ['lobby'] = love.graphics.newImage('graphics/sets/mastros_lobby.jpg'),
     ['dining-room'] = love.graphics.newImage('graphics/sets/mastros_interior.jpg'),
+    ['table'] = love.graphics.newImage('src/games/date/graphics/background.jpg'),
 }
 
 gDateSounds = {

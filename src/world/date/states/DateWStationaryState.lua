@@ -13,9 +13,12 @@ function DateWStationaryState:enter()
         function()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
+            --[[DEV
             -- Keep the Stationary State on, and put the mini game
             -- on top of it
             gStateStack:push(DateGStartState())
+            --]]
+            self.gameStats = {score = 20}
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
@@ -30,7 +33,7 @@ function DateWStationaryState:update(dt)
             stats = {time = self.gameStats.score}, callback =
         function()
         gStateStack:push(DialogueState(
-            'Keeks: Well, looks like its just you and me tonight Lefty...' ..
+            'Keeks: Well, looks like its just you and me tonight Lefty...',
         function()
             -- Pop the stationary state, push the exit state
             -- Increase player walk speed like he's running out

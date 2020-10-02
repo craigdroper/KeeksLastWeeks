@@ -9,13 +9,13 @@ end
 function DateWEnterRestState:enter()
     -- Set the player entity's scale factors to the correct values
     -- for this room's tile sizes
-    self.player.scaleX = 1.75
-    self.player.scaleY = 1.75
+    self.player.scaleX = 5
+    self.player.scaleY = 5
     self.player.opacity = 255
     self.player.walkSpeed = 40
     -- Explicitly set the player's X & Y coordinates to be below frame
     -- and just a bit to the right of the left edge
-    self.player.x = 30
+    self.player.x = -200
     self.player.y = VIRTUAL_HEIGHT + 10
     -- Setup tween entrance
     self:tweenEnter()
@@ -26,7 +26,7 @@ function DateWEnterRestState:tweenEnter()
     local APRX_MID_TABLE_X = VIRTUAL_WIDTH / 3 + 55
     local X_SHIFT = APRX_MID_TABLE_X + 60
     local APRX_DEST_TABLE_Y = APRX_MID_TABLE_Y - 25
-    local APRX_DEST_TABLE_X = X_SHIFT + 24
+    local APRX_DEST_TABLE_X = X_SHIFT + 30
 
     -- Come just inside and subtract the door fee
     local walkPixels = self.player.y - APRX_MID_TABLE_Y

@@ -2,7 +2,7 @@
 DateGBackground = Class{}
 
 function DateGBackground:init()
-    -- TODO self.bkgrd = gCasWImages['table-background']
+    self.bkgrd = gDateWImages['table']
     self.bkgrdX = 0
     self.bkgrdY = 0
     self.bkgrdW, self.bkgrdH = self.bkgrd:getDimensions()

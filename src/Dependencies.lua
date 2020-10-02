@@ -110,6 +110,14 @@ require 'src/games/casino/src/states/CasGCheckWinnerState'
 require 'src/games/casino/src/states/CasGCheckDealerBJState'
 require 'src/games/casino/src/states/CasGInsureMenuState'
 
+-- Date World requirements
+require 'src/world/date/DateWLobby'
+require 'src/world/date/DateWRestaurant'
+require 'src/world/date/states/DateWEnterLobbyState'
+require 'src/world/date/states/DateWHostWelcomeState'
+require 'src/world/date/states/DateWEnterRestState'
+require 'src/world/date/states/DateWStationaryState'
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -338,4 +346,13 @@ gCasGFrames = {
 
 gCasGImages = {
     ['card-back'] = love.graphics.newImage('src/games/casino/graphics/card_back.png'),
+}
+
+gDateWImages = {
+    ['lobby'] = love.graphics.newImage('graphics/sets/mastros_lobby.jpg'),
+    ['dining-room'] = love.graphics.newImage('graphics/sets/mastros_interior.jpg'),
+}
+
+gDateSounds = {
+    ['background'] = love.audio.newSource('sounds/restaurant_whitenoise.mp3'),
 }

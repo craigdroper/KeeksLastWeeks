@@ -16,7 +16,15 @@ function CasWStationaryState:enter()
         'Keeks: Dealer, I got a stack burning a hole in my pocket, '..
         'shuffle \'em up!',
         function()
+    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        function()
+            -- Keep the Stationary State on, and put the mini game
+            -- on top of it
             gStateStack:push(CasGStartState())
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                function()
+                end))
+        end))
         end))
 end
 

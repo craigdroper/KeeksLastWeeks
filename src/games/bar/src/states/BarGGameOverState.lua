@@ -49,15 +49,18 @@ function BarGGameOverState:update(dt)
         -- Currently the stack is as follows:
         -- 1) BarWStationary
         -- 2) BarGGameOver
-        -- Set the BarWStationary game stats 
+        -- Set the BarWStationary game stats
         barWStatState = gStateStack:getNPrevState(1)
         barWStatState.gameStats = {score = self.levelsCleared}
-        -- pop BarGGameOverState off to
-        -- return to the stationary bar state
-        gStateStack:pop()
-        -- TODO we will also push an "update Player's scores" state here
-        -- which takes the mini game player's stats and updates the world
-        -- game player's stats appropriately
+        gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+            function()
+            -- pop BarGGameOverState off to
+            -- return to the stationary bar state
+            gStateStack:pop()
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+            function()
+            end))
+            end))
     end
 end
 

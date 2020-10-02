@@ -19,7 +19,15 @@ function ClubWStationaryState:enter()
         'me you can cut a rug...',
         function()
             gClubSounds['background']:stop()
+            gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        function()
+            -- Keep the Stationary State on, and put the mini game
+            -- on top of it
             gStateStack:push(ClubGStartState())
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                function()
+                end))
+        end))
         end))
 end
 

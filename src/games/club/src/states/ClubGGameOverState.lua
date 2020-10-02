@@ -18,7 +18,14 @@ function ClubGGameOverState:update(dt)
         clubWStatState.gameStats = {score = self.score}
         -- pop ClubGGameOverState off to
         -- return to the stationary bar state
-        gStateStack:pop()
+        gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+            function()
+            -- Pop GameOverState
+            gStateStack:pop()
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+            function()
+            end))
+            end))
     end
 end
 

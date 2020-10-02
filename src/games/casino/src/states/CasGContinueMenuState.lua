@@ -34,8 +34,14 @@ function CasGContinueMenuState:init(params)
                     -- Set the CasWStationary gameOver flag
                     local casWStationary = gStateStack:getNPrevState(1)
                     casWStationary.gameOver = true
-                    -- Pop Continue Menu
-                    gStateStack:pop()
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        -- Pop Continue Menu
+                        gStateStack:pop()
+                        gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                            function()
+                            end))
+                        end))
                 end
             },
         }

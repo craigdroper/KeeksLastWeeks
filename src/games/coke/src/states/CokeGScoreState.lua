@@ -33,9 +33,15 @@ function CokeGScoreState:update(dt)
         -- Set the AlleyWStationary game stats
         alleyWStatState = gStateStack:getNPrevState(1)
         alleyWStatState.gameStats = {multiplier = self.score}
-        -- pop off the coke game score state and return to the
-        -- stationary state
-        gStateStack:pop()
+        gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+            function()
+            -- pop off the coke game score state and return to the
+            -- stationary state
+            gStateStack:pop()
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+            function()
+            end))
+            end))
     end
 end
 

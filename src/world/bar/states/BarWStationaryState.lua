@@ -16,7 +16,15 @@ function BarWStationaryState:enter()
         'We\'ve got your favorite seat saved for you. ' ..
         'What\'ll it be?',
         function()
+            gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        function()
+            -- Keep the Stationary State on, and put the mini game
+            -- on top of it
             gStateStack:push(BarGStartState())
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                function()
+                end))
+        end))
         end))
 end
 

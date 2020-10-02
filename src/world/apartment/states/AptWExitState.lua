@@ -27,25 +27,25 @@ function AptWExitState:tweenExit()
     gSounds['footsteps']:play()
 
     -- Get off couch and walk to limit of coffee table
-    local walkPixels = tableY - self.player.y - self.player.height - FURNITURE_BUFFER
+    local walkPixels = tableY - self.player.y - self.player:getHeight() - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = tableY - self.player.height - FURNITURE_BUFFER}
+        [self.player] = {y = tableY - self.player:getHeight() - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = counterX - self.player.x - self.player.width - FURNITURE_BUFFER
+    walkPixels = counterX - self.player.x - self.player:getWidth() - FURNITURE_BUFFER
     self.player:changeAnimation('walk-right')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = counterX - self.player.width - FURNITURE_BUFFER}
+        [self.player] = {x = counterX - self.player:getWidth() - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = chairY - self.player.y - self.player.height - FURNITURE_BUFFER
+    walkPixels = chairY - self.player.y - self.player:getHeight() - FURNITURE_BUFFER
     self.player:changeAnimation('walk-down')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = chairY - self.player.height - FURNITURE_BUFFER}
+        [self.player] = {y = chairY - self.player:getHeight() - FURNITURE_BUFFER}
     }):finish(
         function()
-    walkPixels = wallX - self.player.x + self.player.width
+    walkPixels = wallX - self.player.x + self.player:getWidth()
     self.player:changeAnimation('walk-right')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
         [self.player] = {x = wallX}

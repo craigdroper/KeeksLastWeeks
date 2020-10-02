@@ -23,7 +23,7 @@ function AptWEnterState:enter()
     -- of the right frame in line to walk into the apartment
     local chairY = self.apartment.furniture['desk-chair'][4]
     self.player.x = VIRTUAL_WIDTH + 10
-    self.player.y = chairY - self.player.height - FURNITURE_BUFFER
+    self.player.y = chairY - self.player:getHeight() - FURNITURE_BUFFER
     self:tweenEnter()
 end
 
@@ -45,20 +45,20 @@ function AptWEnterState:tweenEnter()
     gSounds['footsteps']:play()
 
     -- Come in through door and walk to just passed the counter
-    local walkPixels = self.player.x - counterX + self.player.width + FURNITURE_BUFFER
+    local walkPixels = self.player.x - counterX + self.player:getWidth() + FURNITURE_BUFFER
     self.player:changeAnimation('walk-left')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = counterX - self.player.width - FURNITURE_BUFFER}
+        [self.player] = {x = counterX - self.player:getWidth() - FURNITURE_BUFFER}
     }):finish(
         function()
     -- Walk up high enough to clear the top part of the coffee table
-    walkPixels = self.player.y - tableY + self.player.height + FURNITURE_BUFFER
+    walkPixels = self.player.y - tableY + self.player:getHeight() + FURNITURE_BUFFER
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = tableY - self.player.height - FURNITURE_BUFFER}
+        [self.player] = {y = tableY - self.player:getHeight() - FURNITURE_BUFFER}
     }):finish(
         function()
-    local couchXTarget = (horzCouchX + horzCouchWidth/2) - self.player.width/2 - ARMREST_OFFSET
+    local couchXTarget = (horzCouchX + horzCouchWidth/2) - self.player:getWidth()/2 - ARMREST_OFFSET
     walkPixels = self.player.x - couchXTarget
     self.player:changeAnimation('walk-left')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {

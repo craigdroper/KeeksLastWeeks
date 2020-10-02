@@ -26,7 +26,7 @@ end
 function DateWStationaryState:update(dt)
     if self.isGameOver then
         gStateStack:push(DialogueState(
-            'Keeks: Well, looks like its just you and me tonight Lefty...',
+            'Keeks: Well, looks like its just you and me tonight Righty...',
         function()
             -- Pop the stationary state, push the exit state
             -- Increase player walk speed like he's running out

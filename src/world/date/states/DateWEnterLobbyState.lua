@@ -21,11 +21,8 @@ function DateWEnterLobbyState:enter()
     -- Setup tween entrance
     self:tweenEnter()
     -- Begin playing the casino background music
-    --[[
-        DEVXXX commented out during dev
     gDateSounds['background']:setLooping(true)
     gDateSounds['background']:play()
-    --]]
 end
 
 function DateWEnterLobbyState:tweenEnter()

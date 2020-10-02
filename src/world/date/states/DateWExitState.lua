@@ -42,8 +42,9 @@ function DateWExitState:tweenExit()
                          scaleX = 5, scaleY = 5}
     }):finish(
         function()
-    gSounds['footsteps']:stop()
     gSounds['door']:play()
+    gSounds['footsteps']:stop()
+    gDateSounds['background']:stop()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- Pop the DateWExitState off

@@ -29,11 +29,11 @@ function AptWInitialMenuState:init(params)
                 end
             },
             {
-                text = 'Recover',
+                text = 'Recover Losses',
                 onSelect = function()
                     -- Pop off AptWInitialMenuState
                     gStateStack:pop()
-                    -- TODO push AptWRecoverMenuState
+                    gStateStack:push(AptWRecoverMenuState({apartment = self.apartment}))
                 end
             },
         }

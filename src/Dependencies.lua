@@ -41,6 +41,7 @@ require 'src/world/apartment/states/AptWEnterState'
 require 'src/world/apartment/states/AptWExitState'
 require 'src/world/apartment/states/AptWInitialMenuState'
 require 'src/world/apartment/states/AptWFunMenuState'
+require 'src/world/apartment/states/AptWRecoverMenuState'
 
 -- Bar World requirements
 require 'src/world/bar/Bar'

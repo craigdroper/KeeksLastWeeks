@@ -33,9 +33,22 @@ end
 function EntityIdleState:render()
     local anim = self.entity.currentAnimation
     love.graphics.setColor(255, 255, 255, self.entity.opacity)
+
+    local animTexture = gTextures[anim.texture]
+    local animFrame = gFrames[anim.texture][anim:getCurrentFrame()]
+    if self.entity.subQuadXShift then
+        local origFrameX, origFrameY, origFrameW, origFrameH = animFrame:getViewport()
+        animFrame = love.graphics.newQuad(
+            origFrameX + self.entity.subQuadXShift,
+            origFrameY + self.entity.subQuadYShift,
+            origFrameW + self.entity.subQuadWShift,
+            origFrameH + self.entity.subQuadHShift,
+            animTexture:getDimensions())
+    end
+
     love.graphics.filterDrawQ(
-        gTextures[anim.texture],
-        gFrames[anim.texture][anim:getCurrentFrame()],
+        animTexture,
+        animFrame,
         math.floor(self.entity.x - self.entity.offsetX * self.entity.scaleX),
         math.floor(self.entity.y - self.entity.offsetY * self.entity.scaleY),
         self.entity.orientation,

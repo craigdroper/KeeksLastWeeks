@@ -13,6 +13,7 @@ function Entity:init(def)
     self.direction = 'down'
 
     self.animations = self:createAnimations(def.animations)
+    self.curAnimationName = nil
 
     -- dimensions
     self.x = def.x
@@ -32,6 +33,13 @@ function Entity:init(def)
 
     self.opacity = 255
 
+    -- These values can be set to request that only a subsection of
+    -- the entity's animation quad is drawn
+    self.subQuadXShift = nil
+    self.subQuadYShift = nil
+    self.subQuadWShift = nil
+    self.subQuadHShift = nil
+
     self.walkSpeed = def.walkSpeed
 
 end
@@ -50,6 +58,20 @@ end
 
 function Entity:getHeight()
     return self.scaleY * self.height
+end
+
+function Entity:setSubQuadShifts(xShift, yShift, wShift, hShift)
+    self.subQuadXShift = xShift
+    self.subQuadYShift = yShift
+    self.subQuadWShift = wShift
+    self.subQuadHShift = hShift
+end
+
+function Entity:clearSubQuad()
+    self.subQuadXShift = nil
+    self.subQuadYShift = nil
+    self.subQuadWShift = nil
+    self.subQuadHShift = nil
 end
 
 function Entity:createAnimations(animations)
@@ -75,17 +97,12 @@ function Entity:collides(target)
                 self.y + self.height < target.y or self.y > target.y + target.height)
 end
 
---[[
-function Entity:damage(dmg)
-    self.health = self.health - dmg
-end
---]]
-
 function Entity:changeState(name, params)
     self.stateMachine:change(name, params)
 end
 
 function Entity:changeAnimation(name)
+    self.curAnimationName = name
     self.currentAnimation = self.animations[name]
 end
 

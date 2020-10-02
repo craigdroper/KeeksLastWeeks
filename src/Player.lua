@@ -11,9 +11,6 @@ Player = Class{__includes = Entity}
 function Player:init()
     Entity.init(self, ENTITY_DEFS['keeks'])
 
-    -- A speed that can be set per scene to better accomodate different
-    -- scene pixel sizes
-    self.walkSpeed = nil
     -- Purely used for DEV reasons when we want to test something besides
     -- the players walking speed
     self.walkSpeedMult = PLAYER_WALK_SPEED_MULT
@@ -28,6 +25,9 @@ function Player:init()
     -- game and is entering his first state
     self.isFirstScene = true
 
+    -- Used to locally store a snapshot that can be loaded
+    self.snap = nil
+
     self.stateMachine = StateMachine {
         -- Initial thought is that the player will only have to be "idle"
         -- since any movement is controlled completely by the program
@@ -37,35 +37,59 @@ function Player:init()
     }
 end
 
+function Player:takeSnapshot()
+    return {
+        x = self.x,
+        y = self.y,
+        offsetX = self.offsetX,
+        offsetY = self.offsetY,
+        width = self.width,
+        height = self.height,
+        scaleX = self.scaleX,
+        scaleY = self.scaleY,
+        opacity = self.opacity,
+        subQuadXShift = self.subQuadXShift,
+        subQuadYShift = self.subQuadYShift,
+        subQuadWShift = self.subQuadWShift,
+        subQuadHShift = self.subQuadHShift,
+        walkSpeed = self.walkSpeed,
+        curAnimationName = self.curAnimationName
+    }
+end
+
+function Player:loadSnapshot(snap)
+    self.x = snap.x
+    self.y = snap.y
+    self.offsetX = snap.offsetX
+    self.offsetY = snap.offsetY
+    self.width = snap.width
+    self.height = snap.height
+    self.scaleX = snap.scaleX
+    self.scaleY = snap.scaleY
+    self.opacity = snap.opacity
+    self.subQuadXShift = snap.subQuadXShift
+    self.subQuadYShift = snap.subQuadYShift
+    self.subQuadWShift = snap.subQuadWShift
+    self.subQuadHShift = snap.subQuadHShift
+    self.walkSpeed = snap.walkSpeed
+    self:changeAnimation(snap.curAnimationName)
+end
+
+function Player:storeSnapshot()
+    self.snap = self:takeSnapshot()
+end
+
+function Player:restoreSnapshot()
+    self:loadSnapshot(self.snap)
+    self.snap = nil
+end
+
 function Player:getPixelWalkTime(numPixels)
     return numPixels / (self.walkSpeed * self.walkSpeedMult)
 end
 
 function Player:update(dt)
     Entity.update(self, dt)
-end
-
-function Player:collides(target)
-    local selfY, selfHeight = self.y + self.height / 2, self.height - self.height / 2
-
-    return not (self.x + self.width < target.x or self.x > target.x + target.width or
-                selfY + selfHeight < target.y or selfY > target.y + target.height)
-end
-
-function Player:adjustSolidCollision(object, dt)
-    -- according to the current direction of the player entity, adjust its
-    -- position outside the bounds of the object
-    -- reset position with a little extra padding (2 pixels) to prevent
-    -- buggy repositioning of character
-    if self.direction == 'up' then
-        self.y = self.y + self.walkSpeed * self.walkSpeedMult * dt
-    elseif self.direction == 'down' then
-        self.y = self.y - self.walkSpeed * self.walkSpeedMult * dt
-    elseif self.direction == 'right' then
-        self.x = self.x - self.walkSpeed * self.walkSpeedMult * dt
-    elseif self.direction == 'left' then
-        self.x = self.x + self.walkSpeed * self.walkSpeedMult * dt
-    end
 end
 
 function Player:genStatsDisp()
@@ -135,7 +159,4 @@ end
 
 function Player:render()
     Entity.render(self)
-    -- love.graphics.setColor(255, 0, 255, 255)
-    -- love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
-    -- love.graphics.setColor(255, 255, 255, 255)
 end

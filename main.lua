@@ -24,14 +24,8 @@ function love.load()
     gStateStack = StateStack()
 
     gGlobalObjs = {}
+
     player = Player()
-    player.stateMachine = StateMachine {
-        -- Initial thought is that the player will only have to be "idle"
-        -- since any movement is controlled completely by the program
-        -- and there is no need for a "walk" type state where we need
-        -- to check if we're interacting with the map
-        ['idle'] = function() return PlayerIdleState(player) end,
-    }
     player:changeState('idle')
     gGlobalObjs['player'] = player
 
@@ -39,7 +33,7 @@ function love.load()
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            -- gStateStack:push(AptWEnterState())
+             gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
             -- gStateStack:push(AlleyWEnterState())
@@ -48,7 +42,7 @@ function love.load()
             -- gStateStack:push(ClubGStartState())
             -- gStateStack:push(CasWEnterState())
             -- gStateStack:push(CasGStartState())
-            gStateStack:push(DateWEnterLobbyState())
+            -- gStateStack:push(DateWEnterLobbyState())
             -- gStateStack:push(DateWEnterRestState())
             -- gStateStack:push(DateGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,

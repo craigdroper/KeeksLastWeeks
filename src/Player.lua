@@ -8,15 +8,8 @@
 
 Player = Class{__includes = Entity}
 
-function Player:init(def)
-    Entity.init(self, {
-        animations = ENTITY_DEFS['keeks'].animations,
-        walkSpeed = ENTITY_DEFS['keeks'].walkSpeed,
-        width = 36,
-        height = 58,
-        x = (VIRTUAL_WIDTH - 77) / 2,
-        y = (VIRTUAL_HEIGHT - 77) / 2
-    })
+function Player:init()
+    Entity.init(self, ENTITY_DEFS['keeks'])
 
     -- A speed that can be set per scene to better accomodate different
     -- scene pixel sizes
@@ -34,6 +27,14 @@ function Player:init(def)
     -- This is used to indicate that the player is just beginning the
     -- game and is entering his first state
     self.isFirstScene = true
+
+    self.stateMachine = StateMachine {
+        -- Initial thought is that the player will only have to be "idle"
+        -- since any movement is controlled completely by the program
+        -- and there is no need for a "walk" type state where we need
+        -- to check if we're interacting with the map
+        ['idle'] = function() return PlayerIdleState(player) end,
+    }
 end
 
 function Player:getPixelWalkTime(numPixels)

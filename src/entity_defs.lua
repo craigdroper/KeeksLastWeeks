@@ -7,7 +7,10 @@
 
 ENTITY_DEFS = {
     ['keeks'] = {
-        walkSpeed = PLAYER_WALK_SPEED,
+        width = 36,
+        height = 58,
+        offsetX = 20,
+        offsetY = 18,
         animations = {
             ['walk-left'] = {
                 frames = {9, 10, 11, 12, 13, 14, 15, 16},

@@ -127,6 +127,14 @@ require 'src/games/date/src/states/DateGStartState'
 require 'src/games/date/src/states/DateGPlayState'
 require 'src/games/date/src/states/DateGLoseState'
 
+-- Work World requirements
+require 'src/world/work/WorkWOffice'
+require 'src/world/work/states/WorkWEnterOfficeState'
+require 'src/world/work/states/WorkWEnterMeetingState'
+require 'src/world/work/states/WorkWExitMeetingState'
+require 'src/world/work/states/WorkWExitOfficeState'
+
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -245,6 +253,7 @@ gSounds = {
     ['lift'] = love.audio.newSource('sounds/lift.wav'),
     ['throw'] = love.audio.newSource('sounds/throw.wav'),
     ['breakpot'] = love.audio.newSource('sounds/breakpot.wav'),
+    ['jump'] = love.audio.newSource('sounds/yahoo.wav'),
 }
 
 gBGTextures = {
@@ -368,3 +377,7 @@ gDateSounds = {
     ['mumble'] = love.audio.newSource('src/games/date/sounds/mumbling.mp3'),
 }
 
+gWorkImages = {
+    ['office'] = love.graphics.newImage('graphics/sets/work_office.jpg'),
+    ['meeting'] = love.graphics.newImage('graphics/sets/work_meeting_room.jpg'),
+}

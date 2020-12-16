@@ -134,6 +134,14 @@ require 'src/world/work/states/WorkWEnterMeetingState'
 require 'src/world/work/states/WorkWExitMeetingState'
 require 'src/world/work/states/WorkWExitOfficeState'
 
+-- Work Game requirements
+require 'src/games/work/src/WorkGBackground'
+require 'src/games/work/src/WorkGBall'
+require 'src/games/work/src/WorkGPaddle'
+require 'src/games/work/src/states/WorkGStartState'
+require 'src/games/work/src/states/WorkGServeState'
+require 'src/games/work/src/states/WorkGPlayState'
+require 'src/games/work/src/states/WorkGGameOverState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -181,6 +189,7 @@ gTextures = {
     ['keeks-walk'] = love.graphics.newImage('graphics/characters/kiki_walk.png'),
     ['cursor'] = love.graphics.newImage('graphics/cursor.png'),
     ['city'] = love.graphics.newImage('graphics/sets/urban1.png'),
+    ['sec-rep-walk'] = love.graphics.newImage('graphics/characters/sec_rep.png'),
 }
 
 gTOTAL_CHAR_COUNT = 4
@@ -218,8 +227,12 @@ retDict = GenerateKeeksQuadsandInfo(gTextures['keeks-walk'])
 gFrames['keeks-frames'] = retDict['quads']
 gFramesInfo['keeks-frames'] = retDict['info']
 
+retDict = GenerateCharacterQuadsAndInfo(gTextures['sec-rep-walk'])
+gFrames['sec-rep-frames'] = retDict['quads']
+gFramesInfo['sec-rep-frames'] = retDict['info']
+
 for charCount = 1, gTOTAL_CHAR_COUNT do
-    retDict = GenerateCharacterQuandsAndInfo(gTextures['character-'..charCount])
+    retDict = GenerateCharacterQuadsAndInfo(gTextures['character-'..charCount])
     gFrames['character-'..charCount] = retDict['quads']
     gFramesInfo['character-'..charCount] = retDict['info']
 end
@@ -380,4 +393,12 @@ gDateSounds = {
 gWorkImages = {
     ['office'] = love.graphics.newImage('graphics/sets/work_office.jpg'),
     ['meeting'] = love.graphics.newImage('graphics/sets/work_meeting_room.jpg'),
+    ['report'] = love.graphics.newImage('graphics/spac_report.png'),
+}
+
+gWorkSounds = {
+    ['paddle_hit'] = love.audio.newSource('src/games/work/sounds/paddle_hit.wav'),
+    ['wall_hit'] = love.audio.newSource('src/games/work/sounds/wall_hit.wav'),
+    ['score'] = love.audio.newSource('src/games/work/sounds/score.wav'),
+
 }

@@ -10,7 +10,7 @@ require 'src/Dependencies'
 
 function love.load()
     math.randomseed(os.time())
-    love.window.setTitle('Legend of Zelda')
+    love.window.setTitle('Keeks Last Weeks')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -45,7 +45,7 @@ function love.load()
             -- gStateStack:push(DateWEnterRestState())
             -- gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
-            gStateStack:push(WorkWExitMeetingState())
+            gStateStack:push(WorkGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

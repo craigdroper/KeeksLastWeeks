@@ -4,7 +4,7 @@ WorkWExitMeetingState = Class{__includes = BaseState}
 function WorkWExitMeetingState:init(params)
     self.player = gGlobalObjs['player']
     self.office = WorkWOffice()
-    -- self.gameStats = params.gameStats
+    self.gameStats = params.gameStats
 end
 
 function WorkWExitMeetingState:enter()

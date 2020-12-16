@@ -193,11 +193,18 @@ function GenerateKeeksQuadsandInfo(atlas)
     addAptQuadInfoSmart(atlas, sheet, info,
         gKEEKS_IDLE_UP, 20, 249, 57, 305)
 
+    gKEEKS_IDLE_RIGHT = 'keeks_idle_right'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gKEEKS_IDLE_RIGHT, 563, 172, 591, 229)
+
+    gKEEKS_IDLE_LEFT = 'keeks_idle_left'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gKEEKS_IDLE_LEFT, 564, 95, 592, 152)
 
     return {['quads'] = sheet, ['info'] = info}
 end
 
-function GenerateCharacterQuandsAndInfo(atlas)
+function GenerateCharacterQuadsAndInfo(atlas)
     local sheet = {}
     local info = {}
 
@@ -209,6 +216,13 @@ function GenerateCharacterQuandsAndInfo(atlas)
     addAptQuadInfoSmart(atlas, sheet, info,
         gCHARACTER_IDLE_UP, 19, 246, 56, 308)
 
+    gCHARACTER_IDLE_RIGHT = 'character_idle_right'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gCHARACTER_IDLE_RIGHT, 562, 170, 590, 229 )
+
+    gCHARACTER_IDLE_LEFT = 'character_idle_left'
+    addAptQuadInfoSmart(atlas, sheet, info,
+        gCHARACTER_IDLE_LEFT, 564, 93, 593, 154 )
 
     return {['quads'] = sheet, ['info'] = info}
 end

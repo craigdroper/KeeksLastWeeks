@@ -26,7 +26,7 @@ function WorkGServeState:update(dt)
             player1 = self.player1,
             player2 = self.player2,
             ball = self.ball,
-            servingPlayer = self.servingPlayer,
+            upservingPlayer = self.servingPlayer,
             }))
     end
 end
@@ -37,8 +37,13 @@ function WorkGServeState:render()
     self.player2:render()
     self.ball:render()
     -- UI messages
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.printf('Player ' .. tostring(self.servingPlayer) .. "'s serve!", 
-        0, 10, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf('Press Enter to serve!', 0, 20, VIRTUAL_WIDTH, 'center')
+    love.graphics.setFont(gFonts['medium'])
+    if self.servingPlayer == 1 then
+        love.graphics.printf('Keek\'s serve!',
+            0, VIRTUAL_HEIGHT/2 - 40, VIRTUAL_WIDTH, 'center')
+    else
+        love.graphics.printf('SEC\'s serve!',
+            0, VIRTUAL_HEIGHT/2 - 40, VIRTUAL_WIDTH, 'center')
+    end
+    love.graphics.printf('Press Enter to serve!', 0, VIRTUAL_HEIGHT/2 + 40, VIRTUAL_WIDTH, 'center')
 end

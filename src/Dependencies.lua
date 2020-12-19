@@ -393,12 +393,14 @@ gDateSounds = {
 gWorkImages = {
     ['office'] = love.graphics.newImage('graphics/sets/work_office.jpg'),
     ['meeting'] = love.graphics.newImage('graphics/sets/work_meeting_room.jpg'),
-    ['report'] = love.graphics.newImage('graphics/spac_report.png'),
+    --['report'] = love.graphics.newImage('graphics/spac_report.png'),
+    ['report'] = love.graphics.newImage('src/games/work/graphics/report.png'),
 }
 
 gWorkSounds = {
     ['paddle_hit'] = love.audio.newSource('src/games/work/sounds/paddle_hit.wav'),
     ['wall_hit'] = love.audio.newSource('src/games/work/sounds/wall_hit.wav'),
     ['score'] = love.audio.newSource('src/games/work/sounds/score.wav'),
+    ['background'] = love.audio.newSource('sounds/office_whitenoise.mp3'),
 
 }

@@ -42,6 +42,7 @@ function WorkWExitOfficeState:tweenExit()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- Pop the WorkWExit off
+            gWorkSounds['background']:stop()
             gStateStack:pop()
             gStateStack:push(self.nextGameState)
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,

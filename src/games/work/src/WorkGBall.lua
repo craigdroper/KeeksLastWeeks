@@ -19,8 +19,8 @@ function WorkGBall:init(x, y)
     self.y = y
     self.image = gWorkImages['report']
     local width, height = self.image:getDimensions()
-    self.width = 20
-    self.height = 20
+    self.width = 18
+    self.height = 22
     self.sx = self.width / width
     self.sy = self.height / height
 
@@ -28,6 +28,7 @@ function WorkGBall:init(x, y)
     -- X and Y axis, since the ball can move in two dimensions
     self.dy = 0
     self.dx = 0
+    self:reset()
 end
 
 --[[
@@ -55,8 +56,8 @@ end
     Places the ball in the middle of the screen, with no movement.
 ]]
 function WorkGBall:reset()
-    self.x = VIRTUAL_WIDTH / 2 - 2
-    self.y = VIRTUAL_HEIGHT / 2 - 2
+    self.x = VIRTUAL_WIDTH / 2 - self.width/2
+    self.y = VIRTUAL_HEIGHT / 2 - self.height/2
     self.dx = 0
     self.dy = 0
 end

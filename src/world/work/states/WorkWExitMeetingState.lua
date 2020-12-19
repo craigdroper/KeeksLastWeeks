@@ -19,10 +19,10 @@ function WorkWExitMeetingState:enter()
     self.player.y = MEETING_Y
     -- Setup tween entrance
     self:tweenEnter()
-    -- Begin playing the casino background music
-    -- TODO change to office noises
-    gDateSounds['background']:setLooping(true)
-    gDateSounds['background']:play()
+    -- Begin playing the work background music
+    -- The background noise was running during the game
+    -- gWorkSounds['background']:setLooping(true)
+    -- gWorkSounds['background']:play()
 end
 
 function WorkWExitMeetingState:tweenEnter()
@@ -34,7 +34,7 @@ function WorkWExitMeetingState:tweenEnter()
     local HOP_Y = DESK_Y - 40
     local MEETING_Y = VIRTUAL_HEIGHT/2  - 40
     local ANNOUNCEMENT_X = APRX_TURN_X + 25
-    local ANNOUNCEMENT_Y = MEETING_Y + 20 
+    local ANNOUNCEMENT_Y = MEETING_Y + 20
 
     gSounds['door']:play()
     local doorDuration = gSounds['door']:getDuration()
@@ -53,7 +53,7 @@ function WorkWExitMeetingState:tweenEnter()
     gSounds['footsteps']:stop()
     self.player:changeAnimation('idle-down')
     gStateStack:push(UpdatePlayerStatsState({player = self.player,
-        stats = {money = 100}, callback =
+        stats = {money = self.gameStats['score'] * 25}, callback =
         function()
         gStateStack:push(DialogueState(
             'Keeks: Well that\'s probably the day for me. Happy hour anyone?\n\n'..

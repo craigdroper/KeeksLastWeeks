@@ -34,7 +34,14 @@ function WorkGPaddle:init(x, y, textName, frameName, charFrame)
     self.charFrame = charFrame
     self.width = gFramesInfo[self.frameName][self.charFrame]['width']
     self.height = gFramesInfo[self.frameName][self.charFrame]['height']
-    self.score = 0
+    self.score = 9
+    self.renderScore = false
+    if charFrame == gKEEKS_IDLE_RIGHT then
+        self.scoreX = VIRTUAL_WIDTH / 2 - 50
+    else
+        self.scoreX = VIRTUAL_WIDTH / 2 + 30
+    end
+    self.scoreY = VIRTUAL_HEIGHT / 3 
 end
 
 function WorkGPaddle:update(dt)
@@ -65,4 +72,7 @@ function WorkGPaddle:render()
         gTextures[self.textName],
         gFrames[self.frameName][self.charFrame],
         self.x, self.y)
+    if self.renderScore then
+        love.graphics.print(tostring(self.score), self.scoreX, self.scoreY)
+    end
 end

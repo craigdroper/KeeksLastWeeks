@@ -19,9 +19,9 @@ function WorkWEnterOfficeState:enter()
     self.player.y = VIRTUAL_HEIGHT + self.player:getHeight()
     -- Setup tween entrance
     self:tweenEnter()
-    -- Begin playing the casino background music
-    gDateSounds['background']:setLooping(true)
-    gDateSounds['background']:play()
+    -- Begin playing the work background music
+    gWorkSounds['background']:setLooping(true)
+    gWorkSounds['background']:play()
 end
 
 function WorkWEnterOfficeState:tweenEnter()

@@ -1,7 +1,7 @@
 
 WorkGPlayState = Class{__includes = BaseState}
 
-local PADDLE_SPEED = 200
+local PADDLE_SPEED = 300
 
 function WorkGPlayState:init(params)
     self.background = params.background
@@ -16,8 +16,8 @@ function WorkGPlayState:update(dt)
     -- slightly increasing it, then altering the dy based on the position
     -- at which it collided, then playing a sound effect
     if self.ball:collides(self.player1) then
-        self.ball.dx = -self.ball.dx * 1.03
-        self.ball.x = self.player1.x + 5
+        self.ball.dx = -self.ball.dx * 1.1
+        self.ball.x = self.player1.x + self.player1.width
 
         -- keep velocity going in the same direction, but randomize it
         if self.ball.dy < 0 then
@@ -29,8 +29,8 @@ function WorkGPlayState:update(dt)
         gWorkSounds['paddle_hit']:play()
     end
     if self.ball:collides(self.player2) then
-        self.ball.dx = -self.ball.dx * 1.03
-        self.ball.x = self.player2.x - 4
+        self.ball.dx = -self.ball.dx * 1.1
+        self.ball.x = self.player2.x - self.ball.width
 
         -- keep velocity going in the same direction, but randomize it
         if self.ball.dy < 0 then
@@ -51,8 +51,8 @@ function WorkGPlayState:update(dt)
     end
 
     -- -4 to account for the ball's size
-    if self.ball.y >= VIRTUAL_HEIGHT - 4 then
-        self.ball.y = VIRTUAL_HEIGHT - 4
+    if self.ball.y >= VIRTUAL_HEIGHT - self.ball.height then
+        self.ball.y = VIRTUAL_HEIGHT - self.ball.height
         self.ball.dy = -self.ball.dy
         gWorkSounds['wall_hit']:play()
     end
@@ -60,7 +60,7 @@ function WorkGPlayState:update(dt)
     -- if we reach the left edge of the screen, go back to serve
     -- and update the score and serving player
     if self.ball.x < 0 then
-        self.player2.score = player2Score + 1
+        self.player2.score = self.player2.score + 1
         gWorkSounds['score']:play()
 
         -- if we've reached a score of 10, the game is over; set the
@@ -131,7 +131,7 @@ function WorkGPlayState:update(dt)
 
     -- player 2
     -- UPDATE: player 2 will be the AI paddle and it will always
-    -- "chase" the ball by appropriately changing its direction 
+    -- "chase" the ball by appropriately changing its direction
     -- depending on where the ball is in relation to itself
     -- To make the AI a little more human, we'll only update the y
     -- position once the ball has crossed the halfway point
@@ -140,8 +140,8 @@ function WorkGPlayState:update(dt)
     if self.ball.x > VIRTUAL_WIDTH / 2 then
       -- This is a parameter that could be tweaked with some type of
       -- 'difficulty' input variable selected at the beginning of the game
-      -- but for now its hardcoded to make a move in the wrong direction 10% of the time
-      potentialMistake = math.random(10) == 1 and -1 or 1
+      -- but for now its hardcoded to make a move in the wrong direction ~6% of the time
+      potentialMistake = math.random(15) == 1 and -1 or 1
       if self.player2.y > self.ball.y + self.ball.height then
           self.player2.dy = potentialMistake * -PADDLE_SPEED
       elseif self.player2.y + self.player2.height < self.ball.y then

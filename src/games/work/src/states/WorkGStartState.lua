@@ -25,11 +25,13 @@ function WorkGStartState:enter()
     gStateStack:push(DialogueState(
         'SEC: Keeks I presume?\nYour last SPAC filing raised a lot of red flags '..
         'at the commission, seems like there\'s some really shady stuff in here.\n' ..
-        'Let\'s go back and forth reviewing your filing, and let\'s see if you can '..
-        'get anything past me.',
+        'Let\'s go back and forth reviewing your filing, and see if you can '..
+        'get anything past me. Let\'s say first to 10?',
         function()
             -- Once the dialogue state is closed, pop off the start
             -- state and push on a play state for level 1
+            self.player1.renderScore = true
+            self.player2.renderScore = true
             gStateStack:pop()
             gStateStack:push(WorkGServeState({
                 background = self.background,

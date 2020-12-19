@@ -14,10 +14,10 @@ end
 
 function WorkGGameOverState:update(dt)
     -- Push a dialogue box depending on the result
-    gameStats = {}
+    local gameStats = {}
     local dialogue
     if self.winningPlayer == 1 then
-        gameStats['score'] = scoreDelta
+        gameStats['score'] = self.scoreDelta
         dialogue = 'SEC: Well, I guess everything checks out after all and the deal '..
             'can proceed. I bet your company will be giving you a nice bonus for this.\n'..
             'Until next time Keeks.'
@@ -25,7 +25,7 @@ function WorkGGameOverState:update(dt)
         gameStats['score'] = 0
         dialogue = 'SEC: You thought you could get this shit passed us? We\'re '..
         'slapping your company with a huge fine, and I\'ll bet that means no '..
-        'bonus for Keeks for a very long time'
+        'bonus for Keeks for a very long time.'
     end
     gStateStack:push(DialogueState(dialogue,
         function()

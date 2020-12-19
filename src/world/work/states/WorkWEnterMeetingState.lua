@@ -67,8 +67,9 @@ function WorkWEnterMeetingState:tweenEnter()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- Pop the WEnterMeeting state off
+            gSounds['footsteps']:stop()
             gStateStack:pop()
-            gStateStack:push(WorkWExitMeetingState())
+            gStateStack:push(WorkGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

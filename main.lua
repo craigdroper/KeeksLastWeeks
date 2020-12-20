@@ -46,7 +46,8 @@ function love.load()
             -- gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
             -- gStateStack:push(WorkGStartState())
-            gStateStack:push(DoctorWEnterRoomState())
+            -- gStateStack:push(DoctorWEnterRoomState())
+            gStateStack:push(DocGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
@@ -54,6 +55,7 @@ function love.load()
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
+    love.mouse.keysReleased = {}
     love.keyboard.textInput = ''
 end
 
@@ -103,6 +105,10 @@ function love.mousepressed(x, y, button)
     love.mouse.buttonsPressed[button] = true
 end
 
+function love.mousereleased(x, y, key)
+    love.mouse.keysReleased[key] = true 
+end
+
 function love.keyboard.wasPressed(key)
     return love.keyboard.keysPressed[key]
 end
@@ -112,6 +118,10 @@ end
 ]]
 function love.mouse.wasPressed(button)
     return love.mouse.buttonsPressed[button]
+end
+
+function love.mouse.wasReleased(key)
+    return love.mouse.keysReleased[key]
 end
 
 function love.update(dt)
@@ -125,6 +135,7 @@ function love.update(dt)
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
+    love.mouse.keysReleased = {}
 end
 
 function love.draw()

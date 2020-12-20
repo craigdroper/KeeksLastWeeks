@@ -150,6 +150,15 @@ require 'src/world/doctor/states/DoctorWEnterGameState'
 require 'src/world/doctor/states/DoctorWExitGameState'
 require 'src/world/doctor/states/DoctorWExitRoomState'
 
+-- Doctor Game requirements
+require 'src/games/doctor/src/DocGAlien'
+require 'src/games/doctor/src/DocGAlienLaunchMarker'
+require 'src/games/doctor/src/DocGBackground'
+require 'src/games/doctor/src/DocGLevel'
+require 'src/games/doctor/src/DocGObstacle'
+require 'src/games/doctor/src/states/DocGPlayState'
+require 'src/games/doctor/src/states/DocGStartState'
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -418,4 +427,55 @@ gDoctorImages = {
 
 gDoctorSounds = {
     ['background'] = love.audio.newSource('sounds/doctor_background.mp3'),
+}
+
+gDocGTextures = {
+    -- backgrounds
+    ['blue-desert'] = love.graphics.newImage('src/games/doctor/graphics/blue_desert.png'),
+    ['blue-grass'] = love.graphics.newImage('src/games/doctor/graphics/blue_grass.png'),
+    ['blue-land'] = love.graphics.newImage('src/games/doctor/graphics/blue_land.png'),
+    ['blue-shroom'] = love.graphics.newImage('src/games/doctor/graphics/blue_shroom.png'),
+    ['colored-land'] = love.graphics.newImage('src/games/doctor/graphics/colored_land.png'),
+    ['colored-desert'] = love.graphics.newImage('src/games/doctor/graphics/colored_desert.png'),
+    ['colored-grass'] = love.graphics.newImage('src/games/doctor/graphics/colored_grass.png'),
+    ['colored-shroom'] = love.graphics.newImage('src/games/doctor/graphics/colored_shroom.png'),
+
+    -- aliens
+    ['aliens'] = love.graphics.newImage('src/games/doctor/graphics/aliens.png'),
+
+    -- tiles
+    ['tiles'] = love.graphics.newImage('src/games/doctor/graphics/tiles.png'),
+
+    -- wooden obstacles
+    ['wood'] = love.graphics.newImage('src/games/doctor/graphics/wood.png'),
+
+    -- arrow for trajectory
+    ['arrow'] = love.graphics.newImage('src/games/doctor/graphics/arrow.png')
+}
+
+gDocGFrames = {
+    ['aliens'] = GenerateQuads(gDocGTextures['aliens'], 35, 35),
+    ['tiles'] = GenerateQuads(gDocGTextures['tiles'], 35, 35),
+
+    ['wood'] = {
+        love.graphics.newQuad(0, 0, 110, 35, gDocGTextures['wood']:getDimensions()),
+        love.graphics.newQuad(0, 35, 110, 35, gDocGTextures['wood']:getDimensions()),
+        love.graphics.newQuad(320, 180, 35, 110, gDocGTextures['wood']:getDimensions()),
+        love.graphics.newQuad(355, 355, 35, 110, gDocGTextures['wood']:getDimensions())
+    }
+}
+
+-- tweak circular alien quad
+gDocGFrames['aliens'][9]:setViewport(105.5, 35.5, 35, 34.2)
+
+gDocGSounds = {
+    ['break1'] = love.audio.newSource('src/games/doctor/sounds/break1.wav'),
+    ['break2'] = love.audio.newSource('src/games/doctor/sounds/break2.wav'),
+    ['break3'] = love.audio.newSource('src/games/doctor/sounds/break3.mp3'),
+    ['break4'] = love.audio.newSource('src/games/doctor/sounds/break4.wav'),
+    ['break5'] = love.audio.newSource('src/games/doctor/sounds/break5.wav'),
+    ['bounce'] = love.audio.newSource('src/games/doctor/sounds/bounce.wav'),
+    ['kill'] = love.audio.newSource('src/games/doctor/sounds/kill.wav'),
+
+    ['music'] = love.audio.newSource('src/games/doctor/sounds/music.wav'),
 }

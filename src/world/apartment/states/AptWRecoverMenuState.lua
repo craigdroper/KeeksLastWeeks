@@ -21,6 +21,21 @@ function AptWRecoverMenuState:init(params)
                         }))
                 end
             },
+            {
+                text = 'Go to Work',
+                onSelect = function()
+                    -- Pop AptWRecoverMenuState
+                    gStateStack:pop()
+                    -- Pop AptStationaryState
+                    gStateStack:pop()
+                    -- Transition to leave state
+                    gStateStack:push(AptWExitState(
+                        {
+                            apartment = self.apartment,
+                            nextGameState = WorkWEnterOfficeState()
+                        }))
+                end
+            },
         }
     }
 end

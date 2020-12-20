@@ -56,6 +56,8 @@ function WorkWEnterOfficeState:tweenEnter()
     -- Hop/jump into the desk chair
     self.player:changeAnimation('idle-right')
     gSounds['footsteps']:stop()
+    Timer.after(0.5,
+        function()
     gSounds['jump']:play()
     Timer.tween(0.2, {
         [self.player] = {x = MID_HOP_X, y = HOP_Y}
@@ -66,10 +68,10 @@ function WorkWEnterOfficeState:tweenEnter()
     }):finish(
         function()
         self.player:changeAnimation('idle-right')
-        gSounds['footsteps']:stop()
         -- Pop the work Enter State off, and Push WorkWEnterMeeting
         gStateStack:pop()
         gStateStack:push(WorkWEnterMeetingState({office = self.office}))
+        end)
         end)
         end)
         end)

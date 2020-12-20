@@ -143,6 +143,13 @@ require 'src/games/work/src/states/WorkGServeState'
 require 'src/games/work/src/states/WorkGPlayState'
 require 'src/games/work/src/states/WorkGGameOverState'
 
+-- Doctor World requirements
+require 'src/world/doctor/DoctorWRoom'
+require 'src/world/doctor/states/DoctorWEnterRoomState'
+require 'src/world/doctor/states/DoctorWEnterGameState'
+require 'src/world/doctor/states/DoctorWExitGameState'
+require 'src/world/doctor/states/DoctorWExitRoomState'
+
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
 require 'src/world/alley/states/AlleyWStationaryState'
@@ -403,4 +410,12 @@ gWorkSounds = {
     ['score'] = love.audio.newSource('src/games/work/sounds/score.wav'),
     ['background'] = love.audio.newSource('sounds/office_whitenoise.mp3'),
 
+}
+
+gDoctorImages = {
+    ['room'] = love.graphics.newImage('graphics/sets/doctor_exam_room.png'),
+}
+
+gDoctorSounds = {
+    ['background'] = love.audio.newSource('sounds/doctor_background.mp3'),
 }

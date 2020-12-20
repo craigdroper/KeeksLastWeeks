@@ -65,6 +65,7 @@ function CasWEnterState:tweenEnter()
     -- "Hop/Jump" onto the mid table chair facing left after a small wind up
     -- pause for the jump
     gSounds['footsteps']:stop()
+    gSounds['jump']:play()
     Timer.tween(0.5, {
         [self.player] = {x = APRX_MID_TABLE_CHAIR_X, y = APRX_MID_TABLE_CHAIR_Y}
     }):finish(

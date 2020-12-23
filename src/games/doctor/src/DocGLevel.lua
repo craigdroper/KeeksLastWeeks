@@ -12,6 +12,7 @@ function DocGLevel:init()
     -- create a new "world" (where physics take place), with no x gravity
     -- and 30 units of Y gravity (for downward force)
     self.world = love.physics.newWorld(0, 300)
+    self.player = gGlobalObjs['player']
 
     -- bodies we will destroy after the world update cycle; destroying these in the
     -- actual collision callbacks can cause stack overflow and other errors
@@ -117,6 +118,21 @@ function DocGLevel:init()
 
     end
 
+    self.vertObs = DocGObstacle(self.world, 'vertical', 0, 0)
+    self.horzObs = DocGObstacle(self.world, 'horizontal', 0, 0)
+    self.alien = DocGAlien(self.world, 'square', 0, 0, 'Alien')
+    self.groundHeight = 35
+    self.gridXCoords = {
+        [1] = VIRTUAL_WIDTH - (self.vertObs.width + 3*self.horzObs.width),
+        [2] = VIRTUAL_WIDTH - (self.vertObs.width + 2*self.horzObs.width),
+        [3] = VIRTUAL_WIDTH - (self.vertObs.width + 1*self.horzObs.width),
+    }
+    self.gridYCoords = {
+        [1] = VIRTUAL_HEIGHT - self.groundHeight - 1*(self.vertObs.height + self.horzObs.height),
+        [2] = VIRTUAL_HEIGHT - self.groundHeight - 2*(self.vertObs.height + self.horzObs.height),
+        [3] = VIRTUAL_HEIGHT - self.groundHeight - 3*(self.vertObs.height + self.horzObs.height),
+    }
+
     -- register just-defined functions as collision callbacks for world
     self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
@@ -132,25 +148,117 @@ function DocGLevel:init()
     -- simple edge shape to represent collision for ground
     self.edgeShape = love.physics.newEdgeShape(0, 0, VIRTUAL_WIDTH * 3, 0)
 
-    -- spawn an alien to try and destroy
-    table.insert(self.aliens, DocGAlien(self.world, 'square', VIRTUAL_WIDTH - 80, VIRTUAL_HEIGHT - DOCG_TILE_SIZE - DOCG_ALIEN_SIZE / 2, 'Alien'))
-
-    -- spawn a few obstacles
-    table.insert(self.obstacles, DocGObstacle(self.world, 'vertical',
-        VIRTUAL_WIDTH - 120, VIRTUAL_HEIGHT - 35 - 110 / 2))
-    table.insert(self.obstacles, DocGObstacle(self.world, 'vertical',
-        VIRTUAL_WIDTH - 35, VIRTUAL_HEIGHT - 35 - 110 / 2))
-    table.insert(self.obstacles, DocGObstacle(self.world, 'horizontal',
-        VIRTUAL_WIDTH - 80, VIRTUAL_HEIGHT - 35 - 110 - 35 / 2))
+    self:createLevel()
 
     -- ground data
-    self.groundBody = love.physics.newBody(self.world, -VIRTUAL_WIDTH, VIRTUAL_HEIGHT - 35, 'static')
+    self.groundBody = love.physics.newBody(self.world, -VIRTUAL_WIDTH, VIRTUAL_HEIGHT - self.groundHeight, 'static')
     self.groundFixture = love.physics.newFixture(self.groundBody, self.edgeShape)
     self.groundFixture:setFriction(0.5)
     self.groundFixture:setUserData('Ground')
 
     -- background graphics
     self.background = DocGBackground()
+end
+
+-- Expecting a 3x3 boolean grid
+function DocGLevel:createLevel()
+    local numAliens = 20 - self.player.health / 5
+    local numAliens = 20
+    if( numAliens < 1 ) then
+        numAliens = 1
+    end
+    self.grid = {
+        [1] = {[1] = {build = false, numaliens = 0},
+               [2] = {build = false, numaliens = 0},
+               [3] = {build = false, numaliens = 0},
+           },
+        [2] = {[1] = {build = false, numaliens = 0},
+               [2] = {build = false, numaliens = 0},
+               [3] = {build = false, numaliens = 0},
+           },
+        [3] = {[1] = {build = false, numaliens = 0},
+               [2] = {build = false, numaliens = 0},
+               [3] = {build = false, numaliens = 0},
+           },
+    }
+    if( numAliens > 0 ) then
+        self.grid[2][1].build = true
+    end
+    if( numAliens > 2 ) then
+        self.grid[1][1].build = true
+        self.grid[3][1].build = true
+    end
+    if( numAliens > 7 ) then
+        self.grid[2][2].build = true
+    end
+    if( numAliens > 12 ) then
+        self.grid[1][2].build = true
+        self.grid[3][2].build = true
+    end
+    if( numAliens > 15 ) then
+        self.grid[1][3].build = true
+        self.grid[2][3].build = true
+        self.grid[3][3].build = true
+    end
+    -- Always place one on the ground in the lowest row and middle
+    -- column section, just in case there isn't a section of wood there
+    self.grid[2][1].numaliens = 1
+    numAliens = numAliens - 1
+    while( numAliens > 0 ) do
+        local x = math.random(3)
+        local y = math.random(3)
+        if( self.grid[x][y].build and self.grid[x][y].numaliens < 3 ) then
+            self.grid[x][y].numaliens = self.grid[x][y].numaliens + 1
+            numAliens = numAliens - 1
+        end
+    end
+    for col, colTable in pairs(self.grid) do
+        for row, secInfo in pairs(colTable) do
+            if( secInfo.build ) then
+                self:createSection(
+                    self.gridXCoords[col],
+                    self.gridYCoords[row],
+                    (col == 1 or not self.grid[col-1][row].build),
+                    secInfo.numaliens )
+            end
+        end
+    end
+end
+
+function DocGLevel:createSection(secX, secY, createLeftPillar, numAliens)
+    -- remember these are oriented from their center points
+    -- left vertical obstacle
+    if createLeftPillar then
+        table.insert(self.obstacles, DocGObstacle(self.world, 'vertical',
+            secX + self.vertObs.width/2,
+            secY + self.horzObs.height + self.vertObs.height/2) )
+    end
+    -- right vertical obstacle
+    table.insert(self.obstacles, DocGObstacle(self.world, 'vertical',
+        secX + self.vertObs.width/2 + self.horzObs.width,
+        secY + self.horzObs.height + self.vertObs.height/2) )
+    -- horizontal obstacle
+    table.insert(self.obstacles, DocGObstacle(self.world, 'horizontal',
+        secX + self.vertObs.width/2 + self.horzObs.width/2,
+        secY + self.horzObs.height/2) )
+
+    -- spawn an alien to try and destroy
+    if( numAliens >= 2 ) then
+        table.insert(self.aliens, DocGAlien(self.world, 'square',
+            secX + self.vertObs.width/2 + self.horzObs.width/2 - self.alien.width/2,
+            secY + self.horzObs.height + self.vertObs.height - self.alien.height/2,
+            'Alien' ) )
+        table.insert(self.aliens, DocGAlien(self.world, 'square',
+            secX + self.vertObs.width/2 + self.horzObs.width/2 + self.alien.width/2,
+            secY + self.horzObs.height + self.vertObs.height - self.alien.height/2,
+            'Alien' ) )
+    end
+    if( numAliens % 2 == 1 ) then
+        table.insert(self.aliens, DocGAlien(self.world, 'square',
+            secX + self.vertObs.width/2 + self.horzObs.width/2,
+            secY + self.horzObs.height + self.vertObs.height - self.alien.height*3/2,
+            'Alien' ) )
+    end
 end
 
 function DocGLevel:update(dt)

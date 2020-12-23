@@ -18,12 +18,14 @@ function DocGAlien:init(world, type, x, y, userData)
         x or math.random(VIRTUAL_WIDTH), y or math.random(VIRTUAL_HEIGHT - 35),
         'dynamic')
 
+    self.width = 35
+    self.height = 35
     -- different shape and sprite based on type passed in
     if self.type == 'square' then
-        self.shape = love.physics.newRectangleShape(35, 35)
+        self.shape = love.physics.newRectangleShape(self.width, self.height)
         self.sprite = math.random(5)
     else
-        self.shape = love.physics.newCircleShape(17.5)
+        self.shape = love.physics.newCircleShape(self.width/2)
         self.sprite = 9
     end
 

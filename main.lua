@@ -32,7 +32,7 @@ function love.load()
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            -- gStateStack:push(AptWEnterState())
+            gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
             -- gStateStack:push(AlleyWEnterState())
@@ -46,8 +46,8 @@ function love.load()
             -- gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
             -- gStateStack:push(WorkGStartState())
-            player.health = 50
-            gStateStack:push(DoctorWEnterRoomState())
+            -- player.health = 50
+            -- gStateStack:push(DoctorWEnterRoomState())
             -- gStateStack:push(DocGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()

@@ -18,7 +18,9 @@ function DocGLevel:init()
     self.launchRem = 2
 
     self.totalAliens = 20 - self.player.health / 5
-    self.totalAliens = 20
+    if( self.totalAliens < 1 ) then
+        self.totalAliens = 1
+    end
     self.destroyedAliens = 0
     -- bodies we will destroy after the world update cycle; destroying these in the
     -- actual collision callbacks can cause stack overflow and other errors
@@ -178,9 +180,6 @@ end
 -- Expecting a 3x3 boolean grid
 function DocGLevel:createLevel()
     local numAliens = self.totalAliens
-    if( numAliens < 1 ) then
-        numAliens = 1
-    end
     self.grid = {
         [1] = {[1] = {build = false, numaliens = 0},
                [2] = {build = false, numaliens = 0},

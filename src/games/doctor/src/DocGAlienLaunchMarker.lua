@@ -58,6 +58,10 @@ function DocGAlienLaunchMarker:update(dt)
 
         -- grab mouse coordinates
         local x, y = push:toGame(love.mouse.getPosition())
+        -- Hack with issue where the mouse drops off a retrievable y axis
+        if( y == nil ) then
+            y = VIRTUAL_HEIGHT
+        end
 
         -- if we click the mouse and haven't launched, show arrow preview
         if love.mouse.wasPressed(1) and not self.launched then
@@ -69,7 +73,8 @@ function DocGAlienLaunchMarker:update(dt)
             self.launched = true
 
             self:createPlayerAlien(self.shiftedX, self.shiftedY,
-                (self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
+                (self.baseX - self.shiftedX) * 15,
+                (self.baseY - self.shiftedY) * 15)
 
             -- we're no longer aiming
             self.aiming = false
@@ -113,8 +118,8 @@ function DocGAlienLaunchMarker:render()
         if self.aiming then
 
             -- render arrow if we're aiming, with transparency based on slingshot distance
-            local impulseX = (self.baseX - self.shiftedX) * 10
-            local impulseY = (self.baseY - self.shiftedY) * 10
+            local impulseX = (self.baseX - self.shiftedX) * 15
+            local impulseY = (self.baseY - self.shiftedY) * 15
 
             -- draw 6 circles simulating trajectory of estimated impulse
             local trajX, trajY = self.shiftedX, self.shiftedY
@@ -131,7 +136,7 @@ function DocGAlienLaunchMarker:render()
                 trajY = self.shiftedY + i * 1/60 * impulseY + 0.5 * (i * i + i) * gravY * 1/60 * 1/60
 
                 -- render every fifth calculation as a circle
-                if i % 5 == 0 then
+                if i % 5 == 0 and i <= 15  then
                     love.graphics.circle('fill', trajX, trajY, 3)
                 end
             end
@@ -143,6 +148,7 @@ function DocGAlienLaunchMarker:render()
             alien:render()
         end
     end
+    --[[
     -- XXX DEMO
     -- if self.spaceTextTimer ~= nil then
         local timerFadeTime = 0.5
@@ -155,4 +161,5 @@ function DocGAlienLaunchMarker:render()
             -- self.spaceTextTimer = nil
         -- end
     -- end
+    -- --]]
 end

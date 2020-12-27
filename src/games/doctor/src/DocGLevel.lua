@@ -14,9 +14,16 @@ function DocGLevel:init()
     self.world = love.physics.newWorld(0, 300)
     self.player = gGlobalObjs['player']
 
+    self.launchRem = 2
+
+    self.totalAliens = 20 - self.player.health / 5
+    self.totalAliens = 20
+    self.destroyedAliens = 0
     -- bodies we will destroy after the world update cycle; destroying these in the
     -- actual collision callbacks can cause stack overflow and other errors
     self.destroyedBodies = {}
+
+    self.velocityThreshold = 250
 
     -- define collision callbacks for our world; the World object expects four,
     -- one for different stages of any given collision
@@ -36,14 +43,14 @@ function DocGLevel:init()
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
                     table.insert(self.destroyedBodies, a:getBody())
                 end
             else
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
                     table.insert(self.destroyedBodies, b:getBody())
                 end
             end
@@ -57,14 +64,16 @@ function DocGLevel:init()
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
+                    self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, b:getBody())
                 end
             else
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
+                    self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, a:getBody())
                 end
             end
@@ -81,14 +90,16 @@ function DocGLevel:init()
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
+                    self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, b:getBody())
                 end
             else
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > 20 then
+                if sumVel > self.velocityThreshold then
+                    self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, a:getBody())
                 end
             end
@@ -121,11 +132,13 @@ function DocGLevel:init()
     self.vertObs = DocGObstacle(self.world, 'vertical', 0, 0)
     self.horzObs = DocGObstacle(self.world, 'horizontal', 0, 0)
     self.alien = DocGAlien(self.world, 'square', 0, 0, 'Alien')
+    self.playerIcon = DocGAlien(self.world, 'player', 0, 0, 'Player')
     self.groundHeight = 35
+    local levelX = VIRTUAL_WIDTH + self.horzObs.width/2
     self.gridXCoords = {
-        [1] = VIRTUAL_WIDTH - (self.vertObs.width + 3*self.horzObs.width),
-        [2] = VIRTUAL_WIDTH - (self.vertObs.width + 2*self.horzObs.width),
-        [3] = VIRTUAL_WIDTH - (self.vertObs.width + 1*self.horzObs.width),
+        [1] = levelX - (self.vertObs.width + 3*self.horzObs.width),
+        [2] = levelX - (self.vertObs.width + 2*self.horzObs.width),
+        [3] = levelX - (self.vertObs.width + 1*self.horzObs.width),
     }
     self.gridYCoords = {
         [1] = VIRTUAL_HEIGHT - self.groundHeight - 1*(self.vertObs.height + self.horzObs.height),
@@ -162,8 +175,7 @@ end
 
 -- Expecting a 3x3 boolean grid
 function DocGLevel:createLevel()
-    local numAliens = 20 - self.player.health / 5
-    local numAliens = 20
+    local numAliens = self.totalAliens
     if( numAliens < 1 ) then
         numAliens = 1
     end
@@ -314,6 +326,21 @@ function DocGLevel:update(dt)
                 self.launchMarker.aliens[i].body:destroy()
                 table.remove(self.launchMarker.aliens, i)
             end
+            self.launchRem = self.launchRem - 1
+
+            if( self.launchRem < 0 ) then
+                local gameStats = {numDestroyed = self.destroyedAliens}
+                gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                    function()
+                        -- Pop the Game state off
+                        gStateStack:pop()
+                        gStateStack:push(WorkWExitMeetingState({gameStats = gameStats}))
+                        gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                            function()
+                            end))
+                    end))
+            end
+
             self.launchMarker = DocGAlienLaunchMarker(self.world)
 
             -- re-initialize level if we have no more aliens
@@ -344,6 +371,14 @@ function DocGLevel:render()
     end
 
     self.launchMarker:render()
+
+    -- Draw the launches remaining in the top left corner
+    local padX = 5
+    local padY = 5
+    for i = 1, self.launchRem do
+        love.graphics.draw(gDocGTextures['aliens'], gDocGFrames['aliens'][self.playerIcon.sprite],
+            (i-1)*(self.playerIcon.width + padX), padY)
+    end
 
     for k, alien in pairs(self.aliens) do
         alien:render()

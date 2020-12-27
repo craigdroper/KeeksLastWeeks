@@ -14,10 +14,6 @@ function DocGPlayState:init()
 end
 
 function DocGPlayState:update(dt)
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
-
     -- update camera
     if love.keyboard.isDown('left') then
         self.levelTranslateX = self.levelTranslateX + DOCG_MAP_SCROLL_X_SPEED * dt
@@ -43,9 +39,11 @@ function DocGPlayState:update(dt)
 end
 
 function DocGPlayState:render()
+    --[[
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()))
     love.graphics.setColor(255, 255, 255, 255)
+    --]]
 
     -- render background separate from level rendering
     self.level.background:render()

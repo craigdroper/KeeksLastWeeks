@@ -43,7 +43,7 @@ function DocGObstacle:init(world, shape, x, y)
 
     self.fixture = love.physics.newFixture(self.body, self.shape)
 
-    self.fixture:setUserData('DocGObstacle')
+    self.fixture:setUserData('Obstacle')
 end
 
 function DocGObstacle:update(dt)

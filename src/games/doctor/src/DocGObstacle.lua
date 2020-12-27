@@ -17,9 +17,9 @@ function DocGObstacle:init(world, shape, x, y)
     self.shape = shape or 'horizontal'
 
     if self.shape == 'horizontal' then
-        self.frame = 2
+        self.image = gDoctorImages['horz_obs']
     elseif self.shape == 'vertical' then
-        self.frame = 4
+        self.image = gDoctorImages['vert_obs']
     end
 
     self.startX = x
@@ -38,6 +38,9 @@ function DocGObstacle:init(world, shape, x, y)
         self.width = 35
         self.height = 110
     end
+    self.imgW, self.imgH = self.image:getDimensions()
+    self.scaleX = self.width/self.imgW
+    self.scaleY = self.height/self.imgH
 
     self.shape = love.physics.newRectangleShape(self.width, self.height)
 
@@ -51,7 +54,13 @@ function DocGObstacle:update(dt)
 end
 
 function DocGObstacle:render()
-    love.graphics.draw(gDocGTextures['wood'], gDocGFrames['wood'][self.frame],
-        self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1,
-        self.width / 2, self.height / 2)
+    love.graphics.filterDrawD(
+        self.image,
+        self.body:getX(),
+        self.body:getY(),
+        self.body:getAngle(),
+        self.scaleX,
+        self.scaleY,
+        self.width / 2,
+        self.height / 2)
 end

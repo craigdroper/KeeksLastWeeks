@@ -36,6 +36,12 @@ function DocGPlayState:update(dt)
     end
 
     self.level:update(dt)
+
+    if #self.level.aliens == 0 or self.level.launchRem < 0 then
+        gStateStack:pop()
+        gStateStack:push(DocGGameOverState({level = self.level}))
+    end
+
 end
 
 function DocGPlayState:render()

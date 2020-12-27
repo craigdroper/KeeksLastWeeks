@@ -10,6 +10,7 @@ DocGAlienLaunchMarker = Class{}
 
 function DocGAlienLaunchMarker:init(world)
     self.world = world
+    self.isGameOver = false
 
     -- starting coordinates for launcher used to calculate launch vector
     self.baseX = 90
@@ -27,6 +28,8 @@ function DocGAlienLaunchMarker:init(world)
 
     -- whether we launched the alien and should stop rendering the preview
     self.launched = false
+
+    self.playerIcon = DocGAlien(self.world, 'player', 0, 0, 'Player')
 
     -- our alien we will eventually spawn
     self.aliens = {}
@@ -109,11 +112,19 @@ function DocGAlienLaunchMarker:update(dt)
 end
 
 function DocGAlienLaunchMarker:render()
+    if self.isGameOver then
+        return
+    end
     if not self.launched then
 
         -- render base alien, non physics based
-        love.graphics.draw(gDocGTextures['aliens'], gDocGFrames['aliens'][9],
-            self.shiftedX - 17.5, self.shiftedY - 17.5)
+        love.graphics.draw(
+            self.playerIcon.image,
+            self.shiftedX - self.playerIcon.width/2,
+            self.shiftedY - self.playerIcon.height/2,
+            0,
+            self.playerIcon.scaleX,
+            self.playerIcon.scaleY)
 
         if self.aiming then
 

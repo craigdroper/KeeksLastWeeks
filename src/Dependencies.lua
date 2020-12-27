@@ -158,6 +158,7 @@ require 'src/games/doctor/src/DocGLevel'
 require 'src/games/doctor/src/DocGObstacle'
 require 'src/games/doctor/src/states/DocGPlayState'
 require 'src/games/doctor/src/states/DocGStartState'
+require 'src/games/doctor/src/states/DocGGameOverState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -423,6 +424,11 @@ gWorkSounds = {
 
 gDoctorImages = {
     ['room'] = love.graphics.newImage('graphics/sets/doctor_exam_room.png'),
+    ['pill'] = love.graphics.newImage('src/games/doctor/graphics/pill.png'),
+    ['virus'] = love.graphics.newImage('src/games/doctor/graphics/virus2.png'),
+    ['brainscan'] = love.graphics.newImage('src/games/doctor/graphics/brainscan.jpg'),
+    ['vert_obs'] = love.graphics.newImage('src/games/doctor/graphics/vertobs.png'),
+    ['horz_obs'] = love.graphics.newImage('src/games/doctor/graphics/horzobs.png'),
 }
 
 gDoctorSounds = {

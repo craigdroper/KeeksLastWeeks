@@ -22,8 +22,7 @@ function DoctorWEnterGameState:enter()
                 function()
             -- Pop the WEnterGame state off
             gStateStack:pop()
-            gStateStack:push(DoctorWExitGameState())
-            -- gStateStack:push(DoctorGStartState())
+            gStateStack:push(DocGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

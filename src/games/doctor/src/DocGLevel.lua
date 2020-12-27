@@ -13,6 +13,7 @@ function DocGLevel:init()
     -- and 30 units of Y gravity (for downward force)
     self.world = love.physics.newWorld(0, 300)
     self.player = gGlobalObjs['player']
+    self.isGameOver = false
 
     self.launchRem = 2
 
@@ -23,7 +24,8 @@ function DocGLevel:init()
     -- actual collision callbacks can cause stack overflow and other errors
     self.destroyedBodies = {}
 
-    self.velocityThreshold = 250
+    self.obsVelocity = 200
+    self.virusVelocity = 400
 
     -- define collision callbacks for our world; the World object expects four,
     -- one for different stages of any given collision
@@ -43,14 +45,14 @@ function DocGLevel:init()
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.obsVelocity then
                     table.insert(self.destroyedBodies, a:getBody())
                 end
             else
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.obsVelocity then
                     table.insert(self.destroyedBodies, b:getBody())
                 end
             end
@@ -64,7 +66,7 @@ function DocGLevel:init()
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.virusVelocity then
                     self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, b:getBody())
                 end
@@ -72,7 +74,7 @@ function DocGLevel:init()
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.virusVelocity then
                     self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, a:getBody())
                 end
@@ -90,7 +92,7 @@ function DocGLevel:init()
                 local velX, velY = a:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.virusVelocity then
                     self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, b:getBody())
                 end
@@ -98,7 +100,7 @@ function DocGLevel:init()
                 local velX, velY = b:getBody():getLinearVelocity()
                 local sumVel = math.abs(velX) + math.abs(velY)
 
-                if sumVel > self.velocityThreshold then
+                if sumVel > self.virusVelocity then
                     self.destroyedAliens = self.destroyedAliens + 1
                     table.insert(self.destroyedBodies, a:getBody())
                 end
@@ -258,16 +260,19 @@ function DocGLevel:createSection(secX, secY, createLeftPillar, numAliens)
     if( numAliens >= 2 ) then
         table.insert(self.aliens, DocGAlien(self.world, 'square',
             secX + self.vertObs.width/2 + self.horzObs.width/2 - self.alien.width/2,
+            -- secY + self.horzObs.height + self.vertObs.height - self.alien.height,
             secY + self.horzObs.height + self.vertObs.height - self.alien.height/2,
             'Alien' ) )
         table.insert(self.aliens, DocGAlien(self.world, 'square',
             secX + self.vertObs.width/2 + self.horzObs.width/2 + self.alien.width/2,
+            -- secY + self.horzObs.height + self.vertObs.height - self.alien.height,
             secY + self.horzObs.height + self.vertObs.height - self.alien.height/2,
             'Alien' ) )
     end
     if( numAliens % 2 == 1 ) then
         table.insert(self.aliens, DocGAlien(self.world, 'square',
             secX + self.vertObs.width/2 + self.horzObs.width/2,
+            -- secY + self.horzObs.height + self.vertObs.height - self.alien.height*2,
             secY + self.horzObs.height + self.vertObs.height - self.alien.height*3/2,
             'Alien' ) )
     end
@@ -328,6 +333,7 @@ function DocGLevel:update(dt)
             end
             self.launchRem = self.launchRem - 1
 
+            --[[
             if( self.launchRem < 0 ) then
                 local gameStats = {numDestroyed = self.destroyedAliens}
                 gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
@@ -340,6 +346,7 @@ function DocGLevel:update(dt)
                             end))
                     end))
             end
+            --]]
 
             self.launchMarker = DocGAlienLaunchMarker(self.world)
 
@@ -367,7 +374,7 @@ end
 function DocGLevel:render()
     -- render ground tiles across full scrollable width of the screen
     for x = -VIRTUAL_WIDTH, VIRTUAL_WIDTH * 2, 35 do
-        love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
+        -- love.graphics.draw(gTextures['tiles'], gFrames['tiles'][12], x, VIRTUAL_HEIGHT - 35)
     end
 
     self.launchMarker:render()
@@ -376,8 +383,12 @@ function DocGLevel:render()
     local padX = 5
     local padY = 5
     for i = 1, self.launchRem do
-        love.graphics.draw(gDocGTextures['aliens'], gDocGFrames['aliens'][self.playerIcon.sprite],
-            (i-1)*(self.playerIcon.width + padX), padY)
+        love.graphics.filterDrawD(self.playerIcon.image,
+            (i-1)*(self.playerIcon.width + padX),
+            padY,
+            0,
+            self.playerIcon.scaleX,
+            self.playerIcon.scaleY )
     end
 
     for k, alien in pairs(self.aliens) do
@@ -389,19 +400,19 @@ function DocGLevel:render()
     end
 
     -- render instruction text if we haven't launched bird
-    if not self.launchMarker.launched then
+    if not self.launchMarker.launched and not self.isGameOver then
         love.graphics.setFont(gFonts['medium'])
-        love.graphics.setColor(0, 0, 0, 255)
-        love.graphics.printf('Click and drag circular alien to shoot!',
+        love.graphics.setColor(255, 50, 50, 255)
+        love.graphics.printf('Click and drag medicine to shoot!',
             0, 64, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(255, 255, 255, 255)
     end
 
-    -- render victory text if all aliens are dead
+    -- game over all aliens are dead
+    --[[
     if #self.aliens == 0 then
-        love.graphics.setFont(gFonts['huge'])
-        love.graphics.setColor(0, 0, 0, 255)
-        love.graphics.printf('VICTORY', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
-        love.graphics.setColor(255, 255, 255, 255)
+        gStateStack:pop()
+        gStateStack:push(DocGGameOverState({level = self.level}))
     end
+    --]]
 end

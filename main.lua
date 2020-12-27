@@ -46,8 +46,9 @@ function love.load()
             -- gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
             -- gStateStack:push(WorkGStartState())
-            -- gStateStack:push(DoctorWEnterRoomState())
-            gStateStack:push(DocGStartState())
+            player.health = 50
+            gStateStack:push(DoctorWEnterRoomState())
+            -- gStateStack:push(DocGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

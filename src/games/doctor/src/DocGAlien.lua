@@ -22,11 +22,18 @@ function DocGAlien:init(world, type, x, y, userData)
     self.height = 35
     -- different shape and sprite based on type passed in
     if self.type == 'square' then
+        self.image = gDoctorImages['virus']
+        self.imageW, self.imageH = self.image:getDimensions()
+        self.scaleX = self.width / self.imageW
+        self.scaleY = self.height / self.imageH
         self.shape = love.physics.newRectangleShape(self.width, self.height)
-        self.sprite = math.random(5)
+        -- self.shape = love.physics.newCircleShape(self.width/2)
     else
+        self.image = gDoctorImages['pill']
+        self.imageW, self.imageH = self.image:getDimensions()
+        self.scaleX = self.width / self.imageW
+        self.scaleY = self.height / self.imageH
         self.shape = love.physics.newCircleShape(self.width/2)
-        self.sprite = 9
     end
 
     self.fixture = love.physics.newFixture(self.body, self.shape)
@@ -38,7 +45,13 @@ function DocGAlien:init(world, type, x, y, userData)
 end
 
 function DocGAlien:render()
-    love.graphics.draw(gDocGTextures['aliens'], gDocGFrames['aliens'][self.sprite],
-        math.floor(self.body:getX()), math.floor(self.body:getY()), self.body:getAngle(),
-        1, 1, 17.5, 17.5)
+    love.graphics.filterDrawD(
+        self.image,
+        math.floor(self.body:getX()),
+        math.floor(self.body:getY()),
+        self.body:getAngle(),
+        self.scaleX,
+        self.scaleY,
+        self.width/2,
+        self.height/2)
 end

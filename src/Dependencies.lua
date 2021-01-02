@@ -182,6 +182,14 @@ require 'src/games/coke/src/states/CokeGTitleScreenState'
 require 'src/states/entity/EntityIdleState'
 require 'src/states/entity/EntityWalkState'
 
+-- Acid Game requirements
+require 'src/games/acid/src/AcidGBoard'
+require 'src/games/acid/src/AcidGTile'
+require 'src/games/acid/src/states/AcidGBeginGameState'
+require 'src/games/acid/src/states/AcidGGameOverState'
+require 'src/games/acid/src/states/AcidGPlayState'
+require 'src/games/acid/src/states/AcidGStartState'
+
 -- TODO delete start
 require 'src/states/entity/player/PlayerIdleState'
 require 'src/states/game/GameOverState'
@@ -484,4 +492,26 @@ gDocGSounds = {
     ['kill'] = love.audio.newSource('src/games/doctor/sounds/kill.wav'),
 
     ['music'] = love.audio.newSource('src/games/doctor/sounds/music.wav'),
+}
+
+gAcidGSounds = {
+    ['music'] = love.audio.newSource('src/games/acid/sounds/music3.mp3'),
+    ['select'] = love.audio.newSource('src/games/acid/sounds/select.wav'),
+    ['error'] = love.audio.newSource('src/games/acid/sounds/error.wav'),
+    ['match'] = love.audio.newSource('src/games/acid/sounds/match.wav'),
+    ['clock'] = love.audio.newSource('src/games/acid/sounds/clock.wav'),
+    ['game-over'] = love.audio.newSource('src/games/acid/sounds/game-over.wav'),
+    ['next-level'] = love.audio.newSource('src/games/acid/sounds/next-level.wav')
+}
+
+gAcidGTextures = {
+    ['main'] = love.graphics.newImage('src/games/acid/graphics/match3.png'),
+    ['background'] = love.graphics.newImage('src/games/acid/graphics/background.png'),
+    ['particle'] = love.graphics.newImage('src/games/acid/graphics/particle.png')
+}
+
+gAcidGFrames = {
+    -- divided into sets for each tile type in this game, instead of one large
+    -- table of Quads
+    ['tiles'] = GenerateTileQuads(gAcidGTextures['main'])
 }

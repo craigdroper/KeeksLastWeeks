@@ -32,7 +32,7 @@ function love.load()
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            gStateStack:push(AptWEnterState())
+            -- gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
             -- gStateStack:push(AlleyWEnterState())
@@ -49,6 +49,7 @@ function love.load()
             -- player.health = 50
             -- gStateStack:push(DoctorWEnterRoomState())
             -- gStateStack:push(DocGStartState())
+            gStateStack:push(AcidGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
@@ -57,6 +58,7 @@ function love.load()
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
     love.mouse.keysReleased = {}
+    love.mouse.mouseClicks = {}
     love.keyboard.textInput = ''
 end
 
@@ -104,6 +106,13 @@ end
 ]]
 function love.mousepressed(x, y, button)
     love.mouse.buttonsPressed[button] = true
+    -- Simplified design choice to only process "primary" mouse clicks
+    if button == 1 then
+        virtualX, virtualY = push:toGame(x, y)
+        if virtualX and virtualY then
+            table.insert(love.mouse.mouseClicks, {x=virtualX, y=virtualY})
+        end
+    end
 end
 
 function love.mousereleased(x, y, key)
@@ -137,6 +146,7 @@ function love.update(dt)
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
     love.mouse.keysReleased = {}
+    love.mouse.mouseClicks = {}
 end
 
 function love.draw()

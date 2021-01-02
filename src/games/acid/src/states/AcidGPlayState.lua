@@ -47,31 +47,32 @@ function AcidGPlayState:init(params)
     self.highlightedTile = nil
 
     self.score = 0
-    self.timer = 60
+    self.timer = 30
     -- flag that indicates if we're resetting an impossible board
     self.isResetting = false
     self.resetMsgAlpha = 255
 
+    self.timers = {}
     -- set our Timer class to turn cursor highlight on and off
-    Timer.every(0.5, function()
+    table.insert( self.timers, Timer.every(0.5, function()
         self.rectHighlighted = not self.rectHighlighted
-    end)
+    end) )
 
     -- subtract 1 from timer every second
-    Timer.every(1, function()
+    table.insert( self.timers, Timer.every(1, function()
         self.timer = self.timer - 1
 
         -- play warning sound on timer if we get low
         if self.timer <= 5 then
             gAcidGSounds['clock']:play()
         end
-    end)
+    end))
 end
 
 function AcidGPlayState:enter()
 
     -- score we have to reach to get to the next level
-    self.scoreGoal = self.level * 1.25 * 1000
+    self.scoreGoal = self.level * 1.5 * 1000
 end
 
 function AcidGPlayState:update(dt)
@@ -79,7 +80,9 @@ function AcidGPlayState:update(dt)
     if self.timer <= 0 then
 
         -- clear timers from prior AcidGPlayStates
-        Timer.clear()
+        for _, timer in pairs(self.timers) do
+            timer:remove()
+        end
 
         gAcidGSounds['game-over']:play()
 
@@ -87,6 +90,7 @@ function AcidGPlayState:update(dt)
         gStateStack:push(AcidGGameOverState({
             bkgrd = self.bkgrd,
             score = self.score,
+            level = self.level,
         }))
     end
 
@@ -96,16 +100,28 @@ function AcidGPlayState:update(dt)
         -- clear timers from prior AcidGPlayStates
         -- always clear before you change state, else next state's timers
         -- will also clear!
-        Timer.clear()
+        for _, timer in pairs(self.timers) do
+            timer:remove()
+        end
 
         gAcidGSounds['next-level']:play()
 
-        -- change to begin game state with new level (incremented)
-        gStateStack:pop()
-        gStateStack:push(AcidGBeginGameState( {
-            level = self.level + 1,
-            score = self.score
-        }))
+        if self.level == 10 then
+            gStateStack:pop()
+            gStateStack:push(AcidGGameOverState({
+                bkgrd = self.bkgrd,
+                score = self.score,
+                level = self.level + 1,
+            }))
+        else
+            -- change to begin game state with new level (incremented)
+            gStateStack:pop()
+            gStateStack:push(AcidGBeginGameState( {
+                bkgrd = self.bkgrd,
+                level = self.level + 1,
+                score = self.score
+            }))
+        end
     end
 
     if self.canInput and not self.isResetting then
@@ -230,9 +246,9 @@ function AcidGPlayState:calculateMatches()
         -- add score for each match
         -- and add a bonus second timer for every block cleared
         for k, match in pairs(matches) do
+            self.timer = self.timer + 1
             for _, tile in pairs(match) do
                 self.score = self.score + 50 * tile.variety
-                self.timer = self.timer + 1
             end
         end
 
@@ -269,8 +285,8 @@ function AcidGPlayState:render()
         love.graphics.setBlendMode('add')
 
         love.graphics.setColor(255, 255, 255, 96)
-        love.graphics.rectangle('fill', (self.highlightedTile.gridX - 1) * 32 + (VIRTUAL_WIDTH - 272),
-            (self.highlightedTile.gridY - 1) * 32 + 16, 32, 32, 4)
+        love.graphics.rectangle('fill', (self.highlightedTile.gridX - 1) * 32 + self.board.x,
+            (self.highlightedTile.gridY - 1) * 32 + self.board.y, 32, 32, 4)
 
         -- back to alpha
         love.graphics.setBlendMode('alpha')
@@ -285,19 +301,28 @@ function AcidGPlayState:render()
 
     -- draw actual cursor rect
     love.graphics.setLineWidth(4)
-    love.graphics.rectangle('line', self.boardHighlightX * 32 + (VIRTUAL_WIDTH - 272),
-        self.boardHighlightY * 32 + 16, 32, 32, 4)
+    love.graphics.rectangle('line', self.boardHighlightX * 32 + self.board.x,
+        self.boardHighlightY * 32 + self.board.y, 32, 32, 4)
 
     -- GUI text
     love.graphics.setColor(56, 56, 56, 234)
-    love.graphics.rectangle('fill', 16, 16, 186, 116, 4)
+    local guix = VIRTUAL_WIDTH/2 + 16
+    local guiy = VIRTUAL_HEIGHT/2 - 64
+    love.graphics.rectangle('fill', guix, guiy, 186, 116, 4)
 
     love.graphics.setColor(99, 155, 255, 255)
     love.graphics.setFont(gFonts['medium'])
-    love.graphics.printf('Level: ' .. tostring(self.level), 20, 24, 182, 'center')
-    love.graphics.printf('Score: ' .. tostring(self.score), 20, 52, 182, 'center')
-    love.graphics.printf('Goal : ' .. tostring(self.scoreGoal), 20, 80, 182, 'center')
-    love.graphics.printf('Timer: ' .. tostring(self.timer), 20, 108, 182, 'center')
+    love.graphics.printf('Level: ' .. tostring(self.level),
+        guix + 4, 
+        guiy + 8, 182, 'center')
+    love.graphics.printf('Score: ' .. tostring(self.score),
+        guix + 4, guiy + 36, 182, 'center')
+    love.graphics.printf('Goal : ' .. tostring(self.scoreGoal),
+        guix + 4,
+        guiy + 64, 182, 'center')
+    love.graphics.printf('Timer: ' .. tostring(self.timer),
+        guix + 4,
+        guiy + 92, 182, 'center')
 
     -- Possible Reset Board Message
     if self.isResetting then

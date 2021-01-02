@@ -18,6 +18,7 @@ AcidGStartState = Class{__includes = BaseState}
 
 function AcidGStartState:init()
     self.bkgrd = AcidGBackground()
+    self.board = AcidGBoard(32, 64)
 
     -- currently selected menu item
     self.currentMenuItem = 1
@@ -28,18 +29,18 @@ function AcidGStartState:init()
         [2] = {95, 205, 228, 255},
         [3] = {251, 242, 54, 255},
         [4] = {118, 66, 138, 255},
+        --[[
         [5] = {153, 229, 80, 255},
         [6] = {223, 113, 38, 255}
+        --]]
     }
 
     -- letters of MATCH 3 and their spacing relative to the center
     self.letterTable = {
-        {'M', -108},
-        {'A', -64},
-        {'T', -28},
-        {'C', 2},
-        {'H', 40},
-        {'3', 112}
+        {'A', -52},
+        {'C', -16},
+        {'I', 14},
+        {'D', 52},
     }
 
     -- time for a color change if it's been half a second
@@ -47,9 +48,9 @@ function AcidGStartState:init()
 
         -- shift every color to the next, looping the last to front
         -- assign it to 0 so the loop below moves it to 1, default start
-        self.colors[0] = self.colors[6]
+        self.colors[0] = self.colors[#self.colors]
 
-        for i = 6, 1, -1 do
+        for i = #self.colors, 1, -1 do
             self.colors[i] = self.colors[i - 1]
         end
     end)
@@ -100,7 +101,17 @@ function AcidGStartState:update(dt)
                     self.colorTimer:remove()
                 end)
             else
-                love.event.quit()
+                gStateStack:push(DialogueState(
+                    'The colors, OH THE COLORS!\n'..
+                    'Try and match at least three mini-tabs of acid in a row within the '..
+                    'blotter paper grid. Click the mini-tabs with the mouse to move '..
+                    'them. You can only switch two tabs that are neighbors in one '..
+                    'of the cardanal directions (up, right, down, left).\n'..
+                    'Match enough tabs and score enough points before the timer '..
+                    'runs out to advance to a....higher level'
+                , function()
+                    self.pauseInput = false
+                  end))
             end
 
             -- turn off input during transition
@@ -114,8 +125,10 @@ end
 
 function AcidGStartState:render()
     self.bkgrd:render()
+    self.board:render()
 
     -- render all tiles and their drop shadows
+    --[[
     for y = 1, 8 do
         for x = 1, 8 do
 
@@ -130,6 +143,7 @@ function AcidGStartState:render()
                 (x - 1) * 32 + 128, (y - 1) * 32 + 16)
         end
     end
+    --]]
 
     -- keep the background and tiles a little darker than normal
     love.graphics.setColor(0, 0, 0, 128)
@@ -155,10 +169,10 @@ function AcidGStartState:drawMatch3Text(y)
 
     -- draw MATCH 3 text shadows
     love.graphics.setFont(gFonts['large'])
-    self:drawTextShadow('MATCH 3', VIRTUAL_HEIGHT / 2 + y)
+    self:drawTextShadow('ACID', VIRTUAL_HEIGHT / 2 + y)
 
     -- print MATCH 3 letters in their corresponding current colors
-    for i = 1, 6 do
+    for i = 1, #self.letterTable do
         love.graphics.setColor(self.colors[i])
         love.graphics.printf(self.letterTable[i][1], 0, VIRTUAL_HEIGHT / 2 + y,
             VIRTUAL_WIDTH + self.letterTable[i][2], 'center')
@@ -188,7 +202,7 @@ function AcidGStartState:drawOptions(y)
 
     -- draw Quit Game text
     love.graphics.setFont(gFonts['medium'])
-    self:drawTextShadow('Quit Game', VIRTUAL_HEIGHT / 2 + y + 33)
+    self:drawTextShadow('Instructions', VIRTUAL_HEIGHT / 2 + y + 33)
 
     if self.currentMenuItem == 2 then
         love.graphics.setColor(99, 155, 255, 255)
@@ -196,7 +210,7 @@ function AcidGStartState:drawOptions(y)
         love.graphics.setColor(48, 96, 130, 255)
     end
 
-    love.graphics.printf('Quit Game', 0, VIRTUAL_HEIGHT / 2 + y + 33, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Instructions', 0, VIRTUAL_HEIGHT / 2 + y + 33, VIRTUAL_WIDTH, 'center')
 end
 
 --[[

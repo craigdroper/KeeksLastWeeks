@@ -50,15 +50,15 @@ function AcidGTile:render(x, y)
 
     -- draw shadow
     love.graphics.setColor(34, 32, 52, 255)
-    love.graphics.draw(gAcidGTextures['main'], gAcidGFrames['tiles'][self.color][self.variety],
+    love.graphics.filterDrawQ(gAcidGTextures['main'], gAcidGFrames['tiles'][self.color][self.variety],
         self.x + x + 2, self.y + y + 2)
 
     -- draw tile itself
     love.graphics.setColor(255, 255, 255, self.opacity)
-    love.graphics.draw(gAcidGTextures['main'], gAcidGFrames['tiles'][self.color][self.variety],
+    love.graphics.filterDrawQ(gAcidGTextures['main'], gAcidGFrames['tiles'][self.color][self.variety],
         self.x + x, self.y + y)
 
     if self.isShiny then
-        love.graphics.draw(self.psys, self.x + x + 16, self.y + y + 16)
+        love.graphics.filterDrawD(self.psys, self.x + x + 16, self.y + y + 16)
     end
 end

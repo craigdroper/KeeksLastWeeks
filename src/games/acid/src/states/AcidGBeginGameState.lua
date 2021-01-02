@@ -22,8 +22,8 @@ function AcidGBeginGameState:init(def)
     -- start our transition alpha at full, so we fade in
     self.transitionAlpha = 255
 
-    -- spawn a board and place it toward the right
-    self.board = AcidGBoard(VIRTUAL_WIDTH - 272, 16)
+    -- spawn a board and place it toward the left
+    self.board = AcidGBoard(32, 64)
 
     -- start our level # label off-screen
     self.levelLabelY = -64

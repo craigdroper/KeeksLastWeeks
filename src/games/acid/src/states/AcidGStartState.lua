@@ -17,6 +17,7 @@ local positions = {}
 AcidGStartState = Class{__includes = BaseState}
 
 function AcidGStartState:init()
+    self.bkgrd = AcidGBackground()
 
     -- currently selected menu item
     self.currentMenuItem = 1
@@ -63,6 +64,10 @@ function AcidGStartState:init()
 
     -- if we've selected an option, we need to pause input while we animate out
     self.pauseInput = false
+
+    gAcidGSounds['music']:setLooping(true)
+    -- TODO remove mute
+    -- gAcidGSounds['music']:play()
 end
 
 function AcidGStartState:update(dt)
@@ -84,9 +89,11 @@ function AcidGStartState:update(dt)
                 Timer.tween(1, {
                     [self] = {transitionAlpha = 255}
                 }):finish(function()
+                    self.bkgrd:beginTransitioning()
                     gStateStack:pop()
                     gStateStack:push(AcidGBeginGameState({
-                        level = 1
+                        bkgrd = self.bkgrd,
+                        level = 1,
                     }))
 
                     -- remove color timer from Timer
@@ -106,6 +113,7 @@ function AcidGStartState:update(dt)
 end
 
 function AcidGStartState:render()
+    self.bkgrd:render()
 
     -- render all tiles and their drop shadows
     for y = 1, 8 do

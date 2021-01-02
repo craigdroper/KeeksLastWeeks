@@ -17,6 +17,7 @@ AcidGBeginGameState = Class{__includes = BaseState}
 function AcidGBeginGameState:init(def)
     -- grab level # from the def we're passed
     self.level = def.level
+    self.bkgrd = def.bkgrd
 
     -- start our transition alpha at full, so we fade in
     self.transitionAlpha = 255
@@ -63,6 +64,7 @@ function AcidGBeginGameState:enter()
                 :finish(function()
                     gStateStack:pop()
                     gStateStack:push(AcidGPlayState({
+                        bkgrd = self.bkgrd,
                         level = self.level,
                         board = self.board
                     }))
@@ -77,6 +79,7 @@ function AcidGBeginGameState:update(dt)
 end
 
 function AcidGBeginGameState:render()
+    self.bkgrd:render()
 
     -- render board of tiles
     self.board:render()

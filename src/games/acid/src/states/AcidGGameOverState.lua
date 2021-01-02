@@ -14,6 +14,7 @@ AcidGGameOverState = Class{__includes = BaseState}
 
 function AcidGGameOverState:init(params)
     self.score = params.score
+    self.bkgrd = params.bkgrd
 end
 
 function AcidGGameOverState:enter()
@@ -21,6 +22,7 @@ end
 
 function AcidGGameOverState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gAcidGSounds['music']:stop()
         -- TODO transition out of game and apply acid filter
         gStateStack:pop()
         gStateStack:push(AcidGStartState())
@@ -28,6 +30,7 @@ function AcidGGameOverState:update(dt)
 end
 
 function AcidGGameOverState:render()
+    self.bkgrd:render()
     love.graphics.setFont(gFonts['large'])
 
     love.graphics.setColor(56, 56, 56, 234)

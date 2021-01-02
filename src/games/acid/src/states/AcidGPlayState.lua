@@ -19,6 +19,7 @@
 AcidGPlayState = Class{__includes = BaseState}
 
 function AcidGPlayState:init(params)
+    self.bkgrd = params.bkgrd
 
     -- grab level # from the params we're passed
     self.level = params.level
@@ -84,7 +85,8 @@ function AcidGPlayState:update(dt)
 
         gStateStack:pop()
         gStateStack:push(AcidGGameOverState({
-            score = self.score
+            bkgrd = self.bkgrd,
+            score = self.score,
         }))
     end
 
@@ -256,6 +258,7 @@ function AcidGPlayState:calculateMatches()
 end
 
 function AcidGPlayState:render()
+    self.bkgrd:render()
     -- render board of tiles
     self.board:render()
 

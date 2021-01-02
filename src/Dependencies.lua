@@ -185,6 +185,7 @@ require 'src/states/entity/EntityWalkState'
 -- Acid Game requirements
 require 'src/games/acid/src/AcidGBoard'
 require 'src/games/acid/src/AcidGTile'
+require 'src/games/acid/src/AcidGBackground'
 require 'src/games/acid/src/states/AcidGBeginGameState'
 require 'src/games/acid/src/states/AcidGGameOverState'
 require 'src/games/acid/src/states/AcidGPlayState'
@@ -495,7 +496,7 @@ gDocGSounds = {
 }
 
 gAcidGSounds = {
-    ['music'] = love.audio.newSource('src/games/acid/sounds/music3.mp3'),
+    ['music'] = love.audio.newSource('src/games/acid/sounds/country.mp3'),
     ['select'] = love.audio.newSource('src/games/acid/sounds/select.wav'),
     ['error'] = love.audio.newSource('src/games/acid/sounds/error.wav'),
     ['match'] = love.audio.newSource('src/games/acid/sounds/match.wav'),
@@ -506,7 +507,11 @@ gAcidGSounds = {
 
 gAcidGTextures = {
     ['main'] = love.graphics.newImage('src/games/acid/graphics/match3.png'),
-    ['background'] = love.graphics.newImage('src/games/acid/graphics/background.png'),
+    ['background1'] = love.graphics.newImage('src/games/acid/graphics/background5.png'),
+    ['background2'] = love.graphics.newImage('src/games/acid/graphics/background.jpg'),
+    ['background3'] = love.graphics.newImage('src/games/acid/graphics/background2.jpg'),
+    ['background4'] = love.graphics.newImage('src/games/acid/graphics/background4.jpg'),
+    ['background5'] = love.graphics.newImage('src/games/acid/graphics/background3.jpg'),
     ['particle'] = love.graphics.newImage('src/games/acid/graphics/particle.png')
 }
 

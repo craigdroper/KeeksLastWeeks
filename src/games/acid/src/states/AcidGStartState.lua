@@ -67,8 +67,7 @@ function AcidGStartState:init()
     self.pauseInput = false
 
     gAcidGSounds['music']:setLooping(true)
-    -- TODO remove mute
-    -- gAcidGSounds['music']:play()
+    gAcidGSounds['music']:play()
 end
 
 function AcidGStartState:update(dt)

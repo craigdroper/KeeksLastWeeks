@@ -47,15 +47,15 @@ function AcidGGameOverState:render()
     love.graphics.setFont(gFonts['large'])
 
     love.graphics.setColor(56, 56, 56, 234)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 64, 64, 128, 136, 4)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 128, 64, 256, 64, 4)
 
     love.graphics.setColor(99, 155, 255, 255)
     if self.level == 11 then
-        love.graphics.printf('YOU WIN', VIRTUAL_WIDTH / 2 - 64, 64, 128, 'center')
+        love.graphics.printf('YOU WIN', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
     else
-        love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 64, 64, 128, 'center')
+        love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
     end
     love.graphics.setFont(gFonts['medium'])
     -- love.graphics.printf('Your Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 64, 140, 128, 'center')
-    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 64, 180, 128, 'center')
+    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 128, 96, 256, 'center')
 end

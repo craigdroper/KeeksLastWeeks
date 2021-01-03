@@ -33,6 +33,7 @@ require 'src/gui/Inputbox'
 -- Drug filters
 require 'src/filters/NoFilter'
 require 'src/filters/CokeFilter'
+require 'src/filters/AcidFilter'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'
@@ -513,6 +514,20 @@ gAcidGTextures = {
     ['background4'] = love.graphics.newImage('src/games/acid/graphics/background4.jpg'),
     ['background5'] = love.graphics.newImage('src/games/acid/graphics/background3.jpg'),
     ['particle'] = love.graphics.newImage('src/games/acid/graphics/particle.png')
+}
+
+gAcidFImage = {
+    ['background'] = love.graphics.newImage('graphics/acidfilterbkgrd.jpg'),
+    ['c1'] = love.graphics.newImage('graphics/filters/creature1.png'),
+    ['c2'] = love.graphics.newImage('graphics/filters/creature2.png'),
+    ['c3'] = love.graphics.newImage('graphics/filters/creature3.png'),
+    ['c4'] = love.graphics.newImage('graphics/filters/creature4.png'),
+    ['c5'] = love.graphics.newImage('graphics/filters/creature5.png'),
+    ['c6'] = love.graphics.newImage('graphics/filters/creature6.png'),
+    ['c7'] = love.graphics.newImage('graphics/filters/creature7.png'),
+    ['c8'] = love.graphics.newImage('graphics/filters/creature8.png'),
+    ['c9'] = love.graphics.newImage('graphics/filters/creature9.png'),
+    ['c10'] = love.graphics.newImage('graphics/filters/creature10.png'),
 }
 
 gAcidGFrames = {

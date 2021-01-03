@@ -26,6 +26,8 @@ function AlleyWStationaryState:update(dt)
         --]]
         if self.alley.drugName == 'coke' then
             gGlobalObjs['filter'] = CokeFilter({multiplier = self.gameStats.multiplier})
+        elseif self.alley.drugName == 'acid' then
+            gGlobalObjs['filter'] = AcidFilter({multiplier = self.gameStats.multiplier})
         else
             error('Unrecognized drug name')
         end
@@ -34,7 +36,7 @@ function AlleyWStationaryState:update(dt)
             stats = {money = -100, health = -10}, callback =
         function()
         gStateStack:push(DialogueState(
-            'Keeks:WOOOOOOOOOO! I am feeling '..self.gameStats.multiplier..' times better!\n'..
+            'Keeks:WOW! I am feeling '..self.gameStats.multiplier..' times better!\n'..
             'No way I can go back to my apartment now. Hey Mikhail?\n\n'..
             'Mikhail: Ya?\n\n'..
             'Keeks: How about a lift to some fun?\n\n'..

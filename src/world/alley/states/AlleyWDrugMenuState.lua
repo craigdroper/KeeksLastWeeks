@@ -23,6 +23,23 @@ function AlleyWDrugMenuState:init(params)
                         end))
                 end
             },
+            {
+                text = 'Acid',
+                onSelect =
+                function()
+                    self.alley.drugName = 'acid'
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                    -- Pop AlleyWDrugMenuState
+                    gStateStack:pop()
+                    -- Transition to acid game
+                    gStateStack:push(AcidGStartState())
+                    gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        end))
+                        end))
+                end
+            },
         }
     }
 end

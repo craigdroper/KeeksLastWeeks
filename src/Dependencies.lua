@@ -29,6 +29,7 @@ require 'src/gui/Panel'
 require 'src/gui/Selection'
 require 'src/gui/Textbox'
 require 'src/gui/Inputbox'
+require 'src/gui/ProgressBar'
 
 -- Drug filters
 require 'src/filters/NoFilter'

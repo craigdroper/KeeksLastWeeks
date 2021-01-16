@@ -10,7 +10,7 @@ WeedGTakeTurnState = Class{__includes = BaseState}
 
 function WeedGTakeTurnState:init(battleState)
     self.battleState = battleState
-    self.playerPokemon = self.battleState.player.party.pokemon[1]
+    self.playerPokemon = self.battleState.player.weedGPokemon
     self.opponentPokemon = self.battleState.opponent.party.pokemon[1]
 
     self.playerSprite = self.battleState.playerSprite

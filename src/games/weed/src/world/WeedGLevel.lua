@@ -39,6 +39,7 @@ function WeedGLevel:init()
     -- Also add the expected traits the weedg expects
     self.player.weedGMapX = 10
     self.player.weedGMapY = 10
+    self.player.weedGPokemon = WeedGPokemon(WeedGPokemon.getRandomDef(), 1)
 end
 
 function WeedGLevel:createMaps()

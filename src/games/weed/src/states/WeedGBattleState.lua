@@ -15,18 +15,17 @@ function WeedGBattleState:init(player)
     -- flag for when the battle can take input, set in the first update call
     self.battleStarted = false
 
-    self.opponent = Opponent {
-        party = Party {
+    self.opponent = WeedGOpponent {
+        party = WeedGParty {
             pokemon = {
-                Pokemon(Pokemon.getRandomDef(), math.random(2, 6))
+                WeedGPokemon(WeedGPokemon.getRandomDef(), math.random(2, 6))
             }
         }
     }
 
-    self.playerSprite = BattleSprite(self.player.party.pokemon[1].battleSpriteBack,
-        -64, VIRTUAL_HEIGHT - 128)
-    self.opponentSprite = BattleSprite(self.opponent.party.pokemon[1].battleSpriteFront,
-        VIRTUAL_WIDTH, 8)
+    self.playerSprite = WeedGBattleSprite(nil, -64, VIRTUAL_HEIGHT - 128, true)
+    self.opponentSprite = WeedGBattleSprite(self.opponent.party.pokemon[1].battleSpriteFront,
+        VIRTUAL_WIDTH, 8, false)
 
     -- health bars for pokemon
     self.playerHealthBar = ProgressBar {
@@ -35,8 +34,8 @@ function WeedGBattleState:init(player)
         width = 152,
         height = 6,
         color = {r = 189, g = 32, b = 32},
-        value = self.player.party.pokemon[1].currentHP,
-        max = self.player.party.pokemon[1].HP
+        value = self.player.weedGPokemon.currentHP,
+        max = self.player.weedGPokemon.HP
     }
 
     self.opponentHealthBar = ProgressBar {
@@ -56,8 +55,8 @@ function WeedGBattleState:init(player)
         width = 152,
         height = 6,
         color = {r = 32, g = 32, b = 189},
-        value = self.player.party.pokemon[1].currentExp,
-        max = self.player.party.pokemon[1].expToLevel
+        value = self.player.weedGPokemon.currentExp,
+        max = self.player.weedGPokemon.expToLevel
     }
 
     -- flag for rendering health (and exp) bars, shown after pokemon slide in
@@ -68,7 +67,7 @@ function WeedGBattleState:init(player)
     self.opponentCircleX = VIRTUAL_WIDTH + 32
 
     -- references to active pokemon
-    self.playerPokemon = self.player.party.pokemon[1]
+    self.playerPokemon = self.player.weedGPokemon
     self.opponentPokemon = self.opponent.party.pokemon[1]
 end
 
@@ -141,7 +140,7 @@ function WeedGBattleState:triggerStartingDialogue()
 
     -- callback for when the battle message is closed
     function()
-        gStateStack:push(WeedGBattleMessageState('Go, ' .. tostring(self.player.party.pokemon[1].name .. '!'),
+        gStateStack:push(WeedGBattleMessageState('Go, Keeks!',
 
         -- push a battle menu onto the stack that has access to the battle state
         function()

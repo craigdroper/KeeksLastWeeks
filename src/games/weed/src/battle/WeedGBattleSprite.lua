@@ -8,8 +8,9 @@
 
 WeedGBattleSprite = Class{}
 
-function WeedGBattleSprite:init(texture, x, y)
+function WeedGBattleSprite:init(texture, x, y, is_player)
     self.texture = texture
+    self.is_player = is_player
     self.x = x
     self.y = y
     self.opacity = 255
@@ -42,7 +43,15 @@ function WeedGBattleSprite:render()
     love.graphics.setShader(self.whiteShader)
     self.whiteShader:send('WhiteFactor', self.blinking and 1 or 0)
 
-    love.graphics.draw(gWeedGTextures[self.texture], self.x, self.y)
+    if not self.is_player then
+        love.graphics.draw(gWeedGTextures[self.texture], self.x, self.y)
+    else
+        love.graphics.draw(
+            gTextures['keeks-walk'],
+            gFrames['keeks-frames'][gKEEKS_IDLE_RIGHT],
+            self.x,
+            self.y)
+    end
 
     -- reset shader
     love.graphics.setShader()

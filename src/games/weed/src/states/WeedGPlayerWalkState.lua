@@ -29,8 +29,9 @@ function WeedGPlayerWalkState:checkForEncounter()
         self.entity:changeState('idle')
 
         -- trigger music changes
-        gSounds['field-music']:pause()
-        gSounds['battle-music']:play()
+        -- TODO
+        -- gWeedGSounds['field-music']:pause()
+        -- gWeedGSounds['battle-music']:play()
 
         -- first, push a fade in; when that's done, push a battle state and a fade
         -- out, which will fall back to the battle state once it pushes itself off
@@ -41,7 +42,7 @@ function WeedGPlayerWalkState:checkForEncounter()
 
             -- callback that will execute once the fade in is complete
             function()
-                gStateStack:push(BattleState(self.entity))
+                gStateStack:push(WeedGBattleState(self.entity))
                 gStateStack:push(FadeOutState({
                     r = 255, g = 255, b = 255,
                 }, 1,

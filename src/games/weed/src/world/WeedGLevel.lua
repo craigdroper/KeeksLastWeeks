@@ -9,8 +9,8 @@
 WeedGLevel = Class{}
 
 function WeedGLevel:init()
-    self.tileWidth = 50
-    self.tileHeight = 50
+    self.tileWidth = VIRTUAL_WIDTH / WEEDG_TILE_SIZE + 1
+    self.tileHeight = VIRTUAL_HEIGHT / WEEDG_TILE_SIZE + 1
 
     self.baseLayer = WeedGTileMap(self.tileWidth, self.tileHeight)
     self.grassLayer = WeedGTileMap(self.tileWidth, self.tileHeight)
@@ -37,8 +37,8 @@ function WeedGLevel:init()
     self.player.stateMachine.states['walk'] =
         function() return WeedGPlayerWalkState(self.player, self) end
     -- Also add the expected traits the weedg expects
-    self.player.weedGMapX = 10
-    self.player.weedGMapY = 10
+    self.player.weedGMapX = math.floor(self.player.x / WEEDG_TILE_SIZE)
+    self.player.weedGMapY = math.floor(self.player.y / WEEDG_TILE_SIZE)
     self.player.weedGPokemon = WeedGPokemon(WeedGPokemon.getRandomDef(), 1)
 end
 

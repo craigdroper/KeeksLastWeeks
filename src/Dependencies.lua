@@ -571,8 +571,7 @@ gWeedGTextures = {
 }
 
 gWeedGFrames = {
-    ['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
-    ['entities'] = GenerateQuads(gTextures['entities'], 16, 16)
+    ['tiles'] = GenerateQuads(gWeedGTextures['tiles'], 16, 16),
 }
 
 gWeedGSounds = {

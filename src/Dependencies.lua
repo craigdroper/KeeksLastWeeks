@@ -558,16 +558,15 @@ gWeedGTextures = {
     ['entities'] = love.graphics.newImage('src/games/weed/graphics/entities.png'),
     ['cursor'] = love.graphics.newImage('src/games/weed/graphics/cursor.png'),
 
-    ['aardart-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/aardart-back.png'),
-    ['aardart-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/aardart-front.png'),
-    ['agnite-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/agnite-back.png'),
-    ['agnite-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/agnite-front.png'),
-    ['anoleaf-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/anoleaf-back.png'),
-    ['anoleaf-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/anoleaf-front.png'),
-    ['bamboon-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/bamboon-back.png'),
-    ['bamboon-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/bamboon-front.png'),
-    ['cardiwing-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/cardiwing-back.png'),
-    ['cardiwing-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/cardiwing-front.png'),
+    ['weed1'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed1.png'),
+    ['weed2'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed2.png'),
+    ['weed3'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed3.png'),
+    ['weed4'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed4.png'),
+    ['weed5'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed5.png'),
+    ['weed6'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed6.png'),
+    ['weed7'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed7.png'),
+    ['weed8'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed8.png'),
+    ['weed9'] = love.graphics.newImage('src/games/weed/graphics/pokemon/weed9.png'),
 }
 
 gWeedGFrames = {

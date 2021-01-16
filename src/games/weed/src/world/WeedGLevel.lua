@@ -12,25 +12,14 @@ function WeedGLevel:init()
     self.tileWidth = 50
     self.tileHeight = 50
 
-    self.baseLayer = TileMap(self.tileWidth, self.tileHeight)
-    self.grassLayer = TileMap(self.tileWidth, self.tileHeight)
-    self.halfGrassLayer = TileMap(self.tileWidth, self.tileHeight)
+    self.baseLayer = WeedGTileMap(self.tileWidth, self.tileHeight)
+    self.grassLayer = WeedGTileMap(self.tileWidth, self.tileHeight)
+    self.halfGrassLayer = WeedGTileMap(self.tileWidth, self.tileHeight)
 
     self:createMaps()
 
-    self.player = Player {
-        animations = ENTITY_DEFS['player'].animations,
-        mapX = 10,
-        mapY = 10,
-        width = 16,
-        height = 16,
-    }
-
-    self.player.stateMachine = StateMachine {
-        ['walk'] = function() return PlayerWalkState(self.player, self) end,
-        ['idle'] = function() return PlayerIdleState(self.player) end
-    }
-    self.player.stateMachine:change('idle')
+    -- Create a local copy so we don't effect the real world player
+    self.player = createPlayer()
 end
 
 function WeedGLevel:createMaps()
@@ -42,7 +31,7 @@ function WeedGLevel:createMaps()
         for x = 1, self.tileWidth do
             local id = WEEDG_TILE_IDS['grass'][math.random(#WEEDG_TILE_IDS['grass'])]
 
-            table.insert(self.baseLayer.tiles[y], Tile(x, y, id))
+            table.insert(self.baseLayer.tiles[y], WeedGTile(x, y, id))
         end
     end
 
@@ -54,7 +43,7 @@ function WeedGLevel:createMaps()
         for x = 1, self.tileWidth do
             local id = y > 10 and WEEDG_TILE_IDS['tall-grass'] or WEEDG_TILE_IDS['empty']
 
-            table.insert(self.grassLayer.tiles[y], Tile(x, y, id))
+            table.insert(self.grassLayer.tiles[y], WeedGTile(x, y, id))
         end
     end
 end

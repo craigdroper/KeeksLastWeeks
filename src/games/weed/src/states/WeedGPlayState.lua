@@ -9,7 +9,7 @@
 WeedGPlayState = Class{__includes = BaseState}
 
 function WeedGPlayState:init()
-    self.level = Level()
+    self.level = WeedGLevel()
 
     --gWeedGSounds['field-music']:setLooping(true)
     --gWeedGSounds['field-music']:play()

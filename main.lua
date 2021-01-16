@@ -29,15 +29,13 @@ function love.load()
     gGlobalObjs['player'] = player
 
     gGlobalObjs['filter'] = NoFilter()
-    -- TODO Dev
-    -- gGlobalObjs['filter'] = AcidFilter({multiplier=10})
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            gStateStack:push(AptWEnterState())
+            -- gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
-            gStateStack:push(AlleyWEnterState())
+            -- gStateStack:push(AlleyWEnterState())
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())
@@ -52,7 +50,7 @@ function love.load()
             -- gStateStack:push(DoctorWEnterRoomState())
             -- gStateStack:push(DocGStartState())
             -- gStateStack:push(AcidGStartState())
-            -- gStateStack:push(WeedGStartState())
+            gStateStack:push(WeedGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))

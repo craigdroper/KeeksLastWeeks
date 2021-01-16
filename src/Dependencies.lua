@@ -183,7 +183,7 @@ require 'src/games/coke/src/states/CokeGTitleScreenState'
 -- Some dependency exists with rendering the player and these
 -- general states
 require 'src/states/entity/EntityIdleState'
-require 'src/states/entity/EntityWalkState'
+require 'src/states/entity/EntityBaseState'
 require 'src/states/entity/player/PlayerIdleState'
 
 -- Acid Game requirements
@@ -211,6 +211,9 @@ require 'src/games/weed/src/world/WeedGLevel'
 require 'src/games/weed/src/world/tile_ids'
 require 'src/games/weed/src/world/WeedGTile'
 require 'src/games/weed/src/world/WeedGTileMap'
+-- Currently only works with Pokemon Level
+require 'src/games/weed/src/states/WeedGEntityWalkState'
+require 'src/games/weed/src/states/WeedGPlayerWalkState'
 
 gTextures = {
     --TODO delete legacy code from here

@@ -20,6 +20,25 @@ function WeedGLevel:init()
 
     -- Create a local copy so we don't effect the real world player
     self.player = createPlayer()
+    -- Set the player entity's scale factors to the correct values
+    -- for this room's tile sizes
+    self.player.scaleX = 1
+    self.player.scaleY = 1
+    self.player.opacity = 255
+    self.player.walkSpeed = 50
+    -- Explicitly set the player's X & Y coordinates to be vertically
+    -- and just out of frame on the left
+    self.player.x = VIRTUAL_WIDTH/2 - self.player:getWidth()/2
+    self.player.y = VIRTUAL_HEIGHT/2 + self.player:getHeight()/2
+
+    -- Right now the player 'walk' state only exists for this Pokemon level,
+    -- and its been copy and pasted from the pokemon levels, so just add
+    -- the walk animation here and delete it when we exit
+    self.player.stateMachine.states['walk'] =
+        function() return WeedGPlayerWalkState(self.player, self) end
+    -- Also add the expected traits the weedg expects
+    self.player.weedGMapX = 10
+    self.player.weedGMapY = 10
 end
 
 function WeedGLevel:createMaps()

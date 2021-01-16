@@ -24,6 +24,7 @@ require 'src/states/game/FadeOutState'
 require 'src/states/game/DialogueState'
 require 'src/states/game/UpdatePlayerStatsState'
 require 'src/states/game/UserInputState'
+require 'src/states/entity/player/PlayerIdleState'
 require 'src/gui/Menu'
 require 'src/gui/Panel'
 require 'src/gui/Selection'
@@ -192,12 +193,22 @@ require 'src/games/acid/src/states/AcidGGameOverState'
 require 'src/games/acid/src/states/AcidGPlayState'
 require 'src/games/acid/src/states/AcidGStartState'
 
--- TODO delete start
-require 'src/states/entity/player/PlayerIdleState'
-require 'src/states/game/GameOverState'
-require 'src/states/game/PlayState'
-require 'src/states/game/StartState'
--- TODO delete end
+-- Weed game requirements
+require 'src/games/weed/src/WeedGParty'
+require 'src/games/weed/src/WeedGPokemon'
+require 'src/games/weed/src/pokemon_defs'
+require 'src/games/weed/src/battle/WeedGBattleSprite'
+require 'src/games/weed/src/battle/WeedGOpponent'
+require 'src/games/weed/src/states/game/WeedGBattleState'
+require 'src/games/weed/src/states/game/WeedGBattleMenuState'
+require 'src/games/weed/src/states/game/WeedGBattleMessageState'
+require 'src/games/weed/src/states/game/WeedGPlayState'
+require 'src/games/weed/src/states/game/WeedGStartState'
+require 'src/games/weed/src/states/game/WeedGTakeTurnState'
+require 'src/games/weed/src/world/WeedGLevel'
+require 'src/games/weed/src/world/tile_ids'
+require 'src/games/weed/src/world/WeedGTile'
+require 'src/games/weed/src/world/WeedGTileMap'
 
 gTextures = {
     --TODO delete legacy code from here
@@ -534,4 +545,40 @@ gAcidGFrames = {
     -- divided into sets for each tile type in this game, instead of one large
     -- table of Quads
     ['tiles'] = GenerateTileQuads(gAcidGTextures['main'])
+}
+
+gWeedTextures = {
+    ['tiles'] = love.graphics.newImage('src/games/weed/graphics/sheet.png'),
+    ['entities'] = love.graphics.newImage('src/games/weed/graphics/entities.png'),
+    ['cursor'] = love.graphics.newImage('src/games/weed/graphics/cursor.png'),
+
+    ['aardart-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/aardart-back.png'),
+    ['aardart-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/aardart-front.png'),
+    ['agnite-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/agnite-back.png'),
+    ['agnite-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/agnite-front.png'),
+    ['anoleaf-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/anoleaf-back.png'),
+    ['anoleaf-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/anoleaf-front.png'),
+    ['bamboon-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/bamboon-back.png'),
+    ['bamboon-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/bamboon-front.png'),
+    ['cardiwing-back'] = love.graphics.newImage('src/games/weed/graphics/pokemon/cardiwing-back.png'),
+    ['cardiwing-front'] = love.graphics.newImage('src/games/weed/graphics/pokemon/cardiwing-front.png'),
+}
+
+gWeedGFrames = {
+    ['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
+    ['entities'] = GenerateQuads(gTextures['entities'], 16, 16)
+}
+
+gWeedGSounds = {
+    ['field-music'] = love.audio.newSource('src/games/weed/sounds/field_music.wav'),
+    ['battle-music'] = love.audio.newSource('src/games/weed/sounds/battle_music.mp3'),
+    ['blip'] = love.audio.newSource('src/games/weed/sounds/blip.wav'),
+    ['powerup'] = love.audio.newSource('src/games/weed/sounds/powerup.wav'),
+    ['hit'] = love.audio.newSource('src/games/weed/sounds/hit.wav'),
+    ['run'] = love.audio.newSource('src/games/weed/sounds/run.wav'),
+    ['heal'] = love.audio.newSource('src/games/weed/sounds/heal.wav'),
+    ['exp'] = love.audio.newSource('src/games/weed/sounds/exp.wav'),
+    ['levelup'] = love.audio.newSource('src/games/weed/sounds/levelup.wav'),
+    ['victory-music'] = love.audio.newSource('src/games/weed/sounds/victory.wav'),
+    ['intro-music'] = love.audio.newSource('src/games/weed/sounds/intro.mp3')
 }

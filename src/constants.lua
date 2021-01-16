@@ -67,7 +67,11 @@ COKEG_GROUND_SCROLL_SPEED = 60
 DOCG_MAP_SCROLL_X_SPEED = 100
 DOCG_BACKGROUND_SCROLL_X_SPEED = DOCG_MAP_SCROLL_X_SPEED / 2
 DOCG_TILE_SIZE = 35
+-- TODO should this be DOCG_TILE_SIZE? Does that make the alien's physics less wonky?
 DOCG_ALIEN_SIZE = TILE_SIZE
+
+-- Weed game constants
+WEEDG_TILE_SIZE = 16
 
 --
 -- map constants

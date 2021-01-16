@@ -18,7 +18,7 @@ function WeedGStartState:init()
     self.spriteX = VIRTUAL_WIDTH/2 - (swidth * self.scale)/2
     self.spriteY = VIRTUAL_HEIGHT/2 - (sheight * self.scale)/2
 
-    self.tween = Timer.every(3, function()
+    self.tween = Timer.every(2, function()
         Timer.tween(0.2, {
             [self] = {spriteX = -64}
         })
@@ -48,9 +48,10 @@ function WeedGStartState:update(dt)
 
             gStateStack:push(WeedGPlayState())
             gStateStack:push(DialogueState("" ..
-                "Welcome to the world of 50Mon! To start fighting monsters with your own randomly assigned" ..
-                " monster, just walk in the tall grass! If you need to heal, just press 'P' in the field! " ..
-                "Good luck! (Press Enter to dismiss dialogues)"
+                'Welcome to the wonderful world of Smokey-Mon! Feel free to wander around, but beware: ' ..
+                'this isn\'t your typical grass growing in these fields. If you encounter one of our '..
+                'Smokey-Mon strains, you\'ll have to try and smoke them down to nothing before they do '..
+                'the same to you. Good luck!'
             ))
             gStateStack:push(FadeOutState({
                 r = 255, g = 255, b = 255

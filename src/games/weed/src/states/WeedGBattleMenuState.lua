@@ -11,10 +11,10 @@ WeedGBattleMenuState = Class{__includes = BaseState}
 function WeedGBattleMenuState:init(battleState)
     self.battleState = battleState
 
-    self.battleMenu = Menu {
-        x = VIRTUAL_WIDTH - 64,
+    self.battleMenu = WeedGMenu {
+        x = 0,
         y = VIRTUAL_HEIGHT - 64,
-        width = 64,
+        width = 128,
         height = 64,
         items = {
             {

@@ -10,7 +10,8 @@ WeedGBattleState = Class{__includes = BaseState}
 
 function WeedGBattleState:init(player)
     self.player = player
-    self.bottomPanel = Panel(0, VIRTUAL_HEIGHT - 64, VIRTUAL_WIDTH, 64)
+    self.panelH = 64
+    self.bottomPanel = Panel(0, VIRTUAL_HEIGHT - self.panelH, VIRTUAL_WIDTH, self.panelH)
 
     -- flag for when the battle can take input, set in the first update call
     self.battleStarted = false
@@ -23,9 +24,9 @@ function WeedGBattleState:init(player)
         }
     }
 
-    self.playerSprite = WeedGBattleSprite(nil, -64, VIRTUAL_HEIGHT - 128, true)
+    self.playerSprite = WeedGBattleSprite(nil, -self.player:getWidth() - 100, true)
     self.opponentSprite = WeedGBattleSprite(self.opponent.party.pokemon[1].battleSpriteFront,
-        VIRTUAL_WIDTH, 8, false)
+        VIRTUAL_WIDTH + 100, false)
 
     -- health bars for pokemon
     self.playerHealthBar = ProgressBar {
@@ -63,8 +64,8 @@ function WeedGBattleState:init(player)
     self.renderHealthBars = false
 
     -- circles underneath pokemon that will slide from sides at start
-    self.playerCircleX = -68
-    self.opponentCircleX = VIRTUAL_WIDTH + 32
+    self.playerCircleX = self.playerSprite.x + self.playerSprite.width/2
+    self.opponentCircleX = self.opponentSprite.x + self.opponentSprite.width/2
 
     -- references to active pokemon
     self.playerPokemon = self.player.weedGPokemon
@@ -91,8 +92,15 @@ function WeedGBattleState:render()
     love.graphics.clear(214, 214, 214, 255)
 
     love.graphics.setColor(45, 184, 45, 124)
-    love.graphics.ellipse('fill', self.opponentCircleX, 60, 72, 24)
-    love.graphics.ellipse('fill', self.playerCircleX, VIRTUAL_HEIGHT - 64, 72, 24)
+    local circlePad = 0
+    self.circleW = 100
+    self.circleH = 36
+    love.graphics.ellipse('fill',
+        self.opponentCircleX, self.opponentSprite.y + self.opponentSprite.height + circlePad,
+        self.circleW, self.circleH)
+    love.graphics.ellipse('fill',
+        self.playerCircleX, self.playerSprite.y + self.playerSprite.height + circlePad,
+        self.circleW, self.circleH)
 
     love.graphics.setColor(255, 255, 255, 255)
     self.opponentSprite:render()
@@ -121,10 +129,14 @@ function WeedGBattleState:triggerSlideIn()
     self.battleStarted = true
 
     -- slide the sprites and circles in from the edges, then trigger first dialogue boxes
+    local playerX = 96
+    local oppX = VIRTUAL_WIDTH - 250
     Timer.tween(1, {
-        [self.playerSprite] = {x = 32},
-        [self.opponentSprite] = {x = VIRTUAL_WIDTH - 96},
-        [self] = {playerCircleX = 66, opponentCircleX = VIRTUAL_WIDTH - 70}
+        [self.playerSprite] = {x = playerX},
+        [self.opponentSprite] = {x = oppX},
+        [self] = {
+        playerCircleX = playerX + self.playerSprite.width/2,
+        opponentCircleX = oppX + self.opponentSprite.width/2}
     })
     :finish(function()
         self:triggerStartingDialogue()

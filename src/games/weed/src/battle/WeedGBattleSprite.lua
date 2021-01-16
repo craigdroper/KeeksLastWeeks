@@ -8,13 +8,33 @@
 
 WeedGBattleSprite = Class{}
 
-function WeedGBattleSprite:init(texture, x, y, is_player)
+function WeedGBattleSprite:init(texture, x, is_player)
     self.texture = texture
     self.is_player = is_player
     self.x = x
-    self.y = y
     self.opacity = 255
     self.blinking = false
+    local imgH = nil
+    local imgW = nil
+    local targetHeight = nil
+    if not self.is_player then
+        targetHeight = 150
+        imgW, imgH = gWeedGTextures[self.texture]:getDimensions()
+    else
+        targetHeight = 100
+        imgH = gFramesInfo['keeks-frames'][gKEEKS_IDLE_RIGHT]['height']
+        imgW = gFramesInfo['keeks-frames'][gKEEKS_IDLE_RIGHT]['width']
+    end
+    self.scale = targetHeight / imgH
+    self.width = imgW * self.scale
+    self.height = imgH * self.scale
+    local vertOffest = 50
+    if not self.is_player then
+        self.y = vertOffest
+    else
+        -- Panel Height is 64
+        self.y = VIRTUAL_HEIGHT - 80 - vertOffest - self.height
+    end
 
     -- https://love2d.org/forums/viewtopic.php?t=79617
     -- white shader that will turn a sprite completely white when used; allows us
@@ -44,13 +64,13 @@ function WeedGBattleSprite:render()
     self.whiteShader:send('WhiteFactor', self.blinking and 1 or 0)
 
     if not self.is_player then
-        love.graphics.draw(gWeedGTextures[self.texture], self.x, self.y)
+        love.graphics.draw(gWeedGTextures[self.texture], self.x, self.y, 0, self.scale, self.scale)
     else
         love.graphics.draw(
             gTextures['keeks-walk'],
             gFrames['keeks-frames'][gKEEKS_IDLE_RIGHT],
             self.x,
-            self.y)
+            self.y, 0, self.scale, self.scale)
     end
 
     -- reset shader

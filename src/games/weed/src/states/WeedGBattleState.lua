@@ -10,16 +10,28 @@ WeedGBattleState = Class{__includes = BaseState}
 
 function WeedGBattleState:init(player)
     self.player = player
+    -- Refresh full HP
+    self.player.weedGPokemon.currentHP = self.player.weedGPokemon.HP
     self.panelH = 64
     self.bottomPanel = Panel(0, VIRTUAL_HEIGHT - self.panelH, VIRTUAL_WIDTH, self.panelH)
 
     -- flag for when the battle can take input, set in the first update call
     self.battleStarted = false
 
+    local playLevel = self.player.weedGPokemon.level
+    local oppLevel = 0
+    if playLevel < 2 then
+        oppLevel = playLevel
+    elseif playLevel < 6 then
+        oppLevel = math.min(math.max(playLevel + math.random(-1, 1), 1),10)
+    else
+        oppLevel = math.min(math.max(playLevel + math.random(-2, 2), 1),10)
+    end
+
     self.opponent = WeedGOpponent {
         party = WeedGParty {
             pokemon = {
-                WeedGPokemon(WeedGPokemon.getRandomDef(), math.random(2, 6))
+                WeedGPokemon(WeedGPokemon.getRandomDef(), oppLevel, false)
             }
         }
     }
@@ -30,8 +42,8 @@ function WeedGBattleState:init(player)
 
     -- health bars for pokemon
     self.playerHealthBar = ProgressBar {
-        x = VIRTUAL_WIDTH - 160,
-        y = VIRTUAL_HEIGHT - 80,
+        x = 8,
+        y = 8,
         width = 152,
         height = 6,
         color = {r = 189, g = 32, b = 32},
@@ -40,8 +52,8 @@ function WeedGBattleState:init(player)
     }
 
     self.opponentHealthBar = ProgressBar {
-        x = 8,
-        y = 8,
+        x = VIRTUAL_WIDTH - 160,
+        y = VIRTUAL_HEIGHT - 80,
         width = 152,
         height = 6,
         color = {r = 189, g = 32, b = 32},
@@ -51,8 +63,8 @@ function WeedGBattleState:init(player)
 
     -- exp bar for player
     self.playerExpBar = ProgressBar {
-        x = VIRTUAL_WIDTH - 160,
-        y = VIRTUAL_HEIGHT - 73,
+        x = 8,
+        y = 15,
         width = 152,
         height = 6,
         color = {r = 32, g = 32, b = 189},
@@ -148,15 +160,17 @@ function WeedGBattleState:triggerStartingDialogue()
 
     -- display a dialogue first for the pokemon that appeared, then the one being sent out
     gStateStack:push(WeedGBattleMessageState('A wild ' .. tostring(self.opponent.party.pokemon[1].name ..
-        ' appeared!'),
+        ' appeared, time to blaze up!'),
 
     -- callback for when the battle message is closed
     function()
+    gStateStack:push(WeedGBattleMessageState('Remember, your more advanced smoking techniques will do more damage, but also have a higher chance of missing',
+    function()
         gStateStack:push(WeedGBattleMessageState('Go, Keeks!',
-
         -- push a battle menu onto the stack that has access to the battle state
         function()
             gStateStack:push(WeedGBattleMenuState(self))
         end))
+    end))
     end))
 end

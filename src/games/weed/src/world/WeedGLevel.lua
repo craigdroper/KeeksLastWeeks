@@ -39,7 +39,8 @@ function WeedGLevel:init()
     -- Also add the expected traits the weedg expects
     self.player.weedGMapX = math.floor(self.player.x / WEEDG_TILE_SIZE)
     self.player.weedGMapY = math.floor(self.player.y / WEEDG_TILE_SIZE)
-    self.player.weedGPokemon = WeedGPokemon(WeedGPokemon.getRandomDef(), 1)
+    self.player.weedGPokemon = WeedGPokemon(WeedGPokemon.getRandomDef(), 1, true)
+    self.player.weedGPokemon.name = 'Keeks'
 end
 
 function WeedGLevel:createMaps()

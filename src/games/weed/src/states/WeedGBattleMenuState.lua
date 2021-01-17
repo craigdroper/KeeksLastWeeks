@@ -11,58 +11,28 @@ WeedGBattleMenuState = Class{__includes = BaseState}
 function WeedGBattleMenuState:init(battleState)
     self.battleState = battleState
 
-    self.battleMenu = WeedGMenu {
-        x = 0,
-        y = VIRTUAL_HEIGHT - 64,
-        width = 128,
-        height = 64,
-        items = {
-            {
-                text = 'Fight',
-                onSelect = function()
-                    gStateStack:pop()
-                    gStateStack:push(WeedGTakeTurnState(self.battleState))
-                end
-            },
-            {
-                text = 'Run',
-                onSelect = function()
-                    gWeedGSounds['run']:play()
-
-                    -- pop battle menu
-                    gStateStack:pop()
-
-                    -- show a message saying they successfully ran, then fade in
-                    -- and out back to the field automatically
-                    gStateStack:push(WeedGBattleMessageState('You fled successfully!',
-                        function() end), false)
-                    Timer.after(0.5, function()
-                        gStateStack:push(FadeInState({
-                            r = 255, g = 255, b = 255
-                        }, 1,
-
-                        -- pop message and battle state and add a fade to blend in the field
-                        function()
-
-                            -- resume field music
-                            gWeedGSounds['field-music']:play()
-
-                            -- pop message state
-                            gStateStack:pop()
-
-                            -- pop battle state
-                            gStateStack:pop()
-
-                            gStateStack:push(FadeOutState({
-                                r = 255, g = 255, b = 255
-                            }, 1, function()
-                                -- do nothing after fade out ends
-                            end))
-                        end))
-                    end)
-                end
-            }
-        }
+    local items = {}
+    local playLevel = self.battleState.player.weedGPokemon.level
+    for key, attack in pairs(self.battleState.player.weedGPokemon.attacks) do
+        if playLevel >= attack.minLevel then
+            table.insert(items,
+                {
+                    text = attack.text,
+                    onSelect = function()
+                        gStateStack:pop()
+                        gStateStack:push(WeedGTakeTurnState(
+                                self.battleState,
+                                attack.missPercentage,
+                                attack.multiplier))
+                        end
+                }
+            )
+        end
+    end
+    self.battleMenu = Menu {
+        items = items,
+        centerX = VIRTUAL_WIDTH/2,
+        centerY = VIRTUAL_HEIGHT/2,
     }
 end
 

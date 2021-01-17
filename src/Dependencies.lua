@@ -198,7 +198,6 @@ require 'src/games/acid/src/states/AcidGStartState'
 
 -- Weed game requirements
 require 'src/games/weed/src/WeedGParty'
-require 'src/games/weed/src/WeedGMenu'
 require 'src/games/weed/src/WeedGPokemon'
 require 'src/games/weed/src/pokemon_defs'
 require 'src/games/weed/src/battle/WeedGBattleSprite'

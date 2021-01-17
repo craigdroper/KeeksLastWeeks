@@ -8,34 +8,26 @@
 
 WeedGTakeTurnState = Class{__includes = BaseState}
 
-function WeedGTakeTurnState:init(battleState)
+function WeedGTakeTurnState:init(battleState, missPercent, multiplier)
     self.battleState = battleState
+    self.missPercent = missPercent
+    self.multiplier = multiplier
     self.playerPokemon = self.battleState.player.weedGPokemon
     self.opponentPokemon = self.battleState.opponent.party.pokemon[1]
 
     self.playerSprite = self.battleState.playerSprite
     self.opponentSprite = self.battleState.opponentSprite
 
-    -- figure out which pokemon is faster, as they get to attack first
-    if self.playerPokemon.speed > self.opponentPokemon.speed then
-        self.firstPokemon = self.playerPokemon
-        self.secondPokemon = self.opponentPokemon
-        self.firstSprite = self.playerSprite
-        self.secondSprite = self.opponentSprite
-        self.firstBar = self.battleState.playerHealthBar
-        self.secondBar = self.battleState.opponentHealthBar
-    else
-        self.firstPokemon = self.opponentPokemon
-        self.secondPokemon = self.playerPokemon
-        self.firstSprite = self.opponentSprite
-        self.secondSprite = self.playerSprite
-        self.firstBar = self.battleState.opponentHealthBar
-        self.secondBar = self.battleState.playerHealthBar
-    end
+    self.firstPokemon = self.playerPokemon
+    self.secondPokemon = self.opponentPokemon
+    self.firstSprite = self.playerSprite
+    self.secondSprite = self.opponentSprite
+    self.firstBar = self.battleState.playerHealthBar
+    self.secondBar = self.battleState.opponentHealthBar
 end
 
 function WeedGTakeTurnState:enter(params)
-    self:attack(self.firstPokemon, self.secondPokemon, self.firstSprite, self.secondSprite, self.firstBar, self.secondBar,
+    self:attack(self.firstPokemon, self.secondPokemon, self.firstSprite, self.secondSprite, self.firstBar, self.secondBar, true,
 
     function()
 
@@ -48,7 +40,7 @@ function WeedGTakeTurnState:enter(params)
             return
         end
 
-        self:attack(self.secondPokemon, self.firstPokemon, self.secondSprite, self.firstSprite, self.secondBar, self.firstBar,
+        self:attack(self.secondPokemon, self.firstPokemon, self.secondSprite, self.firstSprite, self.secondBar, self.firstBar, false,
 
         function()
 
@@ -68,7 +60,7 @@ function WeedGTakeTurnState:enter(params)
     end)
 end
 
-function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderSprite, attackerkBar, defenderBar, onEnd)
+function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderSprite, attackerkBar, defenderBar, isPlayer, onEnd)
 
     -- first, push a message saying who's attacking, then flash the attacker
     -- this message is not allowed to take input at first, so it stays on the stack
@@ -77,42 +69,49 @@ function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderS
         function() end, false))
 
     -- pause for half a second, then play attack animation
+    local isAttackResultMsg = false
     Timer.after(0.5, function()
+        local attackSuccess = true
+        if isPlayer then
+            attackSuccess = math.random(100) > self.missPercent
+        end
 
-        -- attack sound
-        gWeedGSounds['powerup']:stop()
-        gWeedGSounds['powerup']:play()
+        if attackSuccess then
+            -- attack sound
+            gWeedGSounds['powerup']:stop()
+            gWeedGSounds['powerup']:play()
 
-        -- blink the attacker sprite three times (turn on and off blinking 6 times)
-        Timer.every(0.1, function()
-            attackerSprite.blinking = not attackerSprite.blinking
-        end)
-        :limit(6)
-        :finish(function()
-
-            -- after finishing the blink, play a hit sound and flash the opacity of
-            -- the defender a few times
-            gWeedGSounds['hit']:stop()
-            gWeedGSounds['hit']:play()
-
+            -- blink the attacker sprite three times (turn on and off blinking 6 times)
             Timer.every(0.1, function()
-                defenderSprite.opacity = defenderSprite.opacity == 64 and 255 or 64
+                attackerSprite.blinking = not attackerSprite.blinking
             end)
             :limit(6)
             :finish(function()
 
-                -- shrink the defender's health bar over half a second, doing at least 1 dmg
-                local dmg = math.max(1, attacker.attack - defender.defense)
+                -- after finishing the blink, play a hit sound and flash the opacity of
+                -- the defender a few times
+                gWeedGSounds['hit']:stop()
+                gWeedGSounds['hit']:play()
 
-                Timer.tween(0.5, {
-                    [defenderBar] = {value = defender.currentHP - dmg}
-                })
+                Timer.every(0.1, function()
+                    defenderSprite.opacity = defenderSprite.opacity == 64 and 255 or 64
+                end)
+                :limit(6)
                 :finish(function()
-                    defender.currentHP = defender.currentHP - dmg
-                    onEnd()
+
+                    -- shrink the defender's health bar over half a second, doing at least 1 dmg
+                    local dmg = math.max(1, attacker.attack * self.multiplier - defender.defense)
+
+                    Timer.tween(0.5, {
+                        [defenderBar] = {value = defender.currentHP - dmg}
+                    })
+                    :finish(function()
+                        defender.currentHP = defender.currentHP - dmg
+                        onEnd()
+                    end)
                 end)
             end)
-        end)
+        end
     end)
 end
 
@@ -214,7 +213,14 @@ function WeedGTakeTurnState:victory()
                         self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
                         self.playerPokemon:levelUp()
 
-                        gStateStack:push(WeedGBattleMessageState('Congratulations! Level Up!',
+                        local levelUpMsg = 'Congratulations! You leveled Up!'
+                        for _, attack in pairs(self.playerPokemon.attacks) do
+                            if self.playerPokemon.level == attack.minLevel then
+                                levelUpMsg = levelUpMsg .. ' You also learned some new skilzz: ' .. attack.text
+                            end
+                        end
+
+                        gStateStack:push(WeedGBattleMessageState(levelUpMsg,
                         function()
                             self:fadeOutWhite()
                         end))

@@ -8,8 +8,41 @@
 
 WeedGPokemon = Class{}
 
-function WeedGPokemon:init(def, level)
+function WeedGPokemon:init(def, level, isPlayer)
     self.name = def.name
+    self.isPlayer = isPlayer
+    self.attacks = {
+        [1] = {
+            text = 'Smoke a Piece',
+            minLevel = 1,
+            missPercentage = 0,
+            multiplier = 1,
+        },
+        [2] = {
+            text = 'Roll a Joint',
+            minLevel = 3,
+            missPercentage = 20,
+            multiplier = 1.2,
+        },
+        [3] = {
+            text = 'Rip a Bong',
+            minLevel = 5,
+            missPercentage = 40,
+            multiplier = 1.5,
+        },
+        [4] = {
+            text = 'Vape a Volcano',
+            minLevel = 7,
+            missPercentage = 60,
+            multiplier = 2.0,
+        },
+        [5] = {
+            text = 'Torch and Dab',
+            minLevel = 9,
+            missPercentage = 80,
+            multiplier = 3.0,
+        },
+    }
 
     self.battleSpriteFront = def.battleSpriteFront
     self.battleSpriteBack = def.battleSpriteBack
@@ -39,7 +72,11 @@ function WeedGPokemon:init(def, level)
 end
 
 function WeedGPokemon:calculateStats()
-    for i = 1, self.level do
+    local level = self.level
+    if not self.isPlayer then
+        level = level - 1
+    end
+    for i = 1, level do
         self:statsLevelUp()
     end
 end

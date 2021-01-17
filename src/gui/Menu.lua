@@ -28,6 +28,10 @@ function Menu:init(def)
     local menuHeight = charPixelHeight * #def.items
     local menuX = (VIRTUAL_WIDTH - menuWidth) / 2
     local menuY = (VIRTUAL_HEIGHT - TEXT_Y_PAD - menuHeight)
+    if def.centerX and def.centerY then
+        menuX = def.centerX - menuWidth/2
+        menuY = def.centerY - menuHeight/2
+    end
 
     self.panel = Panel(menuX, menuY, menuWidth, menuHeight)
     self.selection = Selection {

@@ -31,7 +31,6 @@ function WeedGTakeTurnState:enter(params)
 
     function()
 
-        -- remove the message
         gStateStack:pop()
 
         -- check to see whether the player or enemy died
@@ -68,51 +67,68 @@ function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderS
     gStateStack:push(WeedGBattleMessageState(attacker.name .. ' attacks ' .. defender.name .. '!',
         function() end, false))
 
+    local attackSuccess = true
+    if isPlayer then
+        attackSuccess = math.random(100) > self.missPercent
+    else
+        attackSuccess = math.random(100) > 20
+    end
+    -- Hack to make hits never miss on level 1 since that can cripple
+    -- the player since its usually 2 hits and out
+    if attacker.level == 1 then
+        attackSuccess = true
+    end
+
     -- pause for half a second, then play attack animation
-    local isAttackResultMsg = false
     Timer.after(0.5, function()
-        local attackSuccess = true
-        if isPlayer then
-            attackSuccess = math.random(100) > self.missPercent
-        end
+        -- attack sound
+        gWeedGSounds['powerup']:stop()
+        gWeedGSounds['powerup']:play()
 
-        if attackSuccess then
-            -- attack sound
-            gWeedGSounds['powerup']:stop()
-            gWeedGSounds['powerup']:play()
+        -- blink the attacker sprite three times (turn on and off blinking 6 times)
+        Timer.every(0.1, function()
+            attackerSprite.blinking = not attackerSprite.blinking
+        end)
+        :limit(6)
+        :finish(function()
 
-            -- blink the attacker sprite three times (turn on and off blinking 6 times)
+            -- after finishing the blink, play a hit sound and flash the opacity of
+            -- the defender a few times
+            if attackSuccess then
+                gWeedGSounds['hit']:stop()
+                gWeedGSounds['hit']:play()
+            else
+                gWeedGSounds['miss']:stop()
+                gWeedGSounds['miss']:play()
+            end
+
             Timer.every(0.1, function()
-                attackerSprite.blinking = not attackerSprite.blinking
+                defenderSprite.opacity = defenderSprite.opacity == 64 and 255 or 64
             end)
             :limit(6)
             :finish(function()
 
-                -- after finishing the blink, play a hit sound and flash the opacity of
-                -- the defender a few times
-                gWeedGSounds['hit']:stop()
-                gWeedGSounds['hit']:play()
+                -- shrink the defender's health bar over half a second, doing at least 1 dmg
+                --local dmg = math.max(1, attacker.attack - defender.defense)
+                local dmg = math.max(1, attacker.attack + math.random(-2, 2))
+                if isPlayer then
+                    dmg = dmg * self.multiplier
+                end
+                if not attackSuccess then
+                    dmg = 0
+                end
 
-                Timer.every(0.1, function()
-                    defenderSprite.opacity = defenderSprite.opacity == 64 and 255 or 64
-                end)
-                :limit(6)
+                Timer.tween(0.5, {
+                    [defenderBar] = {value = defender.currentHP - dmg}
+                })
                 :finish(function()
-
-                    -- shrink the defender's health bar over half a second, doing at least 1 dmg
-                    local dmg = math.max(1, attacker.attack * self.multiplier - defender.defense)
-
-                    Timer.tween(0.5, {
-                        [defenderBar] = {value = defender.currentHP - dmg}
-                    })
-                    :finish(function()
-                        defender.currentHP = defender.currentHP - dmg
-                        onEnd()
-                    end)
+                    defender.currentHP = defender.currentHP - dmg
+                    onEnd()
                 end)
             end)
-        end
+        end)
     end)
+    return true
 end
 
 function WeedGTakeTurnState:checkDeaths()
@@ -150,8 +166,8 @@ function WeedGTakeTurnState:faint()
                 self.playerPokemon.currentHP = self.playerPokemon.HP
 
                 -- resume field music
-                gWeedGSounds['battle-music']:stop()
-                gWeedGSounds['field-music']:play()
+                -- gWeedGSounds['battle-music']:stop()
+                -- gWeedGSounds['field-music']:play()
 
                 -- pop off the battle state and back into the field
                 gStateStack:pop()
@@ -173,7 +189,7 @@ function WeedGTakeTurnState:victory()
     })
     :finish(function()
         -- play victory music
-        gWeedGSounds['battle-music']:stop()
+        -- gWeedGSounds['battle-music']:stop()
 
         gWeedGSounds['victory-music']:setLooping(true)
         gWeedGSounds['victory-music']:play()
@@ -216,7 +232,7 @@ function WeedGTakeTurnState:victory()
                         local levelUpMsg = 'Congratulations! You leveled Up!'
                         for _, attack in pairs(self.playerPokemon.attacks) do
                             if self.playerPokemon.level == attack.minLevel then
-                                levelUpMsg = levelUpMsg .. ' You also learned some new skilzz: ' .. attack.text
+                                levelUpMsg = levelUpMsg .. '\nYou also learned some new skilzz: ' .. attack.text
                             end
                         end
 
@@ -241,7 +257,7 @@ function WeedGTakeTurnState:fadeOutWhite()
     function()
 
         -- resume field music
-        --gWeedGSounds['victory-music']:stop()
+        gWeedGSounds['victory-music']:stop()
         --gWeedGSounds['field-music']:play()
 
         -- pop off the battle state

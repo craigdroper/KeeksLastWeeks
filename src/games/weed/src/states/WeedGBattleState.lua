@@ -23,9 +23,9 @@ function WeedGBattleState:init(player)
     if playLevel < 2 then
         oppLevel = playLevel
     elseif playLevel < 6 then
-        oppLevel = math.min(math.max(playLevel + math.random(-1, 1), 1),10)
+        oppLevel = math.min(math.max(playLevel + math.random(1), 1),10)
     else
-        oppLevel = math.min(math.max(playLevel + math.random(-2, 2), 1),10)
+        oppLevel = math.min(math.max(playLevel + math.random(2), 1),10)
     end
 
     self.opponent = WeedGOpponent {

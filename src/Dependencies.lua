@@ -579,6 +579,7 @@ gWeedGSounds = {
     ['blip'] = love.audio.newSource('src/games/weed/sounds/blip.wav'),
     ['powerup'] = love.audio.newSource('src/games/weed/sounds/powerup.wav'),
     ['hit'] = love.audio.newSource('src/games/weed/sounds/hit.wav'),
+    ['miss'] = love.audio.newSource('src/games/weed/sounds/miss.wav'),
     ['run'] = love.audio.newSource('src/games/weed/sounds/run.wav'),
     ['heal'] = love.audio.newSource('src/games/weed/sounds/heal.wav'),
     ['exp'] = love.audio.newSource('src/games/weed/sounds/exp.wav'),

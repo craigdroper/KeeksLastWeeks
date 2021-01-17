@@ -15,26 +15,26 @@ function WeedGPokemon:init(def, level, isPlayer)
         [1] = {
             text = 'Smoke a Piece',
             minLevel = 1,
-            missPercentage = 0,
+            missPercentage = 10,
             multiplier = 1,
         },
         [2] = {
             text = 'Roll a Joint',
             minLevel = 3,
             missPercentage = 20,
-            multiplier = 1.2,
+            multiplier = 1.4,
         },
         [3] = {
             text = 'Rip a Bong',
             minLevel = 5,
-            missPercentage = 40,
-            multiplier = 1.5,
+            missPercentage = 50,
+            multiplier = 1.75,
         },
         [4] = {
             text = 'Vape a Volcano',
             minLevel = 7,
             missPercentage = 60,
-            multiplier = 2.0,
+            multiplier = 2.2,
         },
         [5] = {
             text = 'Torch and Dab',
@@ -74,9 +74,10 @@ end
 function WeedGPokemon:calculateStats()
     local level = self.level
     if not self.isPlayer then
+        -- NB: Not used right now
         level = level - 1
     end
-    for i = 1, level do
+    for i = 1, self.level do
         self:statsLevelUp()
     end
 end
@@ -97,7 +98,7 @@ function WeedGPokemon:statsLevelUp()
 
     for j = 1, 3 do
         if math.random(6) <= self.HPIV then
-            self.HP = self.HP + 1
+            self.HP = self.HP + 3
             HPIncrease = HPIncrease + 1
         end
     end
@@ -134,7 +135,7 @@ end
 
 function WeedGPokemon:levelUp()
     self.level = self.level + 1
-    self.expToLevel = self.level * self.level * 5 * 0.75
+    self.expToLevel = self.level * self.level * 8 * 0.75
 
     return self:statsLevelUp()
 end

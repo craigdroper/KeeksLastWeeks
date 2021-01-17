@@ -38,7 +38,7 @@ function WeedGEntityWalkState:attemptMove()
     end
 
     -- break out if we try to move out of the map boundaries
-    if toX < 1 or toX > 24 or toY < 1 or toY > 13 then
+    if toX < 1 or toX > self.level.tileWidth-2 or toY < 1 or toY > self.level.tileHeight-2 then
         self.entity:changeState('idle')
         self.entity:changeAnimation('idle-' .. tostring(self.entity.direction))
         return
@@ -48,7 +48,7 @@ function WeedGEntityWalkState:attemptMove()
     self.entity.weedGMapX = toX
 
     Timer.tween(0.5, {
-        [self.entity] = {x = (toX - 1) * TILE_SIZE, y = (toY - 1) * TILE_SIZE - self.entity.height / 2}
+        [self.entity] = {x = (toX - 1) * WEEDG_TILE_SIZE, y = (toY - 1) * WEEDG_TILE_SIZE - self.entity:getHeight() / 2}
     }):finish(function()
         if love.keyboard.isDown('left') then
             self.entity.direction = 'left'

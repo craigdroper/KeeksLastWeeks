@@ -35,6 +35,7 @@ require 'src/gui/ProgressBar'
 require 'src/filters/NoFilter'
 require 'src/filters/CokeFilter'
 require 'src/filters/AcidFilter'
+require 'src/filters/WeedFilter'
 
 -- Apartment World requirements
 require 'src/world/apartment/Apartment'

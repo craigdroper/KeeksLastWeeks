@@ -33,16 +33,16 @@ function AcidFilter:init(params)
     self:tweenBackground()
 
     self.monsters = {
-        [1] = {img=gAcidFImage['c1'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [2] = {img=gAcidFImage['c2'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [3] = {img=gAcidFImage['c3'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [4] = {img=gAcidFImage['c4'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [5] = {img=gAcidFImage['c5'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [6] = {img=gAcidFImage['c6'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [7] = {img=gAcidFImage['c7'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [8] = {img=gAcidFImage['c8'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [9] = {img=gAcidFImage['c9'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
-        [10] = {img=gAcidFImage['c10'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},  
+        [1] = {img=gAcidFImage['c1'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [2] = {img=gAcidFImage['c2'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [3] = {img=gAcidFImage['c3'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [4] = {img=gAcidFImage['c4'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [5] = {img=gAcidFImage['c5'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [6] = {img=gAcidFImage['c6'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [7] = {img=gAcidFImage['c7'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [8] = {img=gAcidFImage['c8'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [9] = {img=gAcidFImage['c9'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
+        [10] = {img=gAcidFImage['c10'], x=0, y=0, rad=0, sx=1, sy=1, ox=0, oy=0, opac=0},
     }
     self.monsterFreq = #self.monsters / self.multiplier
     self.monsterPeriod = 10
@@ -134,8 +134,8 @@ function AcidFilter:tweenSpiralMonster(mIdx)
     self.monsters[mIdx].oy = imgh/2
     self.monsters[mIdx].opac = 64
     Timer.tween(self.monsterPeriod, {[self.monsters[mIdx]] = {
-        x = VIRTUAL_WIDTH/2 + math.random(-VIRTUAL_WIDTH,VIRTUAL_WIDTH), 
-        y = VIRTUAL_HEIGHT/2 + math.random(-VIRTUAL_HEIGHT,VIRTUAL_HEIGHT), 
+        x = VIRTUAL_WIDTH/2 + math.random(-VIRTUAL_WIDTH,VIRTUAL_WIDTH),
+        y = VIRTUAL_HEIGHT/2 + math.random(-VIRTUAL_HEIGHT,VIRTUAL_HEIGHT),
         rad = 6.24 * math.random(-300,300)/100.,
         sx = math.random(400,800) / imgw,
         sy = math.random(400,800) / imgh,
@@ -151,8 +151,8 @@ end
 
 function AcidFilter:tweenBackground()
     Timer.tween( self.bkPeriod, {[self] = {
-        bx = VIRTUAL_WIDTH/2 + math.random(-50,50), 
-        by = VIRTUAL_HEIGHT/2 + math.random(-50,50), 
+        bx = VIRTUAL_WIDTH/2 + math.random(-50,50),
+        by = VIRTUAL_HEIGHT/2 + math.random(-50,50),
         brad = self.brad + 6.24, -- one full rotation
         bsx = math.random(math.floor(self.bminSx*100), math.floor(self.bminSx*400))/100.,
         bsy = math.random(math.floor(self.bminSy*100), math.floor(self.bminSy*400))/100.,

@@ -29,6 +29,8 @@ function love.load()
     gGlobalObjs['player'] = player
 
     gGlobalObjs['filter'] = NoFilter()
+    -- TODO DEV
+    gGlobalObjs['filter'] = WeedFilter({multiplier = 10})
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()

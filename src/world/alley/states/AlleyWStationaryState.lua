@@ -28,6 +28,8 @@ function AlleyWStationaryState:update(dt)
             gGlobalObjs['filter'] = CokeFilter({multiplier = self.gameStats.multiplier})
         elseif self.alley.drugName == 'acid' then
             gGlobalObjs['filter'] = AcidFilter({multiplier = self.gameStats.multiplier})
+        elseif self.alley.drugName == 'weed' then
+            gGlobalObjs['filter'] = WeedFilter({multiplier = self.gameStats.multiplier})
         else
             error('Unrecognized drug name')
         end

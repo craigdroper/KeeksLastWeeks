@@ -7,16 +7,16 @@ function AlleyWDrugMenuState:init(params)
     self.drugMenu = Menu {
         items = {
             {
-                text = 'Coke',
+                text = 'Weed',
                 onSelect =
                 function()
-                    self.alley.drugName = 'coke'
+                    self.alley.drugName = 'weed'
                     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
                         function()
                     -- Pop AlleyWDrugMenuState
                     gStateStack:pop()
-                    -- Transition to coke game
-                    gStateStack:push(CokeGTitleScreenState())
+                    -- Transition to weed game
+                    gStateStack:push(WeedGStartState())
                     gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                         function()
                         end))
@@ -34,6 +34,23 @@ function AlleyWDrugMenuState:init(params)
                     gStateStack:pop()
                     -- Transition to acid game
                     gStateStack:push(AcidGStartState())
+                    gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        end))
+                        end))
+                end
+            },
+            {
+                text = 'Coke',
+                onSelect =
+                function()
+                    self.alley.drugName = 'coke'
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                    -- Pop AlleyWDrugMenuState
+                    gStateStack:pop()
+                    -- Transition to coke game
+                    gStateStack:push(CokeGTitleScreenState())
                     gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                         function()
                         end))

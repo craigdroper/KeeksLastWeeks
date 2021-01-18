@@ -85,11 +85,10 @@ function WeedGBattleState:init(player)
 end
 
 function WeedGBattleState:enter(params)
-
 end
 
 function WeedGBattleState:exit()
-    gWeedGSounds['battle-music']:stop()
+    -- gWeedGSounds['battle-music']:stop()
     -- gWeedGSounds['field-music']:play()
 end
 

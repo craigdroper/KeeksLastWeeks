@@ -155,28 +155,10 @@ function WeedGTakeTurnState:faint()
         gStateStack:push(WeedGBattleMessageState('You fainted!',
 
         function()
-
-            -- fade in black
-            gStateStack:push(FadeInState({
-                r = 0, g = 0, b = 0
-            }, 1,
-            function()
-
-                -- restore player pokemon to full health
-                self.playerPokemon.currentHP = self.playerPokemon.HP
-
-                -- resume field music
-                -- gWeedGSounds['battle-music']:stop()
-                -- gWeedGSounds['field-music']:play()
-
-                -- pop off the battle state and back into the field
-                gStateStack:pop()
-                gStateStack:push(FadeOutState({
-                    r = 0, g = 0, b = 0
-                }, 1, function()
-                    gStateStack:push(DialogueState('Your Pokemon has been fully restored; try again!'))
-                end))
-            end))
+            -- Pop TakeTurn state, push GameOver
+            -- Looks like TakeTurn will actually be pushed after this method
+            -- was called
+            gStateStack:push(WeedGGameOverState({level=self.playerPokemon.level}))
         end))
     end)
 end
@@ -238,7 +220,14 @@ function WeedGTakeTurnState:victory()
 
                         gStateStack:push(WeedGBattleMessageState(levelUpMsg,
                         function()
-                            self:fadeOutWhite()
+                            if self.playerPokemon.level ~= 10 then
+                                self:fadeOutWhite()
+                            else
+                                -- Pop TakeTurn state, push GameOver
+                                -- Looks like TakeTurn will actually be pushed after this method
+                                -- was called
+                                gStateStack:push(WeedGGameOverState({level=self.playerPokemon.level}))
+                            end
                         end))
                     else
                         self:fadeOutWhite()

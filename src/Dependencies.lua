@@ -215,6 +215,7 @@ require 'src/games/weed/src/world/WeedGTileMap'
 -- Currently only works with Pokemon Level
 require 'src/games/weed/src/states/WeedGEntityWalkState'
 require 'src/games/weed/src/states/WeedGPlayerWalkState'
+require 'src/games/weed/src/states/WeedGGameOverState'
 
 gTextures = {
     --TODO delete legacy code from here

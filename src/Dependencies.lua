@@ -432,6 +432,7 @@ gCasGImages = {
 gBarWImages = {
     ['exterior'] = love.graphics.newImage('graphics/sets/bar_exterior.jpg'),
     ['interior'] = love.graphics.newImage('graphics/sets/bar_interior.jpg'),
+    ['game'] = love.graphics.newImage('graphics/sets/bar_game.jpg'),
 }
 
 gBarWSounds = {

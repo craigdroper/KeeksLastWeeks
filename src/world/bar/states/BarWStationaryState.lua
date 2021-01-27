@@ -16,7 +16,7 @@ function BarWStationaryState:enter()
         'We\'ve got your favorite seat saved for you. ' ..
         'What\'ll it be?',
         function()
-            gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- Keep the Stationary State on, and put the mini game
             -- on top of it
@@ -41,7 +41,7 @@ function BarWStationaryState:update(dt)
         function()
             -- Pop the stationary state, push the exit state
             -- Increase player walk speed like he's running out
-            self.player.walkSpeed = 500
+            self.player.walkSpeed = 150
             gStateStack:pop()
             gStateStack:push(BarWExitState(
                 {bar = self.bar, nextGameState = AptWEnterState()}))

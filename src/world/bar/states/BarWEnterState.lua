@@ -1,37 +1,34 @@
 
 BarWEnterState = Class{__includes = BaseState}
 
-local FURNITURE_BUFFER = 8
-
 function BarWEnterState:init()
     self.player = gGlobalObjs['player']
-    self.bar = Bar()
+    self.bar = BarWInterior()
 end
 
 function BarWEnterState:enter()
     -- Set the player entity's scale factors to the correct values
     -- for this room's tile sizes
-    self.player.scaleX = 0.75
-    self.player.scaleY = 0.75
+    self.player.scaleX = 1.5
+    self.player.scaleY = 1.5
     self.player.opacity = 255
-    self.player.walkSpeed = 150
-    -- Explicitly set the player's X & Y coordinates to be just outside
-    -- of the right frame in line to walk into the bar withouth
-    -- hitting any of the tables
-    local botTableY = self.bar.furniture['vert-table-9'][4]
-    local vertTableHeight = gFramesInfo['bar'][gBAR_VERT_TABLE]['height']
-    self.player.x = VIRTUAL_WIDTH + 10
-    self.player.y = botTableY + vertTableHeight + FURNITURE_BUFFER
+    self.player.walkSpeed = 50
+    -- Explicitly set the player's X & Y coordinates to be off screen, bottom left
+    self.player.x = -self.player:getWidth() - 10
+    self.player.y = VIRTUAL_HEIGHT - 100
     -- Setup tween entrance
     self:tweenEnter()
+    -- Begin playing the casino background music
+    gBarWSounds['interior']:setLooping(true)
+    gBarWSounds['interior']:play()
 end
 
 function BarWEnterState:tweenEnter()
-    local stoolX = self.bar.furniture['barstool-3'][3]
-    local stoolWidth = gFramesInfo['bar'][gBAR_LEFT_CHAIR]['width']
-    local stoolY = self.bar.furniture['barstool-3'][4]
-    local barX = self.bar.furniture['bar-base'][3]
-    local barWidth = gFramesInfo['bar'][gBAR_BAR_EXT]['width']
+    local ROW_X = VIRTUAL_WIDTH/2 - 100
+    local TURN_X = VIRTUAL_WIDTH/2 - 20
+    local TURN_Y = VIRTUAL_HEIGHT/2 + 20
+    local CHAIR_X = TURN_X - 15
+    local CHAIR_Y = TURN_Y - 30
 
     gSounds['door']:play()
     local doorDuration = gSounds['door']:getDuration()
@@ -41,33 +38,34 @@ function BarWEnterState:tweenEnter()
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
-    -- Come in through the door, walk just under the lowest tables to
-    -- the bar portion
-    local walkPixels = self.player.x - (stoolX + stoolWidth + FURNITURE_BUFFER)
-    self.player:changeAnimation('walk-left')
+    -- Come just inside and subtract the door fee
+    local walkPixels = ROW_X - self.player.x
+    self.player:changeAnimation('walk-right')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = stoolX + stoolWidth + FURNITURE_BUFFER}
+        [self.player] = {x = ROW_X}
     }):finish(
         function()
-    -- Walk high enough to be in line with the target barstool
-    walkPixels = self.player.y - stoolY
+    walkPixels = self.player.y - TURN_Y
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = stoolY}
+        [self.player] = {x = TURN_X, y=TURN_Y, scaleX=1, scaleY=1}
     }):finish(
         function()
-    -- Walk over "into" the chair, flush on the right side of the bar
-    walkPixels = self.player.x - barX + barWidth
-    self.player:changeAnimation('walk-left')
-    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = barX + barWidth}
-    }):finish(
-        function()
-    gSounds['footsteps']:stop()
     self.player:changeAnimation('idle-left')
-    -- Pop the Bar Enter State off, and push the stationary state
+    Timer.after(0.5,
+        function()
+    -- "Hop/Jump" onto the mid table chair facing left after a small wind up
+    -- pause for the jump
+    gSounds['footsteps']:stop()
+    gSounds['jump']:play()
+    Timer.tween(0.5, {
+        [self.player] = {x = CHAIR_X, y = CHAIR_Y}
+    }):finish(
+        function()
+    -- Pop the bar Enter State off, and Push bar stationary state
     gStateStack:pop()
     gStateStack:push(BarWStationaryState({bar = self.bar}))
+        end)
         end)
         end)
         end)

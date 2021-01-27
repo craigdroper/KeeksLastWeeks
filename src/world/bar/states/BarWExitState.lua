@@ -14,45 +14,51 @@ function BarWExitState:enter()
 end
 
 function BarWExitState:tweenExit()
-    local stoolX = self.bar.furniture['barstool-3'][3]
-    local stoolWidth = gFramesInfo['bar'][gBAR_LEFT_CHAIR]['width']
-    local botTableY = self.bar.furniture['vert-table-9'][4]
-    local vertTableHeight = gFramesInfo['bar'][gBAR_VERT_TABLE]['height']
-    local stoolY = botTableY + vertTableHeight + FURNITURE_BUFFER
-    local wallX = VIRTUAL_WIDTH + 10
+    local ROW_X = VIRTUAL_WIDTH/2 - 100
+    local TURN_X = VIRTUAL_WIDTH/2 - 20
+    local TURN_Y = VIRTUAL_HEIGHT/2 + 20
+    local CHAIR_X = TURN_X - 15
+    local CHAIR_Y = TURN_Y - 30
+    local DOOR_X = -20
+    local DOOR_Y = VIRTUAL_HEIGHT - 100
 
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
-    local walkPixels = (stoolX + stoolWidth) - self.player.x
-    self.player:changeAnimation('walk-right')
-    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = stoolX + stoolWidth + FURNITURE_BUFFER}
+    -- Jump off from off the chair, and sit still for a second as if recovering
+    -- from the landing
+    self.player:changeAnimation('idle-right')
+    Timer.tween(0.5,{
+        [self.player] = {x = TURN_X, y = TURN_Y}
     }):finish(
         function()
-    walkPixels = stoolY - self.player.y
+    Timer.after(0.5,
+        function()
+    local walkPixels = DOOR_Y - self.player.y
     self.player:changeAnimation('walk-down')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = stoolY}
+        [self.player] = {x = ROW_X, y=DOOR_Y, scaleX=1.5, scaleY=1.5}
     }):finish(
         function()
-    walkPixels = wallX - self.player.x
-    self.player:changeAnimation('walk-right')
+    local walkPixels = self.player.x - DOOR_X
+    self.player:changeAnimation('walk-left')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = wallX}
+        [self.player] = {x = DOOR_X}
     }):finish(
         function()
     gSounds['footsteps']:stop()
     gSounds['door']:play()
+    gCasSounds['background']:stop()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            -- Pop the AptWExitState off
+            -- Pop the CasWExitState off
             gStateStack:pop()
-            gStateStack:push(self.nextGameState)
+            gStateStack:push(self.nextState)
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
         end))
+        end)
         end)
         end)
         end)

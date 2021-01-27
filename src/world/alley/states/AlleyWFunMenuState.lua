@@ -17,7 +17,7 @@ function AlleyWFunMenuState:init(params)
                     gStateStack:push(AlleyWExitState(
                         {
                             alley = self.alley,
-                            nextState = BarWEnterState()
+                            nextState = BarWEnterExteriorState()
                         }))
                 end
             },

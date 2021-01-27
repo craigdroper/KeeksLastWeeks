@@ -47,10 +47,14 @@ require 'src/world/apartment/states/AptWFunMenuState'
 require 'src/world/apartment/states/AptWRecoverMenuState'
 
 -- Bar World requirements
-require 'src/world/bar/Bar'
+-- require 'src/world/bar/Bar'
+require 'src/world/bar/BarWExterior'
+require 'src/world/bar/BarWInterior'
 require 'src/world/bar/states/BarWStationaryState'
 require 'src/world/bar/states/BarWEnterState'
 require 'src/world/bar/states/BarWExitState'
+require 'src/world/bar/states/BarWEnterExteriorState'
+require 'src/world/bar/states/BarWBouncerState'
 
 -- Bar Breakout Game requirements
 require 'src/games/bar/src/BarGBall'
@@ -423,6 +427,16 @@ gCasGFrames = {
 
 gCasGImages = {
     ['card-back'] = love.graphics.newImage('src/games/casino/graphics/card_back.png'),
+}
+
+gBarWImages = {
+    ['exterior'] = love.graphics.newImage('graphics/sets/bar_exterior.jpg'),
+    ['interior'] = love.graphics.newImage('graphics/sets/bar_interior.jpg'),
+}
+
+gBarWSounds = {
+    ['exterior'] = love.audio.newSource('sounds/street_noise.mp3'),
+    ['interior'] = love.audio.newSource('sounds/bar_background.mp3'),
 }
 
 gDateWImages = {

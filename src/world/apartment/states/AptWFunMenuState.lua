@@ -17,7 +17,7 @@ function AptWFunMenuState:init(params)
                     gStateStack:push(AptWExitState(
                         {
                             apartment = self.apartment,
-                            nextGameState = BarWEnterState()
+                            nextGameState = BarWEnterExteriorState()
                         }))
                 end
             },

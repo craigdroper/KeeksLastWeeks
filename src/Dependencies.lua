@@ -242,7 +242,7 @@ gTextures = {
     ['sec-rep-walk'] = love.graphics.newImage('graphics/characters/sec_rep.png'),
 }
 
-gTOTAL_CHAR_COUNT = 4
+gTOTAL_CHAR_COUNT = 20
 
 for charCount = 1, gTOTAL_CHAR_COUNT do
     gTextures['character-'..charCount] = love.graphics.newImage('graphics/characters/character_'..charCount..'.png')

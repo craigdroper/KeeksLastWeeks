@@ -421,3 +421,43 @@ function createPlayer()
     player:changeState('idle')
     return player
 end
+
+function createNPC(npcs, realX, realY, frame, scale)
+    local tryCount = 1
+    local isUnique = false
+    if #npcs == 0 then
+        isUnique = true
+    end
+    local randCharNum = math.random(1, gTOTAL_CHAR_COUNT)
+    while( not isUnique and tryCount < 1000 ) do
+        local isUniqueCheck = true
+        for _, npc in pairs(npcs) do
+            if npc.num == randCharNum then
+                isUniqueCheck = false
+            end
+        end
+        isUnique = isUniqueCheck
+        tryCount = tryCount + 1
+    end
+    if scale == nil then
+        scale = 1
+    end
+    local charInfo = {
+        imgX = realX,
+        imgY = realY,
+        frame = frame,
+        num = randCharNum,
+        name = 'character-'..randCharNum,
+        scale = scale,
+    }
+    table.insert(npcs, charInfo)
+end
+
+function drawNPC(npcs, imgSX, imgSY)
+    for _, npc in pairs(npcs) do
+        love.graphics.filterDrawQ(
+            gTextures[npc.name], gFrames[npc.name][npc.frame],
+            npc.imgX * imgSX, npc.imgY * imgSY,
+            0, npc.scale, npc.scale)
+    end
+end

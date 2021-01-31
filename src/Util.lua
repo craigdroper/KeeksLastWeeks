@@ -422,7 +422,7 @@ function createPlayer()
     return player
 end
 
-function createNPC(npcs, realX, realY, frame, scale)
+function createNPC(npcs, realX, realY, frame, scale, hshift)
     local tryCount = 1
     local isUnique = false
     if #npcs == 0 then
@@ -449,14 +449,26 @@ function createNPC(npcs, realX, realY, frame, scale)
         num = randCharNum,
         name = 'character-'..randCharNum,
         scale = scale,
+        hshift = hshift,
     }
     table.insert(npcs, charInfo)
 end
 
 function drawNPC(npcs, imgSX, imgSY)
     for _, npc in pairs(npcs) do
+        local texture = gTextures[npc.name]
+        local frame = gFrames[npc.name][npc.frame]
+        if npc.hshift then
+            local origFrameX, origFrameY, origFrameW, origFrameH = frame:getViewport()
+            frame = love.graphics.newQuad(
+                origFrameX,
+                origFrameY,
+                origFrameW,
+                origFrameH - npc.hshift,
+                texture:getDimensions())
+        end
         love.graphics.filterDrawQ(
-            gTextures[npc.name], gFrames[npc.name][npc.frame],
+            texture, frame,
             npc.imgX * imgSX, npc.imgY * imgSY,
             0, npc.scale, npc.scale)
     end

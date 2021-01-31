@@ -11,15 +11,15 @@ end
 function ClubWEnterState:enter()
     -- Set the player entity's scale factors to the correct values
     -- for this room's tile sizes
-    self.player.scaleX = 0.75
-    self.player.scaleY = 0.75
+    self.player.scaleX = 1.4
+    self.player.scaleY = 1.4
     self.player.opacity = 255
     self.player.walkSpeed = 30
     -- Explicitly set the player's X & Y coordinates to be centered and just
     -- out of sight on the botto edge of the screen
     local midX = (VIRTUAL_WIDTH - self.player:getWidth()) / 2
     self.player.x = midX
-    self.player.y = VIRTUAL_HEIGHT + 1
+    self.player.y = VIRTUAL_HEIGHT + 10
     -- Setup tween entrance
     self:tweenEnter()
     -- Begin playing the club background music

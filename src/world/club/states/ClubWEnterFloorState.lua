@@ -11,9 +11,6 @@ end
 function ClubWEnterFloorState:enter()
     -- Setup tween entrance
     self:tweenEnter()
-    -- Begin playing the club background music
-    gClubSounds['background']:setLooping(true)
-    gClubSounds['background']:play()
 end
 
 function ClubWEnterFloorState:tweenEnter()
@@ -21,7 +18,7 @@ function ClubWEnterFloorState:tweenEnter()
     -- going to approximate and hard code these values
     local APRX_BOOTH_OFFSET = 30
     local boothY = VIRTUAL_HEIGHT / 2 + APRX_BOOTH_OFFSET
-    local danceY = (VIRTUAL_HEIGHT - boothY) / 2 + boothY
+    local danceY = (VIRTUAL_HEIGHT - boothY) / 2 + boothY - 50
 
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
@@ -32,7 +29,7 @@ function ClubWEnterFloorState:tweenEnter()
     local walkPixels = self.player.y - danceY
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = danceY}
+        [self.player] = {y = danceY, x=self.player.x+5, scaleY=1.1, scaleX=1.1}
     }):finish(
         function()
     -- Tween together a couple little dance moves
@@ -53,7 +50,7 @@ function ClubWEnterFloorState:tweenEnter()
     walkPixels = self.player.y - boothY
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = boothY}
+        [self.player] = {y = boothY, x=self.player.x+5, scaleY=0.9, scaleX=0.9}
     }):finish(
         function()
     gSounds['footsteps']:stop()

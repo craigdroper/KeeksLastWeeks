@@ -210,7 +210,7 @@ function GenerateCharacterQuadsAndInfo(atlas)
 
     gCHARACTER_IDLE_DOWN = 'character_idle_down'
     addAptQuadInfoSmart(atlas, sheet, info,
-        gKEEKS_IDLE_DOWN, 19, 15, 56, 78)
+        gCHARACTER_IDLE_DOWN, 19, 15, 56, 78)
 
     gCHARACTER_IDLE_UP = 'character_idle_up'
     addAptQuadInfoSmart(atlas, sheet, info,

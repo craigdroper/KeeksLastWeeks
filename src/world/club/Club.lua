@@ -25,38 +25,47 @@ function Club:init()
 
     self.npcs = {}
     self:initNPC()
+    local dj = {
+        imgX = 975,
+        imgY = 650,
+        frame = gCHARACTER_IDLE_DOWN,
+        num = nil,
+        name = 'djbj',
+        scale = 0.9,
+        hshift = 22,
+    }
+    table.insert(self.npcs, dj)
 end
 
 function Club:initNPC()
     -- Left bar
-    createNPC(self.npcs, 665, 780, gCHARACTER_IDLE_RIGHT, 0.8)
-    createNPC(self.npcs, 480, 770, gCHARACTER_IDLE_UP, 1)
-    createNPC(self.npcs, 400, 785, gCHARACTER_IDLE_RIGHT, 1.1)
-    createNPC(self.npcs, 275, 820, gCHARACTER_IDLE_UP, 1.2)
-    createNPC(self.npcs, 200, 850, gCHARACTER_IDLE_LEFT, 1.3)
+    createNPC(self.npcs, 665, 780, gCHARACTER_IDLE_RIGHT, 0.8, 7)
+    createNPC(self.npcs, 480, 770, gCHARACTER_IDLE_UP, 1, 5)
+    createNPC(self.npcs, 400, 785, gCHARACTER_IDLE_RIGHT, 1.1, 7)
+    createNPC(self.npcs, 275, 820, gCHARACTER_IDLE_UP, 1.2, 7)
+    createNPC(self.npcs, 200, 850, gCHARACTER_IDLE_LEFT, 1.3, 7)
     -- Right bar
-    createNPC(self.npcs, 1320, 770, gCHARACTER_IDLE_LEFT, 0.8)
-    createNPC(self.npcs, 1490, 770, gCHARACTER_IDLE_LEFT, 1)
-    createNPC(self.npcs, 1570, 780, gCHARACTER_IDLE_LEFT, 1.1)
-    createNPC(self.npcs, 1650, 805, gCHARACTER_IDLE_RIGHT, 1.2)
-    createNPC(self.npcs, 1750, 825, gCHARACTER_IDLE_RIGHT, 1.3)
+    createNPC(self.npcs, 1320, 770, gCHARACTER_IDLE_LEFT, 0.8, 7)
+    createNPC(self.npcs, 1490, 770, gCHARACTER_IDLE_LEFT, 1, 7)
+    createNPC(self.npcs, 1570, 780, gCHARACTER_IDLE_LEFT, 1.1, 7)
+    createNPC(self.npcs, 1650, 805, gCHARACTER_IDLE_RIGHT, 1.2, 7)
+    createNPC(self.npcs, 1750, 825, gCHARACTER_IDLE_RIGHT, 1.3, 7)
     -- Left side of dance floor
-    createNPC(self.npcs, 870, 820, gCHARACTER_IDLE_DOWN, 0.7)
+    createNPC(self.npcs, 870, 820, gCHARACTER_IDLE_DOWN, 0.7, 10)
     createNPC(self.npcs, 800, 820, gCHARACTER_IDLE_RIGHT, 0.8)
-    createNPC(self.npcs, 740, 950, gCHARACTER_IDLE_UP, 1.1)
+    createNPC(self.npcs, 740, 950, gCHARACTER_IDLE_UP, 1.1, 20)
     createNPC(self.npcs, 670, 900, gCHARACTER_IDLE_RIGHT, 1.1)
     createNPC(self.npcs, 560, 970, gCHARACTER_IDLE_RIGHT, 1.2)
     createNPC(self.npcs, 480, 1020, gCHARACTER_IDLE_RIGHT, 1.3)
-    createNPC(self.npcs, 560, 1100, gCHARACTER_IDLE_UP, 1.5)
+    createNPC(self.npcs, 560, 1100, gCHARACTER_IDLE_UP, 1.5, 25)
     -- Right side of dance floor
-
-    createNPC(self.npcs, 1116, 816, gCHARACTER_IDLE_DOWN, 0.7)
+    createNPC(self.npcs, 1116, 816, gCHARACTER_IDLE_DOWN, 0.7, 10)
     createNPC(self.npcs, 1200, 810, gCHARACTER_IDLE_LEFT, 0.9)
     createNPC(self.npcs, 1280, 870, gCHARACTER_IDLE_LEFT, 1.0)
     createNPC(self.npcs, 1350, 920, gCHARACTER_IDLE_LEFT, 1.1)
     createNPC(self.npcs, 1410, 980, gCHARACTER_IDLE_LEFT, 1.2)
     createNPC(self.npcs, 1480, 1010, gCHARACTER_IDLE_LEFT, 1.3)
-    createNPC(self.npcs, 1300, 1160, gCHARACTER_IDLE_UP, 1.5)
+    createNPC(self.npcs, 1300, 1100, gCHARACTER_IDLE_UP, 1.5, 25)
 end
 
 function Club:tweenColors()

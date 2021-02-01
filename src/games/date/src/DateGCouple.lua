@@ -13,6 +13,8 @@ function DateGCouple:init(player)
     self.player:setSubQuadShifts(0, 0, 0, -self.player.offsetY)
 
     -- self.fiance
+    -- NB: Part of the background class since NPC placement is made easier
+    -- when we know the scale of the bacground image
 end
 
 function DateGCouple:render()

@@ -281,6 +281,36 @@ retDict = GenerateCharacterQuadsAndInfo(gTextures['sec-rep-walk'])
 gFrames['sec-rep-frames'] = retDict['quads']
 gFramesInfo['sec-rep-frames'] = retDict['info']
 
+gTextures['bouncer'] = love.graphics.newImage('graphics/characters/bar_bouncer.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['bouncer'])
+gFrames['bouncer'] = retDict['quads']
+gFramesInfo['bouncer'] = retDict['info']
+
+gTextures['bartender'] = love.graphics.newImage('graphics/characters/bartender.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['bartender'])
+gFrames['bartender'] = retDict['quads']
+gFramesInfo['bartender'] = retDict['info']
+
+gTextures['coworker'] = love.graphics.newImage('graphics/characters/coworker.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['coworker'])
+gFrames['coworker'] = retDict['quads']
+gFramesInfo['coworker'] = retDict['info']
+
+gTextures['djbj'] = love.graphics.newImage('graphics/characters/djbj.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['djbj'])
+gFrames['djbj'] = retDict['quads']
+gFramesInfo['djbj'] = retDict['info']
+
+gTextures['doctor'] = love.graphics.newImage('graphics/characters/doctor.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['doctor'])
+gFrames['doctor'] = retDict['quads']
+gFramesInfo['doctor'] = retDict['info']
+
+gTextures['date'] = love.graphics.newImage('graphics/characters/fiance.png')
+retDict = GenerateCharacterQuadsAndInfo(gTextures['date'])
+gFrames['date'] = retDict['quads']
+gFramesInfo['date'] = retDict['info']
+
 for charCount = 1, gTOTAL_CHAR_COUNT do
     retDict = GenerateCharacterQuadsAndInfo(gTextures['character-'..charCount])
     gFrames['character-'..charCount] = retDict['quads']

@@ -25,7 +25,7 @@ function BarWEnterExteriorState:enter()
 end
 
 function BarWEnterExteriorState:tweenEnter()
-    local DOOR_Y = VIRTUAL_HEIGHT/2 + 70
+    local DOOR_Y = VIRTUAL_HEIGHT/2 + 65
     local BOUNCER_X = VIRTUAL_WIDTH/2 - 20
 
     gSounds['footsteps']:setLooping(true)

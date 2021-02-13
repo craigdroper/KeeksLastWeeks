@@ -20,6 +20,7 @@ function Player:init()
     self.money = 1000
     self.fun = 0
     self.statsFont = gFonts['large']
+    self.displayStats = false
 
     -- This is used to indicate that the player is just beginning the
     -- game and is entering his first state
@@ -135,6 +136,10 @@ end
 
 -- Called in main.lua since we always want this to be displayed
 function Player:renderStats()
+    if not self.displayStats then
+        return
+    end
+
     statsDisp = self:genStatsDisp()
     love.graphics.setFont(self.statsFont)
 

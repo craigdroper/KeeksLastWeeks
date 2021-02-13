@@ -31,6 +31,12 @@ require 'src/gui/Textbox'
 require 'src/gui/Inputbox'
 require 'src/gui/ProgressBar'
 
+-- Intro Menu requirements
+require 'src/gameplay/intro/IntroGBackground'
+require 'src/gameplay/intro/states/IntroGMainMenuState'
+require 'src/gameplay/intro/states/IntroGInstructionsState'
+require 'src/gameplay/intro/states/IntroGIntroState'
+
 -- Drug filters
 require 'src/filters/NoFilter'
 require 'src/filters/CokeFilter'
@@ -633,4 +639,18 @@ gWeedGSounds = {
     ['levelup'] = love.audio.newSource('src/games/weed/sounds/levelup.wav'),
     ['victory-music'] = love.audio.newSource('src/games/weed/sounds/victory.wav'),
     ['intro-music'] = love.audio.newSource('src/games/weed/sounds/intro.mp3')
+}
+
+gIntroImages = {
+    ['img1'] = love.graphics.newImage('graphics/gameplay/img1.jpg'),
+    ['img2'] = love.graphics.newImage('graphics/gameplay/img2.jpg'),
+    ['img3'] = love.graphics.newImage('graphics/gameplay/img3.jpg'),
+    ['img4'] = love.graphics.newImage('graphics/gameplay/img4.jpg'),
+    ['img5'] = love.graphics.newImage('graphics/gameplay/img5.jpg'),
+    ['img6'] = love.graphics.newImage('graphics/gameplay/img6.jpg'),
+}
+
+gIntroSounds = {
+    ['odyssey'] = love.audio.newSource('sounds/space_odyssey_opening.mp3'),
+    ['callme'] = love.audio.newSource('sounds/call_me_maybe.mp3'),
 }

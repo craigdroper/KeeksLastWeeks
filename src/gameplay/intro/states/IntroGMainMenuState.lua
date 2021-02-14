@@ -20,7 +20,6 @@ function IntroGMainMenuState:enter()
                         -- Pop off IntroGMainMenuState
                         gStateStack:pop()
                     -- Transition to entering the apartment state
-                    self.player.displayStats = true
                     gIntroSounds['callme']:stop()
                     gStateStack:push(AptWEnterState())
                     gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
@@ -35,6 +34,13 @@ function IntroGMainMenuState:enter()
                     function()
                         gStateStack:push(IntroGInstructionsState(
                                 {background = self.background}))
+                    end
+            },
+            {
+                text = 'Quit',
+                onSelect =
+                    function()
+                        love.event.quit()
                     end
             },
         }

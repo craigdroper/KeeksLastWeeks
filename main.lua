@@ -30,10 +30,9 @@ function love.load()
 
     gGlobalObjs['filter'] = NoFilter()
 
-    --[[
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
-            -- gStateStack:push(AptWEnterState())
+            gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterExteriorState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
@@ -54,12 +53,12 @@ function love.load()
             -- gStateStack:push(AcidGStartState())
             -- gStateStack:push(WeedGStartState())
             -- gStateStack:push(IntroGMainMenuState())
+            -- gStateStack:push(GameOverGTitleState({emptyStat = 'Health'}))
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
     end))
-    --]]
-    gStateStack:push(IntroGIntroState())
+    -- gStateStack:push(IntroGIntroState())
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}

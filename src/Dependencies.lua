@@ -37,6 +37,12 @@ require 'src/gameplay/intro/states/IntroGMainMenuState'
 require 'src/gameplay/intro/states/IntroGInstructionsState'
 require 'src/gameplay/intro/states/IntroGIntroState'
 
+-- Game over requirements
+require 'src/gameplay/gameover/states/GameOverGTitleState'
+require 'src/gameplay/gameover/states/GameOverGMenuState'
+require 'src/gameplay/gameover/states/GameOverGDialogueState'
+require 'src/gameplay/gameover/GameOverGBackground'
+
 -- Drug filters
 require 'src/filters/NoFilter'
 require 'src/filters/CokeFilter'
@@ -653,4 +659,13 @@ gIntroImages = {
 gIntroSounds = {
     ['odyssey'] = love.audio.newSource('sounds/space_odyssey_opening.mp3'),
     ['callme'] = love.audio.newSource('sounds/call_me_maybe.mp3'),
+}
+
+gGameOverImages = {
+    ['church'] = love.graphics.newImage('graphics/sets/church.jpg')
+}
+
+gGameOverSounds = {
+    ['wedding'] = love.audio.newSource('sounds/wedding_march.mp3'),
+    ['blip'] = love.audio.newSource('sounds/gameover.mp3'),
 }

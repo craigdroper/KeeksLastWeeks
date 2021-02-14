@@ -22,6 +22,10 @@ function Player:init()
     self.statsFont = gFonts['large']
     self.displayStats = false
 
+    self.timeOpac = 255
+    self.healthOpac = 255
+    self.moneyOpac = 255
+
     -- This is used to indicate that the player is just beginning the
     -- game and is entering his first state
     self.isFirstScene = true
@@ -144,15 +148,15 @@ function Player:renderStats()
     love.graphics.setFont(self.statsFont)
 
     disp = statsDisp[TIME_NAME]
-    love.graphics.setColor(TIME_RGB.r, TIME_RGB.g, TIME_RGB.b, 255)
+    love.graphics.setColor(TIME_RGB.r, TIME_RGB.g, TIME_RGB.b, self.timeOpac)
     love.graphics.print(disp.text, disp.x, disp.y)
 
     disp = statsDisp[HEALTH_NAME]
-    love.graphics.setColor(HEALTH_RGB.r, HEALTH_RGB.g, HEALTH_RGB.b, 255)
+    love.graphics.setColor(HEALTH_RGB.r, HEALTH_RGB.g, HEALTH_RGB.b, self.healthOpac)
     love.graphics.print(disp.text, disp.x, disp.y)
 
     disp = statsDisp[MONEY_NAME]
-    love.graphics.setColor(MONEY_RGB.r, MONEY_RGB.g, MONEY_RGB.b)
+    love.graphics.setColor(MONEY_RGB.r, MONEY_RGB.g, MONEY_RGB.b, self.moneyOpac)
     love.graphics.print(disp.text, disp.x, disp.y)
 
     disp = statsDisp[FUN_NAME]

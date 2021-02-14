@@ -7,6 +7,9 @@ local TOP_COUCH_OFFSET = 12
 
 function AptWEnterState:init()
     self.player = gGlobalObjs['player']
+    -- Entering the Apartment is the point where we can assume we want
+    -- stats to start displaying
+    self.player.displayStats = true
     self.apartment = Apartment()
 end
 

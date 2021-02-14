@@ -16,6 +16,8 @@ function UpdatePlayerStatsState:init(params)
 
     self.tweenTime = 1.5
 
+    self.emptyStat = nil
+
     -- Stat update text fields
     self.curVal = nil
     self.text = nil
@@ -77,9 +79,83 @@ function UpdatePlayerStatsState:checkStats()
     else
         -- All stats have been updated with the tweened graphics, pop
         -- this state off
-        gStateStack:pop()
-        self.callback()
+        if not self:checkGameOver() then
+            gStateStack:pop()
+            self.callback()
+        end
     end
+end
+
+function UpdatePlayerStatsState:checkGameOver()
+    if self.player.time <= 0 then
+        self.emptyStat = TIME_NAME
+    elseif self.player.health <= 0 then
+        self.emptyStat = HEALTH_NAME
+    elseif self.player.money <= 0 then
+        self.emptyStat = MONEY_NAME
+    end
+    if self.emptyStat then
+        self:tweenGameOver()
+    end
+    return self.emptyState ~= nil
+end
+
+function UpdatePlayerStatsState:tweenGameOver()
+    local blipLen = gGameOverSounds['blip']:getDuration() + 1
+    local totalLen = 2*blipLen
+    local flashTween = nil
+    if self.emptyStat == TIME_NAME then
+        flashTween = Timer.every(0.2,
+            function()
+                if self.player.timeOpac == 0 then
+                    self.player.timeOpac = 255
+                else
+                    self.player.timeOpac = 0
+                end
+            end
+        )
+    elseif self.emptyStat == HEALTH_NAME then
+        flashTween = Timer.every(0.2,
+            function()
+                if self.player.healthOpac == 0 then
+                    self.player.healthOpac = 255
+                else
+                    self.player.healthOpac = 0
+                end
+            end
+        )
+    elseif self.emptyStat == MONEY_NAME then
+        flashTween = Timer.every(0.2,
+            function()
+                if self.player.moneyOpac == 0 then
+                    self.player.moneyOpac = 255
+                else
+                    self.player.moneyOpac = 0
+                end
+            end
+        )
+    end
+
+    gGameOverSounds['blip']:play()
+    local playTween = Timer.every(blipLen,
+        function()
+            gGameOverSounds['blip']:play()
+        end
+    )
+
+    Timer.after(totalLen + 1,
+        function()
+            flashTween:remove()
+            playTween:remove()
+            self.player.timeOpac = 255
+            self.player.healthOpac = 255
+            self.player.moneyOpac = 255
+            gStateStack:push(FadeInState({r = 0, g = 0, b = 0}, 2,
+                function()
+                    gStateStack:clear()
+                    gStateStack:push(GameOverGTitleState({emptyStat = self.emptyStat}))
+                end))
+    end)
 end
 
 function UpdatePlayerStatsState:tweenTimeUpdate()

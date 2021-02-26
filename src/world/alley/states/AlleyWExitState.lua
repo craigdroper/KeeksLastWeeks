@@ -15,21 +15,28 @@ end
 
 function AlleyWExitState:tweenExit()
     -- Animate the player walking right on the sidewalk out of frame
-    local exitX = VIRTUAL_WIDTH + self.player:getWidth() + 1
+    local EXIT_X = -self.player:getWidth() - 1
 
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
-    local walkPixels = exitX - self.player:getX() 
-    self.player:changeAnimation('walk-right')
+    self.player.walkSpeed = 50
+    local walkPixels = self.player:getX()  - EXIT_X
+    self.player:changeAnimation('walk-left')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = exitX}
+        [self.player] = {x = EXIT_X}
     }):finish(
         function()
     gSounds['footsteps']:stop()
-    -- Pop the Alley Exit State off, and push the next state
-    gStateStack:pop()
-    gStateStack:push(self.nextState)
+    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+        function()
+            -- Pop the Alley Exist off
+            gStateStack:pop()
+            gStateStack:push(self.nextState)
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                function()
+                end))
+        end))
         end)
 end
 

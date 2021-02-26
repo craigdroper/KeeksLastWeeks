@@ -669,3 +669,7 @@ gGameOverSounds = {
     ['wedding'] = love.audio.newSource('sounds/wedding_march.mp3'),
     ['blip'] = love.audio.newSource('sounds/gameover.mp3'),
 }
+
+gAlleyImages = {
+    ['background'] = love.graphics.newImage('graphics/sets/apartment_exterior.jpg'),
+}

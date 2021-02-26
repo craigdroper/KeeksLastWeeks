@@ -18,7 +18,7 @@ function BarWEnterState:enter()
     self.player.y = VIRTUAL_HEIGHT - 100
     -- Setup tween entrance
     self:tweenEnter()
-    -- Begin playing the casino background music
+    -- Begin playing the street white noise
     gBarWSounds['interior']:setLooping(true)
     gBarWSounds['interior']:play()
 end

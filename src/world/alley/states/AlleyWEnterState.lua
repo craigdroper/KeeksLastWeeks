@@ -1,8 +1,6 @@
 
 AlleyWEnterState = Class{__includes = BaseState}
 
-local BUFFER = 2
-
 function AlleyWEnterState:init()
     self.player = gGlobalObjs['player']
     self.alley = Alley()
@@ -11,26 +9,24 @@ end
 function AlleyWEnterState:enter()
     -- Set the player entity's scale factors to the correct values
     -- for this room's tile sizes
-    self.player.scaleX = 0.5
-    self.player.scaleY = 0.5
-    self.player.walkSpeed = 100
-    -- Also set the player's opacity to 0, as we will fade him in to simulate
-    -- hims stepping outdoors
+    self.player.scaleX = 1.0
+    self.player.scaleY = 1.0
     self.player.opacity = 0
-    -- Explicitly set the player's X & Y coordinates to be centered on the apartment
-    -- and just a little above the bottom part of the apartment
-    local minX, maxX, minY, maxY, midX, midY = self.alley:getBorderCoords(self.alley.buildings['apartment'])
-    self.player.x = midX - self.player:getWidth() / 2
-    self.player.y = maxY - self.player:getHeight()
+    self.player.walkSpeed = 20
+    -- Explicitly set the player's X & Y coordinates to be off screen, bottom left
+    self.player.x = VIRTUAL_WIDTH * 2/3 - 5
+    self.player.y = VIRTUAL_HEIGHT * 2/3
+    -- Begin playing the casino background music
+    gBarWSounds['exterior']:setLooping(true)
+    gBarWSounds['exterior']:play()
+    -- Setup tween entrance
     self:tweenEnter()
 end
 
 function AlleyWEnterState:tweenEnter()
-    -- Setup the tween action to animate the player walking from outside
-    -- the apartment to the couch
-    local _, _, _, swMaxY, _, _  = self.alley:getBorderCoords(self.alley.pavements['top'])
-    local _, aptMaxX, _, _, _, _ = self.alley:getBorderCoords(self.alley.buildings['apartment'])
-    local _, _, carMinY, _, carMidX = self.alley:getBorderCoords(self.alley.vehicles['drug-car'])
+    local STREET_Y = VIRTUAL_HEIGHT *3/4 - 10
+    local ALLEY_X = 160
+    local CAR_Y = STREET_Y - 5
 
     gSounds['door']:play()
     local doorDuration = gSounds['door']:getDuration()
@@ -40,38 +36,36 @@ function AlleyWEnterState:tweenEnter()
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
 
-    -- Come out through the apartment door onto the sidewalk
-    local walkPixels = (swMaxY - BUFFER) - self.player:getY() - self.player:getHeight()
+    local walkPixels = STREET_Y - self.player.y
     self.player:changeAnimation('walk-down')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = swMaxY - BUFFER - self.player:getHeight(),
-                         opacity = 255}
+        [self.player] = {y = STREET_Y, opacity = 255}
     }):finish(
         function()
-    -- Walk over just far enough to clear the apartment and go into the alley
-    walkPixels = (aptMaxX + BUFFER) - self.player:getX()
-    self.player:changeAnimation('walk-right')
+    self.player.walkSpeed = 50
+    local walkPixels = self.player.x - ALLEY_X
+    self.player:changeAnimation('walk-left')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = aptMaxX + BUFFER}
+        [self.player] = {x = ALLEY_X}
     }):finish(
         function()
-    -- Walk up towards the left side of the car
-    walkPixels = self.player.y - carMinY
+    self.player.walkSpeed = 5
+    local walkPixels = self.player.y - CAR_Y
     self.player:changeAnimation('walk-up')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = carMinY}
+        [self.player] = {y = CAR_Y, scaleX = .75, scaleY = .75}
     }):finish(
         function()
-    -- Turn right and simulate getting into the car by fading back to opacity 0
-    walkPixels = (carMidX) - (self.player:getX()) - self.player:getWidth()/2
-    self.player:changeAnimation('walk-right')
+    self.player.walkSpeed = 1
+    local walkPixels = 2
+    self.player:changeAnimation('walk-left')
+    gSounds['door']:play()
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = carMidX - self.player:getWidth()/2,
-                         opacity = 0}
+        [self.player] = {opacity = 0}
     }):finish(
         function()
     gSounds['footsteps']:stop()
-    -- Pop the Apt Enter State off, and push the stationary state
+    -- Pop the Alley Enter State off, and push the stationary state
     gStateStack:pop()
     gStateStack:push(AlleyWStationaryState({alley = self.alley}))
         end)

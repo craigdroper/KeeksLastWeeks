@@ -12,8 +12,9 @@ end
 
 function AlleyWStationaryState:enter()
     gStateStack:push(DialogueState(
-        'Keeks: Mikhail! So good to see you comrade!\n\n' ..
-        'Mikhail: Enough talk, what do you desire?',
+        'Keeks: Chicago Breakfast Club! It\'s been a minute. Not like the ironic '..
+        'expresion, I think its literally been a minute. Whats on the drug menu today?\n\n' ..
+        'Chicago Breakfast Club: You tell me Keeks, what do you desire?',
         function()
             gStateStack:push(AlleyWDrugMenuState({alley = self.alley}))
         end))
@@ -38,12 +39,12 @@ function AlleyWStationaryState:update(dt)
             stats = {money = -100, health = -10}, callback =
         function()
         gStateStack:push(DialogueState(
-            'Keeks:WOW! I am feeling '..self.gameStats.multiplier..' times better!\n'..
-            'No way I can go back to my apartment now. Hey Mikhail?\n\n'..
-            'Mikhail: Ya?\n\n'..
+            'Keeks: WOW! I am feeling '..self.gameStats.multiplier..' times better!\n'..
+            'No way I can go back to my apartment now. Hey buddy?\n\n'..
+            'Chicago Breakfast Club: What?\n\n'..
             'Keeks: How about a lift to some fun?\n\n'..
-            'Mikhail: I am not your Uber driver pretty boy. Why don\'t you take '..
-            'those fancy loafers out for a spin',
+            'Chicago Breakfast Club: I am not your Uber driver pretty boy. Why don\'t you take '..
+            'those fancy loafers out for a spin?',
 
         function()
             -- Pop the stationary state, push the exit state

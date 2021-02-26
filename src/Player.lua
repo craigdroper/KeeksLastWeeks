@@ -15,8 +15,8 @@ function Player:init()
     -- the players walking speed
     self.walkSpeedMult = PLAYER_WALK_SPEED_MULT
 
-    self.time = 100
-    self.health = 100
+    self.time = 80
+    self.health = 120
     self.money = 1000
     self.fun = 0
     self.statsFont = gFonts['large']

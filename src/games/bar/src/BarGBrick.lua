@@ -71,8 +71,10 @@ function BarGBrick:init(x, y, charNum) -- , isLocked)
     self.charNum = charNum
     self.charName = 'character-'..self.charNum
     self.charFrame = gCHARACTER_IDLE_UP
-    self.width = gFramesInfo[self.charName][self.charFrame]['width']
-    self.height = gFramesInfo[self.charName][self.charFrame]['height']
+    self.scaleX = 1
+    self.scaleY = 1
+    self.width = gFramesInfo[self.charName][self.charFrame]['width'] * self.scaleX
+    self.height = gFramesInfo[self.charName][self.charFrame]['height'] * self.scaleY
 
     -- used to determine whether this brick should be rendered
     self.inPlay = true
@@ -178,7 +180,7 @@ function BarGBrick:render()
         love.graphics.filterDrawQ(
             gTextures[self.charName],
             gFrames[self.charName][self.charFrame],
-            self.x, self.y)
+            self.x, self.y, 0, self.scaleX, self.scaleY)
     end
 end
 

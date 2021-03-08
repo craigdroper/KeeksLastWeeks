@@ -19,30 +19,47 @@ function BarGStartState:init()
 end
 
 function BarGStartState:enter()
-    -- Push a dialogue box with some simple instructions
-    gStateStack:push(DialogueState(
-        'There are lots of customers between Keeks and his beloved beer.\n\n'..
-        'Hit the other customers with Keeks to clear them away, and once all '..
-        'customers are gone, Keeks can finally cross over the bar and get his beer!',
-        function()
-            -- Once the dialogue state is closed, pop off the start
-            -- state and push on a serve state for level 1
-            gStateStack:pop()
-            gStateStack:push(BarGServeState({
-                background = self.background,
-                paddle = self.paddle,
-                bricks = self.bricks,
-                -- health = 3,
-                -- XXX Dev test
-                health = 1,
-                score = 0,
-                level = self.level,
-                -- recoverPoints = self.recoverPoints,
-                }))
-        end))
+    self.startMenu = Menu {
+        items = {
+            {
+                text = 'Play',
+                onSelect =
+                    function()
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        -- Pop off BarGStartState
+                        gStateStack:pop()
+                        -- Transition to entering the apartment state
+                        gStateStack:push(BarGServeState({
+                            background = self.background,
+                            paddle = self.paddle,
+                            bricks = self.bricks,
+                            -- health = 3,
+                            -- XXX Dev test
+                            health = 1,
+                            score = 0,
+                            level = self.level,
+                            -- recoverPoints = self.recoverPoints,
+                            }))
+                        gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                            function()
+                            end))
+                        end))
+                    end
+            },
+            {
+                text = 'Instructions',
+                onSelect =
+                    function()
+                        gStateStack:push(BarGInstructionsState())
+                    end
+            },
+        }
+    }
 end
 
 function BarGStartState:update(dt)
+    self.startMenu:update(dt)
 end
 
 function BarGStartState:render()
@@ -52,4 +69,5 @@ function BarGStartState:render()
     for k, brick in pairs(self.bricks) do
         brick:render()
     end
+    self.startMenu:render()
 end

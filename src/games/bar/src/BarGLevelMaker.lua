@@ -54,27 +54,13 @@ function BarGLevelMaker.createMap(level, barBackground)
     local barBottomY = barBackground:getBarBottomY()
     local maxRows = ((VIRTUAL_HEIGHT/2) - barBottomY - BRICK_PADDING) /
         (brickHeight + BRICK_PADDING)
-    local numRows = math.random(1, maxRows)
+    local numRows = math.random(1, math.floor(maxRows * level / 10) + 1 )
 
     -- randomly choose the number of columns, ensuring odd
-    local maxCols = (VIRTUAL_WIDTH - BRICK_PADDING) / (brickWidth + BRICK_PADDING) 
-    local numCols = math.random(11, maxCols)
+    local maxCols = (VIRTUAL_WIDTH - BRICK_PADDING) / (brickWidth + BRICK_PADDING)
+    local numCols = math.random(6, math.max(math.floor(maxCols * level / 10), 8))
     numCols = numCols % 2 == 0 and (numCols + 1) or numCols
-
-    -- highest possible spawned brick color in this level; ensure we
-    -- don't go above 3
-    -- local highestTier = math.min(3, math.floor(level / 5))
-
-    -- highest color of the highest tier, no higher than 5
-    -- local highestColor = math.min(5, level % 5 + 3)
-
-    -- local variables for tracking if this level has a locked brick,
-    -- and make sure only a single lock brick is created
-    --[[
-    local isLockLevel = math.random(1,2) == 1
-    local lockBrickRow = isLockLevel and math.random(1, numRows) or 0
-    local lockBrickCol = isLockLevel and math.random(1, numCols) or 0
-    --]]
+    local colBrickOffset = (VIRTUAL_WIDTH - (brickWidth * numCols)) / (numCols + 1)
 
     -- lay out bricks such that they touch each other and fill the space
     for y = 1, numRows do
@@ -102,14 +88,12 @@ function BarGLevelMaker.createMap(level, barBackground)
 
                 -- x-coordinate
                 (x-1)                   -- decrement x by 1 because tables are 1-indexed, coords are 0
-                * (tmpBrick.width + BRICK_PADDING)       -- multiply by the brick width and the padding
-                + BRICK_PADDING         -- the screen should have 8 pixels of padding; we can fit 13 cols + 16 pixels total
-                + (maxCols - numCols) * tmpBrick.width,  -- left-side padding for when there are fewer than 13 columns
+                * (tmpBrick.width + colBrickOffset)       -- multiply by the brick width and the padding
+                + colBrickOffset,         -- Add the starting offset according to the number of columns selected
 
                 -- y-coordinate
                 (y - 1)                 -- decrement y by 1 because tables are 1-indexed, coords are 0
                 * (tmpBrick.height + BRICK_PADDING)       -- multiply by the brick height and padding
-                + BRICK_PADDING        -- Add the brick padding
                 + barBottomY,        -- Add bar offset
 
                 -- Randomly generate a character skin for this "brick"

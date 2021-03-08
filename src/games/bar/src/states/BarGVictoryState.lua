@@ -27,6 +27,13 @@ function BarGVictoryState:init(params)
     self.ball.y = self.paddle.y - self.ball.height
 end
 
+function BarGVictoryState:enter()
+    gStateStack:push(UpdatePlayerStatsState({
+                        player = gGlobalObjs['player'],
+                        stats = {fun = 100}
+                    }))
+end
+
 function BarGVictoryState:update(dt)
     self.paddle:update(dt)
 
@@ -57,8 +64,10 @@ function BarGVictoryState:render()
     self.paddle:render()
     self.ball:render()
 
+    --[[
     renderHealth(self.health)
     renderScore(self.score)
+    --]]
 
     -- level complete text
     love.graphics.setFont(gFonts['large'])

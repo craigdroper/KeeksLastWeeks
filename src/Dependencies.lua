@@ -79,9 +79,9 @@ require 'src/games/bar/src/BarGBeerBrick'
 require 'src/games/bar/src/states/BarGGameOverState'
 require 'src/games/bar/src/states/BarGPlayState'
 require 'src/games/bar/src/states/BarGServeState'
--- require 'src/games/bar/src/states/BarGStartState'
 require 'src/games/bar/src/states/BarGVictoryState'
 require 'src/games/bar/src/states/BarGStartState'
+require 'src/games/bar/src/states/BarGInstructionsState'
 
 -- Club World requirements
 require 'src/world/club/Club'

@@ -54,14 +54,15 @@ function BarGPlayState:init(params)
     -- until all bricks are cleared
     self.balls[1].curMinY = self.background:getBarBottomY()
     -- give ball random starting velocity
-    self.balls[1].dx = math.random(-200, 200)
-    self.balls[1].dy = math.random(-50, -60)
+    local baseDX = 200
+    local multDX = 20
+    local baseDY = 100
+    local multDY = 20
+    local xDir = math.random(2) == 2 and 1 or -1
+    self.balls[1].dx = xDir * baseDX + multDX * self.level
+    self.balls[1].dy = baseDY + multDY * self.level
+    self.paddleDelta = 1 + 0.01 * self.level
 
-    --[[
-    self.powerUp = BarGPowerUp()
-    self.powerUp.isActive = false
-    self.powerUpAlarm = math.random(15,30)
-    --]]
     -- check if the current bricks in this level contain a locked brick
     -- if so the player will need a Unlock power up at some point
     self.isLockedBrick = false
@@ -89,32 +90,6 @@ function BarGPlayState:update(dt)
         gBGSounds['pause']:play()
         return
     end
-
-    --[[
-    self.powerUpAlarm = self.powerUpAlarm - dt
-    -- check if its time to create a BarGPowerUp
-    if self.powerUpAlarm < 0 then
-        -- BarGPowerUp creation logic will be a combination of random selection
-        -- from BarGPowerUps that are appropriate for the current play state
-        local powerUpCands = {}
-        -- ExtraBallPowerUp always valid
-        table.insert(powerUpCands, BGExtraBallsPowerUp())
-        -- KeyPowerUp only valid if the current level has a lock brick and
-        -- if the player has not already collected a KeyPowerUp
-        if self.isLockedBrick and not self.hasKey.val then
-            table.insert(powerUpCands, BGKeyPowerUp())
-        end
-        self.powerUp = powerUpCands[math.random(1,#powerUpCands)]
-        self.powerUpAlarm = math.random(15,30)
-    end
-    if self.powerUp and self.powerUp.isActive then
-        self.powerUp:update(dt)
-        self.powerUp:check({
-            paddle = self.paddle,
-            balls = self.balls,
-            hasKey = self.hasKey, })
-    end
-    --]]
 
     -- update positions based on velocity
     self.paddle:update(dt)
@@ -216,6 +191,9 @@ function BarGPlayState:checkBallPaddleCollision(ball, paddle)
         -- raise ball above paddle in case it goes below it, then reverse dy
         ball.y = paddle.y - ball.height
         ball.dy = -ball.dy
+        -- Increase velocities
+        ball.dx = ball.dx * self.paddleDelta
+        ball.dy = ball.dy * self.paddleDelta
 
         --
         -- tweak angle of bounce based on where it hits the paddle
@@ -386,6 +364,8 @@ function BarGPlayState:render()
 end
 
 function BarGPlayState:checkVictory()
+    return true
+    --[[
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             return false
@@ -393,4 +373,5 @@ function BarGPlayState:checkVictory()
     end
 
     return true
+    --]]
 end

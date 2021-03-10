@@ -100,6 +100,7 @@ require 'src/games/club/src/states/ClubGCountdownState'
 require 'src/games/club/src/states/ClubGPlayState'
 require 'src/games/club/src/states/ClubGVictoryState'
 require 'src/games/club/src/states/ClubGGameOverState'
+require 'src/games/club/src/states/ClubGInstructionsState'
 
 -- Casino world requirements
 require 'src/world/casino/Casino'
@@ -162,6 +163,7 @@ require 'src/games/work/src/states/WorkGStartState'
 require 'src/games/work/src/states/WorkGServeState'
 require 'src/games/work/src/states/WorkGPlayState'
 require 'src/games/work/src/states/WorkGGameOverState'
+require 'src/games/work/src/states/WorkGInstructionsState'
 
 -- Doctor World requirements
 require 'src/world/doctor/DoctorWRoom'
@@ -179,6 +181,7 @@ require 'src/games/doctor/src/DocGObstacle'
 require 'src/games/doctor/src/states/DocGPlayState'
 require 'src/games/doctor/src/states/DocGStartState'
 require 'src/games/doctor/src/states/DocGGameOverState'
+require 'src/games/doctor/src/states/DocGInstructionsState'
 
 -- Drug Alley World requirements
 require 'src/world/alley/Alley'
@@ -198,6 +201,7 @@ require 'src/games/coke/src/states/CokeGCountdownState'
 require 'src/games/coke/src/states/CokeGPlayState'
 require 'src/games/coke/src/states/CokeGScoreState'
 require 'src/games/coke/src/states/CokeGTitleScreenState'
+require 'src/games/coke/src/states/CokeGInstructionsState'
 
 -- Some dependency exists with rendering the player and these
 -- general states
@@ -234,6 +238,7 @@ require 'src/games/weed/src/world/WeedGTileMap'
 require 'src/games/weed/src/states/WeedGEntityWalkState'
 require 'src/games/weed/src/states/WeedGPlayerWalkState'
 require 'src/games/weed/src/states/WeedGGameOverState'
+require 'src/games/weed/src/states/WeedGInstructionsState'
 
 gTextures = {
     --TODO delete legacy code from here

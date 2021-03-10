@@ -13,12 +13,31 @@ function CokeGTitleScreenState:init()
     self.background = CokeGBackground()
 end
 
+function CokeGTitleScreenState:enter()
+    self.startMenu = Menu {
+        items = {
+            {
+                text = 'Play',
+                onSelect =
+                    function()
+                        -- Pop off BarGStartState
+                        gStateStack:pop()
+                        gStateStack:push(CokeGCountdownState({background = self.background}))
+                    end
+            },
+            {
+                text = 'Instructions',
+                onSelect =
+                    function()
+                        gStateStack:push(CokeGInstructionsState())
+                    end
+            },
+        }
+    }
+end
+
 function CokeGTitleScreenState:update(dt)
-    -- transition to countdown when enter/return are pressed
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateStack:pop()
-        gStateStack:push(CokeGCountdownState({background = self.background}))
-    end
+    self.startMenu:update(dt)
 end
 
 function CokeGTitleScreenState:render()
@@ -27,11 +46,13 @@ function CokeGTitleScreenState:render()
 
     -- simple UI code
     love.graphics.setFont(gFonts['flappy-font'])
-    love.graphics.printf('Fifty CokeGBird', 0, 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('SniffyBird', 0, 64, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setFont(gFonts['medium-flappy-font'])
     love.graphics.printf('Press Enter', 0, 100, VIRTUAL_WIDTH, 'center')
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)
+
+    self.startMenu:render()
 end

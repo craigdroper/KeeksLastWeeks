@@ -21,29 +21,39 @@ function WorkGStartState:init()
 end
 
 function WorkGStartState:enter()
-    -- Push a dialogue box with some simple instructions
-    gStateStack:push(DialogueState(
-        'SEC: Keeks I presume?\nYour last SPAC filing raised a lot of red flags '..
-        'at the commission, seems like there\'s some really shady stuff in here.\n' ..
-        'Let\'s go back and forth reviewing your filing, and see if you can '..
-        'get anything past me. Let\'s say first to 10?',
-        function()
-            -- Once the dialogue state is closed, pop off the start
-            -- state and push on a play state for level 1
-            self.player1.renderScore = true
-            self.player2.renderScore = true
-            gStateStack:pop()
-            gStateStack:push(WorkGServeState({
-                background = self.background,
-                player1 = self.player1,
-                player2 = self.player2,
-                ball = self.ball,
-                servingPlayer = self.servingPlayer,
-                }))
-        end))
+    self.startMenu = Menu {
+        items = {
+            {
+                text = 'Play',
+                onSelect =
+                    function()
+                        -- Once the dialogue state is closed, pop off the start
+                        -- state and push on a play state for level 1
+                        self.player1.renderScore = true
+                        self.player2.renderScore = true
+                        gStateStack:pop()
+                        gStateStack:push(WorkGServeState({
+                            background = self.background,
+                            player1 = self.player1,
+                            player2 = self.player2,
+                            ball = self.ball,
+                            servingPlayer = self.servingPlayer,
+                            }))
+                    end
+            },
+            {
+                text = 'Instructions',
+                onSelect =
+                    function()
+                        gStateStack:push(WorkGInstructionsState())
+                    end
+            },
+        }
+    }
 end
 
 function WorkGStartState:update(dt)
+    self.startMenu:update(dt)
 end
 
 function WorkGStartState:render()
@@ -51,4 +61,5 @@ function WorkGStartState:render()
     self.player1:render()
     self.player2:render()
     self.ball:render()
+    self.startMenu:render()
 end

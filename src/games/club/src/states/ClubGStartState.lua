@@ -27,23 +27,35 @@ function ClubGStartState:initTargets()
 end
 
 function ClubGStartState:enter()
-    -- Push a dialogue box with some simple instructions
-    gStateStack:push(DialogueState(
-        '<Instructions for DDR at the Club>',
-        function()
-            -- pop the club mini game start
-            -- state and push on a serve state for level 1
-            gStateStack:pop()
-            gStateStack:push(ClubGCountdownState({
-                background = self.background,
-                targets = self.targets,
-                score = 0,
-                level = self.level,
-                }))
-        end))
+    self.startMenu = Menu {
+        items = {
+            {
+                text = 'Play',
+                onSelect =
+                    function()
+                        -- Pop off BarGStartState
+                        gStateStack:pop()
+                        gStateStack:push(ClubGCountdownState({
+                            background = self.background,
+                            targets = self.targets,
+                            score = 0,
+                            level = self.level,
+                            }))
+                    end
+            },
+            {
+                text = 'Instructions',
+                onSelect =
+                    function()
+                        gStateStack:push(ClubGInstructionsState())
+                    end
+            },
+        }
+    }
 end
 
 function ClubGStartState:update(dt)
+    self.startMenu:update(dt)
 end
 
 function ClubGStartState:render()
@@ -52,4 +64,5 @@ function ClubGStartState:render()
     for _, target in pairs(self.targets) do
         target:renderImage()
     end
+    self.startMenu:render()
 end

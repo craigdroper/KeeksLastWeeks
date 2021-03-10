@@ -35,30 +35,37 @@ function WeedGStartState:init()
     end)
 end
 
+function WeedGStartState:enter()
+    self.startMenu = Menu {
+        items = {
+            {
+                text = 'Play',
+                onSelect =
+                    function()
+                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+                        function()
+                        -- Pop off BarGStartState
+                        gStateStack:pop()
+                        gStateStack:push(WeedGPlayState())
+                        gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+                            function()
+                            end))
+                        end))
+                    end
+            },
+            {
+                text = 'Instructions',
+                onSelect =
+                    function()
+                        gStateStack:push(WeedGInstructionsState())
+                    end
+            },
+        }
+    }
+end
+
 function WeedGStartState:update(dt)
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateStack:push(FadeInState({
-            r = 255, g = 255, b = 255
-        }, 1,
-        function()
-            gWeedGSounds['intro-music']:stop()
-            self.tween:remove()
-
-            gStateStack:pop()
-
-            gStateStack:push(WeedGPlayState())
-            gStateStack:push(DialogueState("" ..
-                'Welcome to the wonderful world of Smokey-Mon! Feel free to wander around, but beware: ' ..
-                'this isn\'t your typical grass growing in these fields. If you encounter one of our '..
-                'Smokey-Mon strains, you\'ll have to try and smoke them down to nothing before they do '..
-                'the same to you. Good luck!'
-            ))
-            gStateStack:push(FadeOutState({
-                r = 255, g = 255, b = 255
-            }, 1,
-            function() end))
-        end))
-    end
+    self.startMenu:update(dt)
 end
 
 function WeedGStartState:render()
@@ -84,4 +91,6 @@ function WeedGStartState:render()
     love.graphics.draw(
         gWeedGTextures[self.sprite],
         self.spriteX, self.spriteY, 0, self.scale, self.scale)
+
+    self.startMenu:render()
 end

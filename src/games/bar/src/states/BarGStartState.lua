@@ -24,8 +24,6 @@ function BarGStartState:enter()
                 text = 'Play',
                 onSelect =
                     function()
-                    gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
-                        function()
                         -- Pop off BarGStartState
                         gStateStack:pop()
                         -- Transition to entering the apartment state
@@ -40,10 +38,6 @@ function BarGStartState:enter()
                             level = self.level,
                             -- recoverPoints = self.recoverPoints,
                             }))
-                        gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
-                            function()
-                            end))
-                        end))
                     end
             },
             {

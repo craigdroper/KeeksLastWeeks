@@ -19,9 +19,9 @@ function CasGShuffleState:enter()
         }))
 end
 
-function CasGStartState:update(dt)
+function CasGShuffleState:update(dt)
 end
 
-function CasGStartState:render()
+function CasGShuffleState:render()
     self.background:render()
 end

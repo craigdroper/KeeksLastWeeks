@@ -129,6 +129,7 @@ require 'src/games/casino/src/states/CasGDealerActState'
 require 'src/games/casino/src/states/CasGCheckWinnerState'
 require 'src/games/casino/src/states/CasGCheckDealerBJState'
 require 'src/games/casino/src/states/CasGInsureMenuState'
+require 'src/games/casino/src/states/CasGInstructionsState'
 
 -- Date World requirements
 require 'src/world/date/DateWLobby'

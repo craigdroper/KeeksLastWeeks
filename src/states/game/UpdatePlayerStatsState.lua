@@ -9,7 +9,12 @@ function UpdatePlayerStatsState:init(params)
     for key, _ in pairs(self.stats) do
         table.insert(self.statsKeys, key)
     end
+    self.hasUpdateStats = true
+    if #self.statsKeys == 0 then
+        self.hasUpdateStats = false
+    end
     self.callback = params.callback and params.callback or function() end
+    self.skipGameOver = params.skipGameOver and params.skipGameOver or false
 
     self.font = gFonts['huge']
     self.fontRGB = {}
@@ -56,7 +61,6 @@ function UpdatePlayerStatsState:init(params)
     self.psystem:setLinearAcceleration(-15, 15, -15, 15)
     self.psystem:setAreaSpread('normal', 10, 10)
 
-
     self.isStatsChecked = false
 end
 
@@ -79,7 +83,7 @@ function UpdatePlayerStatsState:checkStats()
     else
         -- All stats have been updated with the tweened graphics, pop
         -- this state off
-        if not self:checkGameOver() then
+        if self.skipGameOver or not self:checkGameOver() then
             gStateStack:pop()
             self.callback()
         end
@@ -97,7 +101,7 @@ function UpdatePlayerStatsState:checkGameOver()
     if self.emptyStat then
         self:tweenGameOver()
     end
-    return self.emptyState ~= nil
+    return self.emptyStat ~= nil
 end
 
 function UpdatePlayerStatsState:tweenGameOver()
@@ -143,9 +147,20 @@ function UpdatePlayerStatsState:tweenGameOver()
         end
     )
 
+    -- Super weird hack where it looks like when there isn't a stat to update
+    -- and we just want to check if the stats indicated a game over (with no change
+    -- to them) the Timer removal of the flash is messed up so we're just going
+    -- to artificially manage this for this one off case
+    if not self.hasUpdateStats then
+        flashTween:limit(totalLen)
+    end
+
     Timer.after(totalLen + 1,
         function()
-            flashTween:remove()
+            -- See hack comment above
+            if self.hasUpdateStats then
+                flashTween:remove()
+            end
             playTween:remove()
             self.player.timeOpac = 255
             self.player.healthOpac = 255
@@ -291,7 +306,7 @@ function UpdatePlayerStatsState:update(dt)
 end
 
 function UpdatePlayerStatsState:render()
-    if self.isStatsChecked then
+    if self.isStatsChecked and self.hasUpdateStats then
         love.graphics.setFont(self.font)
 
         love.graphics.setColor(self.fontRGB.r, self.fontRGB.g, self.fontRGB.b, self.textOpacity)

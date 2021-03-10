@@ -6,6 +6,7 @@ function CasGContinueMenuState:init(params)
     self.dealer = params.dealer
     self.tablePlayer = params.tablePlayer
     self.deck = params.deck
+    self.isFirstUpdate = true
 
     self.menu = Menu {
         items = {
@@ -48,8 +49,21 @@ function CasGContinueMenuState:init(params)
     }
 end
 
+function CasGContinueMenuState:enter()
+    -- Effectively a no-op player stat check, except for when the player
+    -- has bet all remaining money, and lost and the money is at zero,
+    -- since that will trigger a game over in the update player stats
+    gStateStack:push(UpdatePlayerStatsState({
+                        player = gGlobalObjs['player'],
+                        stats = {},
+                    }))
+end
+
 function CasGContinueMenuState:update(dt)
     self.menu:update(dt)
+    if self.isFirstUpdate then
+        self.isFirstUpdate = false
+    end
 end
 
 function CasGContinueMenuState:render()

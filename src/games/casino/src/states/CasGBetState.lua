@@ -8,7 +8,7 @@ function CasGBetState:init(params)
     self.deck = params.deck
     -- Necessary to retrieve input from UserInputState
     self.userInput = nil
-    self.betMin = 25
+    self.betMin = 50
 end
 
 function CasGBetState:enter()
@@ -31,7 +31,15 @@ function CasGBetState:update(dt)
         if bet < self.betMin then
             gStateStack:push(DialogueState(
                     'C\'mon Keeks, you come here enough to know how to read '..
-                    'a table minimum card. Table Min $25 little man!',
+                    'a table minimum card. Table Min $'..self.betMin..' little man!',
+                    function()
+                        self:enter()
+                    end))
+            return
+        elseif bet > self.tablePlayer.player.money then
+            gStateStack:push(DialogueState(
+                    'We can\'t offer you any more lines of credit at this casino, Keeks, '..
+                    'you can only bet the money you have.',
                     function()
                         self:enter()
                     end))
@@ -42,6 +50,10 @@ function CasGBetState:update(dt)
         gStateStack:push(UpdatePlayerStatsState({
             player = self.tablePlayer.player,
             stats = {money = -bet},
+            -- We want to allow the player to bet all of its money
+            -- and still be able to win it back without immediately going
+            -- into a game over
+            skipGameOver = true,
             callback = function()
                 -- Pop off casino bet state, and push on
                 -- casino deal state

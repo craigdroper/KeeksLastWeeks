@@ -392,7 +392,7 @@ function GenerateTileQuads(atlas)
         for i = 1, 2 do
             tiles[counter] = {}
 
-            for col = 1, 6 do
+            for col = 1, ACIDG_MAX_TILE_VARIETY do
                 table.insert(tiles[counter], love.graphics.newQuad(
                     x, y, 32, 32, atlas:getDimensions()
                 ))

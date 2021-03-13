@@ -46,16 +46,25 @@ function AcidGGameOverState:render()
     self.bkgrd:render()
     love.graphics.setFont(gFonts['large'])
 
-    love.graphics.setColor(56, 56, 56, 234)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 128, 64, 256, 64, 4)
 
-    love.graphics.setColor(99, 155, 255, 255)
     if self.level == 11 then
-        love.graphics.printf('YOU WIN', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
+        love.graphics.setColor(56, 56, 56, 234)
+        love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 128, 64, 256, 96, 4)
+
+        love.graphics.setColor(99, 155, 255, 255)
+        love.graphics.printf('WELCOME TO THE', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
+        love.graphics.printf('HIGHEST LEVEL!', VIRTUAL_WIDTH / 2 - 128, 96, 256, 'center')
+
+        love.graphics.setFont(gFonts['medium'])
+        love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 128, 128, 256, 'center')
     else
+        love.graphics.setColor(56, 56, 56, 234)
+        love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 128, 64, 256, 64, 4)
+
+        love.graphics.setColor(99, 155, 255, 255)
         love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
+
+        love.graphics.setFont(gFonts['medium'])
+        love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 128, 96, 256, 'center')
     end
-    love.graphics.setFont(gFonts['medium'])
-    -- love.graphics.printf('Your Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 64, 140, 128, 'center')
-    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 128, 96, 256, 'center')
 end

@@ -121,7 +121,14 @@ function AcidGBoard:initializeTiles(level)
             -- current implementation will limit the variety of tiles that
             -- are availabale according to the current level
             -- On average one tile per board will be shiny
-            table.insert(self.tiles[tileY], AcidGTile(tileX, tileY, self:getTileColor(), math.random(self.level), self:isTileShiny()))
+            table.insert(
+                self.tiles[tileY],
+                AcidGTile(
+                    tileX,
+                    tileY,
+                    self:getTileColor(),
+                    math.min(math.random(self.level), ACIDG_MAX_TILE_VARIETY),
+                    self:isTileShiny()))
         end
     end
 
@@ -402,7 +409,12 @@ function AcidGBoard:getFallingTiles()
             if not tile then
 
                 -- new tile with random color and variety
-                local tile = AcidGTile(x, y, self:getTileColor(), math.random(self.level), self:isTileShiny())
+                local tile = AcidGTile(
+                    x,
+                    y,
+                    self:getTileColor(),
+                    math.min(math.random(self.level), ACIDG_MAX_TILE_VARIETY),
+                    self:isTileShiny())
                 tile.y = -32
                 self.tiles[y][x] = tile
 

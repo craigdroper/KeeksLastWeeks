@@ -13,7 +13,6 @@ function AlleyWEnterState:enter()
     self.player.scaleY = 1.0
     self.player.opacity = 0
     self.player.walkSpeed = 20
-    -- Explicitly set the player's X & Y coordinates to be off screen, bottom left
     self.player.x = VIRTUAL_WIDTH * 2/3 - 5
     self.player.y = VIRTUAL_HEIGHT * 2/3
     -- Begin playing the casino background music

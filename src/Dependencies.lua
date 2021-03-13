@@ -191,6 +191,7 @@ require 'src/world/alley/states/AlleyWExitState'
 require 'src/world/alley/states/AlleyWDrugMenuState'
 require 'src/world/alley/states/AlleyWExitCarState'
 require 'src/world/alley/states/AlleyWFunMenuState'
+require 'src/world/alley/states/AlleyWExitHomeState'
 
 -- Coke Flappy Bird Game requirements
 require 'src/games/coke/src/CokeGBird'

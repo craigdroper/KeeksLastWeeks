@@ -183,6 +183,7 @@ function UpdatePlayerStatsState:tweenTimeUpdate()
 end
 
 function UpdatePlayerStatsState:tweenHealthUpdate()
+    self.curMult = nil
     self.fontRGB = HEALTH_RGB
     self.statDispMidX, self.statDispMidY =
         self.player:getStatMidCoords(HEALTH_NAME)

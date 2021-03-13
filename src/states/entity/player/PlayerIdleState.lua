@@ -19,6 +19,9 @@ function PlayerIdleState:update(dt)
 end
 
 function PlayerIdleState:update(dt)
+    TODO theres a bug here where accidentally clicking this arrow
+    will cause a crash. I think we need to disable this action for everything
+    but the Pokemon game
     if love.keyboard.isDown('left') then
         self.entity.direction = 'left'
         self.entity:changeState('walk')

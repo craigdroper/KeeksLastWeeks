@@ -30,6 +30,14 @@ function Player:init()
     -- game and is entering his first state
     self.isFirstScene = true
 
+    -- For KLW, we almost always don't want the player's state to transition
+    -- based on arrow input since we tween almost all animations
+    -- The exception for that is in the Pokemon/Weed game where arrow input
+    -- controls the player walking around, so when we enter that game,
+    -- the WeedG code makes this state updatable, and flips the flag again
+    -- upon leaving the Weed game
+    self.isStateUpdatable = false
+
     -- Used to locally store a snapshot that can be loaded
     self.snap = nil
 

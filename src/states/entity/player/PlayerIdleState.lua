@@ -19,21 +19,23 @@ function PlayerIdleState:update(dt)
 end
 
 function PlayerIdleState:update(dt)
-    TODO theres a bug here where accidentally clicking this arrow
-    will cause a crash. I think we need to disable this action for everything
-    but the Pokemon game
-    if love.keyboard.isDown('left') then
-        self.entity.direction = 'left'
-        self.entity:changeState('walk')
-    elseif love.keyboard.isDown('right') then
-        self.entity.direction = 'right'
-        self.entity:changeState('walk')
-    elseif love.keyboard.isDown('up') then
-        self.entity.direction = 'up'
-        self.entity:changeState('walk')
-    elseif love.keyboard.isDown('down') then
-        self.entity.direction = 'down'
-        self.entity:changeState('walk')
+    -- In general, there is not a concept of a walk state in most of this game
+    -- so we don't want to take any user input and try and transition to an
+    -- invalid state
+    if self.entity.isStateUpdatable then
+        if love.keyboard.isDown('left') then
+            self.entity.direction = 'left'
+            self.entity:changeState('walk')
+        elseif love.keyboard.isDown('right') then
+            self.entity.direction = 'right'
+            self.entity:changeState('walk')
+        elseif love.keyboard.isDown('up') then
+            self.entity.direction = 'up'
+            self.entity:changeState('walk')
+        elseif love.keyboard.isDown('down') then
+            self.entity.direction = 'down'
+            self.entity:changeState('walk')
+        end
     end
 end
 

@@ -416,6 +416,7 @@ gCokeGImages = {
     ['nose'] = love.graphics.newImage('src/games/coke/graphics/nose.png'),
     ['background-base'] = love.graphics.newImage('src/games/coke/graphics/cocaine_pile.png'),
     ['background-ext'] = love.graphics.newImage('src/games/coke/graphics/cocaine_lines.jpg'),
+    ['cop'] = love.graphics.newImage('src/games/coke/graphics/obstacle.png'),
 }
 
 gClubWImages = {

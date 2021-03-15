@@ -40,6 +40,9 @@ function WeedGLevel:init()
     -- the walk animation here and delete it when we exit
     self.player.stateMachine.states['walk'] =
         function() return WeedGPlayerWalkState(self.player, self) end
+    -- We will also be flipping the flag for the Player to allow the PlayerIdleState
+    -- state to flip between idle and walking based on arrow key input
+    self.player.isStateUpdatable = true
 end
 
 function WeedGLevel:createMaps()

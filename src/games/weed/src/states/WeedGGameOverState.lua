@@ -30,6 +30,12 @@ function WeedGGameOverState:update(dt)
         -- Set the AlleyWStationary game stats
         alleyWStatState = gStateStack:getNPrevState(3)
         alleyWStatState.gameStats = {multiplier = self.level }
+        -- When exiting we will be returning the player back to the 'PlayerIdleState`,
+        -- and will block that state from taking any arrow key input to change states
+        -- since every other part of KLW relies on tweening, and not user input,
+        -- for character movement
+        gGlobalObjs['player'].isStateUpdatable = false
+        -- Transition the states correctly
         gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
             function()
             -- pop off all states down to the AlleyWStationary state

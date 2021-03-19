@@ -11,6 +11,9 @@ CokeGTitleScreenState = Class{__includes = BaseState}
 
 function CokeGTitleScreenState:init()
     self.background = CokeGBackground()
+
+    gCokeSounds['music']:setLooping(true)
+    gCokeSounds['music']:play()
 end
 
 function CokeGTitleScreenState:enter()
@@ -20,7 +23,7 @@ function CokeGTitleScreenState:enter()
                 text = 'Play',
                 onSelect =
                     function()
-                        -- Pop off BarGStartState
+                        -- Pop off CokeGStartState
                         gStateStack:pop()
                         gStateStack:push(CokeGCountdownState({background = self.background}))
                     end

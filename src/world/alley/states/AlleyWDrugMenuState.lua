@@ -10,6 +10,7 @@ function AlleyWDrugMenuState:init(params)
                 text = 'Weed',
                 onSelect =
                 function()
+                    gBarWSounds['exterior']:stop()
                     self.alley.drugName = 'weed'
                     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
                         function()
@@ -27,6 +28,7 @@ function AlleyWDrugMenuState:init(params)
                 text = 'Acid',
                 onSelect =
                 function()
+                    gBarWSounds['exterior']:stop()
                     self.alley.drugName = 'acid'
                     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
                         function()
@@ -44,6 +46,7 @@ function AlleyWDrugMenuState:init(params)
                 text = 'Coke',
                 onSelect =
                 function()
+                    gBarWSounds['exterior']:stop()
                     self.alley.drugName = 'coke'
                     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
                         function()

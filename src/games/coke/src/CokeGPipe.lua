@@ -26,7 +26,7 @@ function CokeGPipe:update(dt)
 end
 
 function CokeGPipe:render()
-    love.graphics.filterDrawD(gCokeGImages['pipe'], self.x,
+    love.graphics.filterDrawD(gCokeGImages['cop'], self.x,
 
         -- shift pipe rendering down by its height if flipped vertically
         (self.orientation == 'top' and self.y + COKEG_PIPE_HEIGHT or self.y),

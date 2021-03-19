@@ -10,7 +10,7 @@ function CokeGInstructionsState:enter()
         'Tap the space bar to take a bump of that devine Bolivian marching powder, '..
         'and watch your nose pop up on a new high.\n'..
         'Keep those bumps coming at exactly the right levels to keep '..
-        'your high at exactly the right level and avoid the obstacles',
+        'your high at exactly the right level and avoid the law.',
         -- Callback arg
         function()
             -- Pop off this state and return to the Menu state

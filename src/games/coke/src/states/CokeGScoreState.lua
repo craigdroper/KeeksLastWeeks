@@ -15,7 +15,7 @@ CokeGScoreState = Class{__includes = BaseState}
     from the play state so we know what to render to the State.
 ]]
 function CokeGScoreState:init(params)
-    self.score = params.score
+    self.level = params.level
     self.bird = params.bird
     self.background = params.background
     self.background:setIsScrolling(false)
@@ -32,11 +32,12 @@ function CokeGScoreState:update(dt)
         -- 2) CokeGScoreState
         -- Set the AlleyWStationary game stats
         alleyWStatState = gStateStack:getNPrevState(1)
-        alleyWStatState.gameStats = {multiplier = self.score}
+        alleyWStatState.gameStats = {multiplier = self.level}
         gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
             function()
             -- pop off the coke game score state and return to the
             -- stationary state
+            gCokeSounds['music']:stop()
             gStateStack:pop()
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
             function()
@@ -54,11 +55,16 @@ function CokeGScoreState:render()
 
     -- simply render the score to the middle of the screen
     love.graphics.setFont(gFonts['flappy-font'])
-    local lostMsg = 'Oof! You lost!'
-    love.graphics.printf(lostMsg, 0, 64, VIRTUAL_WIDTH, 'center')
+    local msg = nil
+    if self.level == 10 then
+        msg = 'You sniffed it all!'
+    else
+        msg = 'Busted!'
+    end
+    love.graphics.printf(msg, 0, 64, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setFont(gFonts['medium-flappy-font'])
-    local scoreMsg = 'Score: ' .. tostring(self.score)
+    local scoreMsg = 'Lines: ' .. tostring(self.level)
     love.graphics.printf(scoreMsg, 0, 100, VIRTUAL_WIDTH, 'center')
 
     restartMsg = 'Press Enter to End the Game'

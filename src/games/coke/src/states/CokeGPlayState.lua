@@ -16,37 +16,33 @@ function CokeGPlayState:init(params)
     self.background:setIsScrolling(true)
     self.pipePairs = {}
     self.pipeAlarm = 0
-    self.score = 0
+    self.level = 0
+    self.levelPipeCreated = 0
+    self.levelPipeScored = 0
+    self.pipesPerLevel = 5
 
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -COKEG_PIPE_HEIGHT + math.random(80) + 20
-    self.lastGap = 90
+    self.minGap = 100
+    self.maxGap = 200
+    self.levelGaps = {
+        [0] = 190,
+        [1] = 180,
+        [2] = 170,
+        [3] = 160,
+        [4] = 150,
+        [5] = 140,
+        [6] = 130,
+        [7] = 120,
+        [8] = 110,
+        [9] = 100,
+        [10] = 90,
+    }
 
-    -- XXX For now commenting out pause functionality
-    -- self.isPaused = false
-    -- self.pauseImage = gCokeGImages['pause']
     self.groundScroll = 0
 end
 
 function CokeGPlayState:update(dt)
-    -- check if there has been any change in pause state
-    --[[
-    if love.keyboard.wasPressed('p') then
-        gCokeSounds['pause']:play()
-        if self.isPaused then
-            gCokeSounds['music']:play()
-        else
-            gCokeSounds['music']:stop()
-        end
-        gIsScrolling = not gIsScrolling
-        self.isPaused = not self.isPaused
-    end
-    -- don't update any of the pipes or the bird when paused
-    if self.isPaused then
-        return
-    end
-    --]]
-
     -- update pipeAlarm for pipe spawning
     self.pipeAlarm = self.pipeAlarm - dt
 
@@ -57,19 +53,28 @@ function CokeGPlayState:update(dt)
         -- modify the last Y coordinate we placed so pipe gaps aren't too far apart
         -- no higher than 10 pixels below the top edge of the screen,
         -- and no lower than the gap length
-        local gap = math.max(100, math.min(self.lastGap + math.random(-20,20), 150))
-        -- print('Set pipe gap to ' .. tostring(gap) .. ' pixels')
+        local gap = math.max(
+            self.minGap, math.min(
+                self.levelGaps[self.level] + math.random(-20,20), self.maxGap) )
         local y = math.max(-COKEG_PIPE_HEIGHT + 10,
             math.min(self.lastY + math.random(-20, 20), VIRTUAL_HEIGHT - gap - COKEG_PIPE_HEIGHT))
-        self.lastGap = gap
         self.lastY = y
 
         -- add a new pipe pair at the end of the screen at our new Y
         table.insert(self.pipePairs, CokeGPipePair(y, gap))
+        self.levelPipeCreated = self.levelPipeCreated + 1
 
-        -- reset pipeAlarm to be some random time between 1.5 and 2.5 second
-        self.pipeAlarm = 1.5 + math.random()
-        -- print('Set next pipe alarm for ' .. tostring(self.pipeAlarm) .. ' seconds')
+        if self.levelPipeCreated == self.pipesPerLevel then
+            -- set a longer alarm to separate the levels
+            if self.level == 9 then
+                self.pipeAlarm = 1000000
+            else
+                self.pipeAlarm = 6
+            end
+            self.levelPipeCreated = 0
+        else
+            self.pipeAlarm = 1.5
+        end
     end
 
     -- for every pair of pipes..
@@ -78,9 +83,22 @@ function CokeGPlayState:update(dt)
         -- be sure to ignore it if it's already been scored
         if not pair.scored then
             if pair.x + COKEG_PIPE_WIDTH < self.bird.x then
-                self.score = self.score + 1
+                self.levelPipeScored = self.levelPipeScored + 1
+                if self.levelPipeScored == self.pipesPerLevel then
+                    gCokeSounds['score']:play()
+                    self.level = self.level + 1
+                    self.levelPipeScored = 0
+                    if self.level == 10 then
+                        self.bird:win()
+                            gStateStack:pop()
+                            gStateStack:push(
+                                CokeGScoreState(
+                                    {level = self.level,
+                                     bird = self.bird,
+                                     background = self.background}))
+                    end
+                end
                 pair.scored = true
-                gCokeSounds['score']:play()
             end
         end
 
@@ -106,7 +124,7 @@ function CokeGPlayState:update(dt)
 
                 gStateStack:pop()
                 gStateStack:push(CokeGScoreState({
-                    score = self.score, bird = self.bird,
+                    level = self.level, bird = self.bird,
                     background = self.background}))
             end
         end
@@ -120,7 +138,7 @@ function CokeGPlayState:update(dt)
         self.bird:sneeze()
 
         gStateStack:pop()
-        gStateStack:push(CokeGScoreState({score = self.score, bird = self.bird,
+        gStateStack:push(CokeGScoreState({level = self.level, bird = self.bird,
             background = self.background}))
     end
 
@@ -138,19 +156,10 @@ function CokeGPlayState:render()
     end
 
     love.graphics.setFont(gFonts['flappy-font'])
-    love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
+    love.graphics.print('Lines: ' .. tostring(self.level), 8, 8)
 
     self.bird:render()
 
-    -- if the play state is currently paused, display the pause image
-    --[[
-    if self.isPaused then
-        love.graphics.filterDrawD(
-            self.pauseImage,
-            VIRTUAL_WIDTH/2 - self.pauseImage:getWidth()/2,
-            VIRTUAL_HEIGHT/2 - self.pauseImage:getHeight()/2)
-    end
-    --]]
 
     -- Finally draw scrolling ground
     love.graphics.filterDrawD(gCokeGImages['ground'], -self.groundScroll, VIRTUAL_HEIGHT - 16)

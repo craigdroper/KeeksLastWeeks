@@ -27,6 +27,7 @@ function CokeGBird:init()
     -- When the bird sneezes it is no longer in play and should
     -- no longer be updated
     self.isInPlay = true
+    self.isWin = false
 
     -- particle system belonging to the bird, emitted on sneeze
     self.psystem = love.graphics.newParticleSystem(gBGTextures['particle'], 128)
@@ -65,6 +66,12 @@ function CokeGBird:collides(pipe)
     return false
 end
 
+function CokeGBird:win()
+    gCokeSounds['wow']:play()
+    self.isWin = true
+    self.upTimer = 0.2
+end
+
 function CokeGBird:sneeze()
     gCokeSounds['sneeze']:play()
     self.psystem:emit(128)
@@ -81,13 +88,23 @@ function CokeGBird:update(dt)
         return
     end
 
-    self.dy = self.dy + GRAVITY * dt
+    if not self.isWin then
+        self.dy = self.dy + GRAVITY * dt
+    end
 
-    -- burst of anti-gravity when space or left mouse are pressed
-    if love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) then
-        self.dy = self.jumpYAcc
-        gCokeSounds['sniff']:stop()
-        gCokeSounds['sniff']:play()
+    if self.isWin then
+        self.upTimer = self.upTimer - dt
+        if self.upTimer < 0 then
+            self.upTimer = 0.1
+            self.dy = self.jumpYAcc
+        end
+    else
+        -- burst of anti-gravity when space or left mouse are pressed
+        if love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) then
+            self.dy = self.jumpYAcc
+            gCokeSounds['sniff']:stop()
+            gCokeSounds['sniff']:play()
+        end
     end
 
     self.y = self.y + self.dy

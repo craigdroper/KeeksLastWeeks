@@ -30,6 +30,7 @@ function AlleyWExitState:tweenExit()
     gSounds['footsteps']:stop()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
+            gBarWSounds['exterior']:stop()
             -- Pop the Alley Exist off
             gStateStack:pop()
             gStateStack:push(self.nextState)

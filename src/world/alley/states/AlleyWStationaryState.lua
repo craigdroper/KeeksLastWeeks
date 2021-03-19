@@ -22,6 +22,8 @@ end
 
 function AlleyWStationaryState:update(dt)
     if self.gameStats then
+        gBarWSounds['exterior']:setLooping(true)
+        gBarWSounds['exterior']:play()
         local moneyDelta = nil
         local healthDelta = -5 * self.gameStats.multiplier
         if self.alley.drugName == 'coke' then

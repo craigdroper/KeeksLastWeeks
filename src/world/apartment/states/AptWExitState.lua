@@ -1,9 +1,9 @@
 
 AptWExitState = Class{__includes = BaseState}
 
-local FURNITURE_BUFFER = 8
-local ARMREST_OFFSET = 7
-local TOP_COUCH_OFFSET = 12
+--local FURNITURE_BUFFER = 8
+--local ARMREST_OFFSET = 7
+-- local TOP_COUCH_OFFSET = 12
 
 function AptWExitState:init(params)
     self.player = gGlobalObjs['player']
@@ -18,37 +18,33 @@ end
 function AptWExitState:tweenExit()
     -- Setup the tween action to animate the player walking from the
     -- couch out of the apartment
-    local tableY = self.apartment.furniture['coffee-table'][4]
-    local counterX = self.apartment.furniture['vertical-long-counter'][3]
-    local chairY = self.apartment.furniture['desk-chair'][4]
-    local wallX = VIRTUAL_WIDTH + 10
+    local carpetTurnX = VIRTUAL_WIDTH * 3/4 - 30
+    local couchTurnY = VIRTUAL_HEIGHT * 1/2
+    local exitY = VIRTUAL_HEIGHT * 3/4 - 20
 
+    Timer.after(0.5,
+        function()
+    -- "Hop/Jump" onto the mid table chair facing left after a small wind up
+    -- pause for the jump
+    -- gSounds['footsteps']:stop()
+    gSounds['jump']:play()
+    Timer.tween(0.3, {
+        [self.player] = {y = couchTurnY}
+    }):finish(
+        function()
     gSounds['footsteps']:setLooping(true)
     gSounds['footsteps']:play()
-
     -- Get off couch and walk to limit of coffee table
-    local walkPixels = tableY - self.player.y - self.player:getHeight() - FURNITURE_BUFFER
+    local walkPixels = exitY - self.player.y
     self.player:changeAnimation('walk-down')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = tableY - self.player:getHeight() - FURNITURE_BUFFER}
+        [self.player] = {y = exitY, scaleX = 1.8, scaleY = 1.8}
     }):finish(
         function()
-    walkPixels = counterX - self.player.x - self.player:getWidth() - FURNITURE_BUFFER
+    walkPixels = VIRTUAL_WIDTH - self.player.x
     self.player:changeAnimation('walk-right')
     Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = counterX - self.player:getWidth() - FURNITURE_BUFFER}
-    }):finish(
-        function()
-    walkPixels = chairY - self.player.y - self.player:getHeight() - FURNITURE_BUFFER
-    self.player:changeAnimation('walk-down')
-    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {y = chairY - self.player:getHeight() - FURNITURE_BUFFER}
-    }):finish(
-        function()
-    walkPixels = wallX - self.player.x + self.player:getWidth()
-    self.player:changeAnimation('walk-right')
-    Timer.tween(self.player:getPixelWalkTime(walkPixels), {
-        [self.player] = {x = wallX}
+        [self.player] = {x = VIRTUAL_WIDTH}
     }):finish(
         function()
     gSounds['footsteps']:stop()

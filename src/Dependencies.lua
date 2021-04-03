@@ -653,7 +653,8 @@ gWeedGSounds = {
     ['exp'] = love.audio.newSource('src/games/weed/sounds/exp.wav'),
     ['levelup'] = love.audio.newSource('src/games/weed/sounds/levelup.wav'),
     ['victory-music'] = love.audio.newSource('src/games/weed/sounds/victory.wav'),
-    ['intro-music'] = love.audio.newSource('src/games/weed/sounds/intro.mp3')
+    ['intro-music'] = love.audio.newSource('src/games/weed/sounds/intro.mp3'),
+    ['marley'] = love.audio.newSource('src/games/weed/sounds/marley.mp3'),
 }
 
 gIntroImages = {
@@ -681,4 +682,8 @@ gGameOverSounds = {
 
 gAlleyImages = {
     ['background'] = love.graphics.newImage('graphics/sets/apartment_exterior.jpg'),
+}
+
+gAptImages = {
+    ['background'] = love.graphics.newImage('graphics/sets/apartment_interior.jpg'),
 }

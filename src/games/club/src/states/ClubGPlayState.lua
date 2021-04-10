@@ -10,8 +10,6 @@ function ClubGPlayState:init(params)
     self.song = params.song
     self.songBPM = params.songBPM
     self.songTime = self.song:getDuration('seconds')
-    -- DEVXXXX
-    self.songTime = 30
     local tmpArrow = ClubGArrow(self.targets['left'], self.level)
     self.timeToClearArrows =
         (VIRTUAL_HEIGHT - self.targets['left']:getY()) / (-tmpArrow.dy) + 1
@@ -21,6 +19,9 @@ function ClubGPlayState:init(params)
     self.arrows = {}
     -- Get a frequency that's close to the half beats per second
     self.arrowFreq = self.songBPM / 60 / 4
+    self.speedUpTimer = Timer.every(60, function()
+        self.arrowFreq  = self.arrowFreq * 0.8
+    end)
     -- Find how long to wait before the first arrow based on the bpm
     -- and the 3 second countdown
     self.arrowOffset = 3. % self.arrowFreq + self.arrowFreq
@@ -28,21 +29,13 @@ function ClubGPlayState:init(params)
     self.arrowDirs = {'left', 'down', 'up', 'right'}
 
     self:setEndOfLevelTimer()
+    self.isVictory = false
 end
 
 function ClubGPlayState:setEndOfLevelTimer()
     Timer.after(self.songTime,
         function()
-    -- Pop the play state off and move to the level's victory state
-    gStateStack:pop()
-    gStateStack:push(ClubGVictoryState({
-        background = self.background,
-        level = self.level,
-        score = self.score,
-        targets = self.targets,
-        health = self.health,
-        song = self.song,
-        }))
+            self.isVictory = true
         end)
 end
 
@@ -60,11 +53,25 @@ function ClubGPlayState:checkForHitTarget(dir)
         target:hit(closestArrow)
         closestArrow.inPlay = false
     else
-        self:loseHealth(5)
+        self:loseHealth(2)
     end
 end
 
 function ClubGPlayState:update(dt)
+    if self.isVictory then
+        -- Pop the play state off and move to the level's victory state
+        gStateStack:pop()
+        self.speedUpTimer:remove()
+        gStateStack:push(ClubGVictoryState({
+            background = self.background,
+            level = self.level,
+            score = self.score,
+            targets = self.targets,
+            health = self.health,
+            song = self.song,
+            }))
+    end
+
     -- Update the arrows position
     for _, arrow in pairs(self.arrows) do
         arrow:update(dt)
@@ -91,9 +98,9 @@ function ClubGPlayState:update(dt)
     -- Check if any in play arrows have passed outside the screen and should
     -- be counted against health
     for _, arrow in pairs(self.arrows) do
-        if arrow.inPlay and arrow:getY() < -arrow.width then
+        if arrow.inPlay and arrow:getY() < -arrow.height then
             arrow.inPlay = false
-            self:loseHealth(5)
+            self:loseHealth(2)
         end
     end
 
@@ -103,11 +110,12 @@ function ClubGPlayState:update(dt)
         self.song:stop()
         -- Pop the current play state and push the game over state
         gStateStack:pop()
+        self.speedUpTimer:remove()
         gStateStack:push(ClubGGameOverState({
             background = self.background,
             score = self.score,
             targets = self.targets,
-            health = self.health
+            health = self.health,
         }))
     end
 

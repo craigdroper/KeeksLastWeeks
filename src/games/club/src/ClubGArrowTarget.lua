@@ -32,16 +32,16 @@ function ClubGArrowTarget:init(x, y, dir)
     }
 
     self.absDist = {
-        ['perfect'] = 5,
-        ['great'] = 10,
-        ['good'] = 15,
+        ['perfect'] = 3,
+        ['great'] = 6,
+        ['good'] = 10,
     }
     self.maxHitDist = self.absDist['good']
 
     self.hitScores = {
-        ['perfect'] = 10,
-        ['great'] = 5,
-        ['good'] = 2,
+        ['perfect'] = 4,
+        ['great'] = 2,
+        ['good'] = 1,
     }
 
     -- Set direction specific values

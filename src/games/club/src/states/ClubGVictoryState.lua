@@ -11,20 +11,23 @@ function ClubGVictoryState:init(params)
 end
 
 function ClubGVictoryState:update(dt)
-    -- go to play screen if the player presses Enter
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        -- Pop off the current victory state, and push
-        -- a Serve state with a newly created level
-        self.song:stop()
-        gStateStack:pop()
-        gStateStack:push(ClubGCountdownState({
-            background = self.background,
-            level = self.level + 1,
-            targets = self.targets,
-            -- For now reset on every level, since the arrows get faster
-            health = 100,
-            score = self.score,
-        }))
+        -- Currently the stack is as follows:
+        -- 1) ClubWStationary
+        -- 2) ClubGGameOver
+        -- Set the ClubWStationary game stats
+        clubWStatState = gStateStack:getNPrevState(1)
+        clubWStatState.gameStats = {score = 2*self.score}
+        -- pop ClubGGameOverState off to
+        -- return to the stationary bar state
+        gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
+            function()
+            -- Pop GameOverState
+            gStateStack:pop()
+            gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
+            function()
+            end))
+            end))
     end
 end
 
@@ -38,13 +41,11 @@ function ClubGVictoryState:render()
     ClubGUtils():renderScore(self.score)
     ClubGUtils():renderHealth(self.health)
 
-    -- level complete text
     love.graphics.setFont(gFonts['large'])
-    love.graphics.printf("Level " .. tostring(self.level) .. " complete!",
-        0, VIRTUAL_HEIGHT / 4, VIRTUAL_WIDTH, 'center')
-
-    -- instructions text
+    love.graphics.printf('VICTORY', 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
     love.graphics.setFont(gFonts['medium'])
-    love.graphics.printf('Press Enter for next level!', 0, VIRTUAL_HEIGHT / 2,
+    love.graphics.printf('Final Score: ' .. tostring(self.score), 0, VIRTUAL_HEIGHT / 2,
+        VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter!', 0, VIRTUAL_HEIGHT - VIRTUAL_HEIGHT / 4,
         VIRTUAL_WIDTH, 'center')
 end

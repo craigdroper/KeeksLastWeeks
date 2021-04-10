@@ -466,6 +466,11 @@ gClubSounds = {
 
 gClubGSongs = {
     love.audio.newSource('src/games/club/sounds//club_tracks/call_on_me.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/cola.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/frankie_meets_pauline.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/i_follow_rivers.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/intoxicated.mp3'),
+    love.audio.newSource('src/games/club/sounds//club_tracks/wont_look_back.mp3'),
 }
 
 gCasGTextures = {

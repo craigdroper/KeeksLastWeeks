@@ -50,7 +50,7 @@ function ClubWEnterState:tweenEnter()
     gStateStack:push(UpdatePlayerStatsState({player = self.player,
         -- Club mini game will reward its own score that can be dropped right in here
         -- stats = {money = -100}, callback =
-        stats = {money = -10000}, callback =
+        stats = {money = -100}, callback =
         function()
     -- Pop the club Enter State off, and push the player stats
     -- update, and followed by the rest of the enter state

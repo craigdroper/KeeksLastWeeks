@@ -41,7 +41,7 @@ end
 
 function GameOverGDialogueState:setMoneyMessage()
     self.message = self.message .. 'Unfortunately, you are officially broke.\n'..
-    'Seems like a new wife and her money is the only way for you to get back on your feet.\n'..
+    'Seems like a new wife, along with her money, is the only way for you to get back on your feet.\n'..
     'Enjoy married life Keeks!'
 end
 

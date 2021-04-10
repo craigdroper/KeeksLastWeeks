@@ -21,7 +21,7 @@ end
 
 function WeedGGameOverState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        -- gAcidGSounds['music']:stop()
+        gWeedGSounds['marley']:stop()
         -- Currently the stack is:
         -- 1) AlleyWStationary
         -- 2) WeedGPlayState

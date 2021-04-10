@@ -9,7 +9,8 @@
 WeedGStartState = Class{__includes = BaseState}
 
 function WeedGStartState:init()
-    -- gWeedGSounds['intro-music']:play()
+    gWeedGSounds['marley']:setLooping(true)
+    gWeedGSounds['marley']:play()
 
     self.sprite = POKEMON_DEFS[POKEMON_IDS[math.random(#POKEMON_IDS)]].battleSpriteFront
     local swidth, sheight = gWeedGTextures[self.sprite]:getDimensions()

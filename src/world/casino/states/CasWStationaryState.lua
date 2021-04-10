@@ -20,6 +20,7 @@ function CasWStationaryState:enter()
         function()
             -- Keep the Stationary State on, and put the mini game
             -- on top of it
+            gCasSounds['background']:stop()
             gStateStack:push(CasGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
@@ -30,6 +31,7 @@ end
 
 function CasWStationaryState:update(dt)
     if self.gameOver then
+        gCasSounds['background']:play()
         gStateStack:push(DialogueState(
             'Keeks: Really though today was my day to finally take the house...' ..
             'Oh well, you know I\'ll be back!',

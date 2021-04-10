@@ -703,3 +703,9 @@ gAptWSongs = {
 gBarGSounds = {
     ['background'] = love.audio.newSource('src/games/bar/sounds/chelsea_dagger.mp3')
 }
+
+gCasGSongs = {
+    love.audio.newSource('src/games/casino/sounds/bad_boujee.mp3'),
+    love.audio.newSource('src/games/casino/sounds/better_have_my_money.mp3'),
+    love.audio.newSource('src/games/casino/sounds/cant_tell_me_nothing.mp3'),
+}

@@ -31,7 +31,6 @@ function love.load()
     gGlobalObjs['filter'] = NoFilter()
     --gGlobalObjs['filter'] = AcidFilter({multiplier=10})
 
-    --[[
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             player.displayStats = true
@@ -43,7 +42,7 @@ function love.load()
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())
-            -- gStateStack:push(CasWEnterState())
+            gStateStack:push(CasWEnterState())
             -- gStateStack:push(CasGStartState())
             -- gStateStack:push(DateWEnterLobbyState())
             -- gStateStack:push(DateWEnterRestState())
@@ -61,8 +60,7 @@ function love.load()
                 function()
                 end))
     end))
-    --]]
-    gStateStack:push(IntroGIntroState())
+    -- gStateStack:push(IntroGIntroState())
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}

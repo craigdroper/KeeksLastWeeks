@@ -47,8 +47,6 @@ function AcidFilter:init(params)
     self.monsterFreq = #self.monsters / self.multiplier
     self.monsterPeriod = 10
     self.monsterFade = 1
-    -- TODO Dev
-    -- self.monsterFreq = 1
     self:tweenMonster()
 end
 

@@ -8,7 +8,7 @@ end
 
 function AptWStationaryState:enter()
     -- if not self.player.isFirstScene then
-    if self.player.isFirstScene then
+    if not self.player.isFirstScene then
         gStateStack:push(UpdatePlayerStatsState({player = self.player,
             stats = {time = -10}, callback =
         function()

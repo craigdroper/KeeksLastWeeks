@@ -41,7 +41,7 @@ function CasGCheckWinnerState:enter()
             gStateStack:push(UpdatePlayerStatsState({
                                 player = self.tablePlayer.player,
                                 stats = {money = 2*self.tablePlayer.curBet,
-                                         fun = 2*self.tablePlayer.curBet},
+                                         fun = self.tablePlayer.curBet},
                             }))
             gStateStack:push(CasGDispResState({
                                 result = 'WIN',

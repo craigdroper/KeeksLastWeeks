@@ -34,11 +34,11 @@ function love.load()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             player.displayStats = true
-            gStateStack:push(AptWEnterState())
+            -- gStateStack:push(AptWEnterState())
             -- gStateStack:push(BarWEnterExteriorState())
             -- gStateStack:push(BarWEnterState())
             -- gStateStack:push(BarGStartState())
-            -- gStateStack:push(AlleyWEnterState())
+            gStateStack:push(AlleyWEnterState())
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())

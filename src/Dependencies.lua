@@ -687,6 +687,7 @@ gGameOverSounds = {
 
 gAlleyImages = {
     ['background'] = love.graphics.newImage('graphics/sets/apartment_exterior.jpg'),
+    ['car'] = love.graphics.newImage('graphics/sets/drugcar.png'),
 }
 
 gAptImages = {

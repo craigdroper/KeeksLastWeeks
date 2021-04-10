@@ -18,6 +18,8 @@ function BarGStartState:init()
 end
 
 function BarGStartState:enter()
+    gBarGSounds['background']:setLooping(true)
+    gBarGSounds['background']:play()
     self.startMenu = Menu {
         items = {
             {

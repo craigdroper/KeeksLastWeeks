@@ -9,9 +9,6 @@
 WeedGStartState = Class{__includes = BaseState}
 
 function WeedGStartState:init()
-    gWeedGSounds['marley']:setLooping(true)
-    gWeedGSounds['marley']:play()
-
     self.sprite = POKEMON_DEFS[POKEMON_IDS[math.random(#POKEMON_IDS)]].battleSpriteFront
     local swidth, sheight = gWeedGTextures[self.sprite]:getDimensions()
     local targHeight = 150
@@ -37,6 +34,9 @@ function WeedGStartState:init()
 end
 
 function WeedGStartState:enter()
+    gWeedGSounds['marley']:setLooping(true)
+    gWeedGSounds['marley']:play()
+
     self.startMenu = Menu {
         items = {
             {

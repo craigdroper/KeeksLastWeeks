@@ -687,3 +687,7 @@ gAlleyImages = {
 gAptImages = {
     ['background'] = love.graphics.newImage('graphics/sets/apartment_interior.jpg'),
 }
+
+gBarGSounds = {
+    ['background'] = love.audio.newSource('src/games/bar/sounds/chelsea_dagger.mp3')
+}

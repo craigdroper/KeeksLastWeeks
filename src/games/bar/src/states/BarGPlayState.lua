@@ -52,12 +52,18 @@ function BarGPlayState:init(params)
 
     -- Initialize the "ball" to not be able to bounce passed the bar
     -- until all bricks are cleared
-    self.balls[1].curMinY = self.background:getBarBottomY()
+    local beerBrickMaxY = nil
+    for _, brick in pairs(self.bricks) do
+        if brick.isBeerBrick then
+            beerBrickMaxY = brick.y + brick.height + 2
+        end
+    end
+    self.balls[1].curMinY = beerBrickMaxY
     -- give ball random starting velocity
     local baseDX = 200
-    local multDX = 20
-    local baseDY = 100
-    local multDY = 20
+    local multDX = 25
+    local baseDY = 120
+    local multDY = 25
     local xDir = math.random(2) == 2 and 1 or -1
     self.balls[1].dx = xDir * baseDX + multDX * self.level
     self.balls[1].dy = baseDY + multDY * self.level
@@ -364,8 +370,6 @@ function BarGPlayState:render()
 end
 
 function BarGPlayState:checkVictory()
-    return true
-    --[[
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             return false
@@ -373,5 +377,4 @@ function BarGPlayState:checkVictory()
     end
 
     return true
-    --]]
 end

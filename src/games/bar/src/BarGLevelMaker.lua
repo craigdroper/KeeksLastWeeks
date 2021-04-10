@@ -54,11 +54,13 @@ function BarGLevelMaker.createMap(level, barBackground)
     local barBottomY = barBackground:getBarBottomY()
     local maxRows = ((VIRTUAL_HEIGHT/2) - barBottomY - BRICK_PADDING) /
         (brickHeight + BRICK_PADDING)
-    local numRows = math.random(1, math.floor(maxRows * level / 10) + 1 )
+    local minRows = math.min(level / 3 + 1, maxRows)
+    local numRows = math.random(minRows, math.floor(maxRows * level / 10) + 1 )
 
     -- randomly choose the number of columns, ensuring odd
     local maxCols = (VIRTUAL_WIDTH - BRICK_PADDING) / (brickWidth + BRICK_PADDING)
-    local numCols = math.random(6, math.max(math.floor(maxCols * level / 10), 8))
+    local minCols = math.min(6 + level/3, maxCols)
+    local numCols = math.random(minCols, math.max(math.floor(maxCols * level / 10), 8))
     numCols = numCols % 2 == 0 and (numCols + 1) or numCols
     local colBrickOffset = (VIRTUAL_WIDTH - (brickWidth * numCols)) / (numCols + 1)
 

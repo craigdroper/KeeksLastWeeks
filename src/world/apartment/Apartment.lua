@@ -9,7 +9,7 @@ function Apartment:init()
     self.bkgrdW, self.bkgrdH = self.bkgrd:getDimensions()
     self.bkgrdSX = (VIRTUAL_WIDTH) / self.bkgrdW
     self.bkgrdSY = (VIRTUAL_HEIGHT) / self.bkgrdH
-
+    self.song = gAptWSongs[math.random(#gAptWSongs)]
 end
 
 function Apartment:render()

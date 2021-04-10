@@ -52,6 +52,7 @@ function AptWExitState:tweenExit()
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             -- Pop the AptWExitState off
+            self.apartment.song:stop()
             gStateStack:pop()
             gStateStack:push(self.nextGameState)
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,

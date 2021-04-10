@@ -693,6 +693,12 @@ gAptImages = {
     ['background'] = love.graphics.newImage('graphics/sets/apartment_interior.jpg'),
 }
 
+gAptWSongs = {
+    love.audio.newSource('sounds/taylorswift_22.mp3'),
+    love.audio.newSource('sounds/taylorswift_lovestory.mp3'),
+    love.audio.newSource('sounds/taylorswift_shakeitoff.mp3'),
+}
+
 gBarGSounds = {
     ['background'] = love.audio.newSource('src/games/bar/sounds/chelsea_dagger.mp3')
 }

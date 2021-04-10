@@ -14,6 +14,8 @@ function AptWEnterState:init()
 end
 
 function AptWEnterState:enter()
+    self.apartment.song:setLooping(true)
+    self.apartment.song:play()
     -- Always reset the drug filter whenever coming back to the Apartment
     gGlobalObjs['filter'] = NoFilter()
     -- Set the player entity's scale factors to the correct values

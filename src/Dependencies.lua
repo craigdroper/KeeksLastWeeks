@@ -30,6 +30,7 @@ require 'src/gui/Selection'
 require 'src/gui/Textbox'
 require 'src/gui/Inputbox'
 require 'src/gui/ProgressBar'
+require 'src/games/GameMusic'
 
 -- Intro Menu requirements
 require 'src/gameplay/intro/IntroGBackground'
@@ -442,7 +443,12 @@ gCokeSounds = {
     ['sniff'] = love.audio.newSource('src/games/coke/sounds/sniff.mp3', 'static'),
     ['sneeze'] = love.audio.newSource('src/games/coke/sounds/sneeze.wav', 'static'),
     ['wow'] = love.audio.newSource('src/games/coke/sounds/wow.mp3', 'static'),
-    ['music'] = love.audio.newSource('src/games/coke/sounds/the_weeknd.mp3', 'static'),
+}
+
+gCokeGSongs = {
+    love.audio.newSource('src/games/coke/sounds/cant_feel_face.mp3'),
+    love.audio.newSource('src/games/coke/sounds/starboy.mp3'),
+    love.audio.newSource('src/games/coke/sounds/cocaine.mp3'),
 }
 
 gClubGImages = {
@@ -659,7 +665,12 @@ gWeedGSounds = {
     ['levelup'] = love.audio.newSource('src/games/weed/sounds/levelup.wav'),
     ['victory-music'] = love.audio.newSource('src/games/weed/sounds/victory.wav'),
     ['intro-music'] = love.audio.newSource('src/games/weed/sounds/intro.mp3'),
-    ['marley'] = love.audio.newSource('src/games/weed/sounds/marley.mp3'),
+}
+
+gWeedGSongs = {
+    love.audio.newSource('src/games/weed/sounds/marley.mp3'),
+    love.audio.newSource('src/games/weed/sounds/afroman.mp3'),
+    love.audio.newSource('src/games/weed/sounds/burn_one_down.mp3'),
 }
 
 gIntroImages = {
@@ -695,9 +706,9 @@ gAptImages = {
 }
 
 gAptWSongs = {
-    love.audio.newSource('sounds/taylorswift_22.mp3'),
     love.audio.newSource('sounds/taylorswift_lovestory.mp3'),
     love.audio.newSource('sounds/taylorswift_shakeitoff.mp3'),
+    love.audio.newSource('sounds/oliviarodrigo_drivers_license.mp3'),
 }
 
 gBarGSounds = {

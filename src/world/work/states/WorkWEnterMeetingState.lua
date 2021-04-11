@@ -10,14 +10,15 @@ function WorkWEnterMeetingState:enter()
     gStateStack:push(DialogueState('Coworker: Ayyy Keeks! Looks like I owe '..
         'Bob $100, I did NOT think you were going to make it in today. '..
         'Guessing you re-upped on addy then?\n'..
-        'Keeks: Yeah even got a new dasage, but Starbucks said they could only give '..
+        'Keeks: Yeah even got a new dosage over the weekend, but I\'m still going '..
+        'to have some trouble staying awake today: Starbucks said they could only give '..
         'me 4 venti cold brews at a time, so I\'ll probably only make it '..
         'half the day.\n'..
         'Coworker: In that case, you better hurry up and get your ass to the '..
         'meeting room, reps from the SEC are in there waiting for you. Something '..
-        'about that last SPAC you put together last week.\n'..
-        'Keeks: Last week?! I don\'t even remember putting that together. '..
-        'Hopefully this one hits!',
+        'about that SPAC you put together last week.\n'..
+        'Keeks: Last week? I don\'t even remember that...'..
+        'Oh well, hopefully this one hits!',
             function()
                 self:tweenEnter()
             end))

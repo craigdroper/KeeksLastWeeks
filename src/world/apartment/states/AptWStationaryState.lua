@@ -22,7 +22,7 @@ end
 
 function AptWStationaryState:pushWelcomeDialogue()
     gStateStack:push(DialogueState(
-        'Welcome home\n\nWhat would you like to do next?',
+        'Welcome home!\n\nWhat would you like to do next?',
         function()
             gStateStack:push(AptWInitialMenuState({apartment = self.apartment}))
         end))

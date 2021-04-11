@@ -33,7 +33,7 @@ function CasWStationaryState:update(dt)
     if self.gameOver then
         gCasSounds['background']:play()
         gStateStack:push(DialogueState(
-            'Keeks: Really though today was my day to finally take the house...' ..
+            'Keeks: Really thought today was my day to finally take the house...' ..
             'Oh well, you know I\'ll be back!',
         function()
             -- Pop the stationary state, push the exit state

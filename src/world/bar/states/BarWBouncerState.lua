@@ -7,14 +7,14 @@ function BarWBouncerState:init(params)
 end
 
 function BarWBouncerState:enter()
-    gStateStack:push(DialogueState('Bouncer: ID please.\n\n'..
-        'Keeks: ID? Can\'t you see I\'m old enough?\n\n'..
-        'Bouncer: Well sure, physically you look like you\'ve seen better days...'..
-        'like back in the 50\'s when you were a kid. Still, something '..
-        'about you still screams "I have the music tastes of a teenage girl", so I\'m '..
-        'going to have to see some ID just to be sure.\n\n'..
-        'Keeks: Ok ok, here you go.\n\n'..
-        'Bouncer: Whoah! You\'re three years younger than me?! I can\'t believe that. '..
+    gStateStack:push(DialogueState('Bouncer: ID please.\n'..
+        'Keeks: ID? Can\'t you see I\'m old enough?\n'..
+        'Bouncer: Well sure, physically you look like you\'ve seen better days.'..
+        'Maybe back in the 50\'s when you were a kid? Still, something '..
+        'about you screams "I have the music tastes of a teenage girl", so I\'m '..
+        'going to have to see some ID just to be sure.\n'..
+        'Keeks: Ok ok, here you go.\n'..
+        'Bouncer: Whoah! You\'re three years younger than me?! That is shocking. '..
         'Well enjoy yourself Mr. Keeks.',
             function()
                 self:tweenEnter()

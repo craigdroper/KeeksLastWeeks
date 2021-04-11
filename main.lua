@@ -30,6 +30,10 @@ function love.load()
 
     gGlobalObjs['filter'] = NoFilter()
     --gGlobalObjs['filter'] = AcidFilter({multiplier=10})
+    --
+    -- Just initialize to not playing non-nil value
+    gGlobalObjs['music'] = GameMusic(gCasGSongs)
+    gGlobalObjs['music']:stopSong()
 
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
@@ -42,11 +46,11 @@ function love.load()
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())
-            gStateStack:push(CasWEnterState())
+            --gStateStack:push(CasWEnterState())
             -- gStateStack:push(CasGStartState())
             -- gStateStack:push(DateWEnterLobbyState())
             -- gStateStack:push(DateWEnterRestState())
-            -- gStateStack:push(DateGStartState())
+            gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
             -- gStateStack:push(WorkGStartState())
             -- player.health = 50
@@ -60,6 +64,7 @@ function love.load()
                 function()
                 end))
     end))
+    -- Comment the entire fade block above and uncomment this line for the "prod" release
     -- gStateStack:push(IntroGIntroState())
 
     love.keyboard.keysPressed = {}

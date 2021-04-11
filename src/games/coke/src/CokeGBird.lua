@@ -28,6 +28,7 @@ function CokeGBird:init()
     -- no longer be updated
     self.isInPlay = true
     self.isWin = false
+    self.isStartGravity = true
 
     -- particle system belonging to the bird, emitted on sneeze
     self.psystem = love.graphics.newParticleSystem(gBGTextures['particle'], 128)
@@ -89,7 +90,11 @@ function CokeGBird:update(dt)
     end
 
     if not self.isWin then
-        self.dy = self.dy + GRAVITY * dt
+        if self.isStartGravity then
+            self.dy = self.dy + (GRAVITY/8) * dt
+        else
+            self.dy = self.dy + GRAVITY * dt
+        end
     end
 
     if self.isWin then
@@ -101,6 +106,7 @@ function CokeGBird:update(dt)
     else
         -- burst of anti-gravity when space or left mouse are pressed
         if love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) then
+            self.isStartGravity = false
             self.dy = self.jumpYAcc
             gCokeSounds['sniff']:stop()
             gCokeSounds['sniff']:play()

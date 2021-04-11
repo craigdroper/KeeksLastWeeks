@@ -21,14 +21,14 @@ function DoctorWExitGameState:enter()
     gStateStack:push(DialogueState('Good Doctor: How ya feeling bud?\n' ..
         'Keeks: I don\'t know...a little better I guess? Definitely still not '..
         'feeling 100%...\n'..
-        'Good Doctor: Yeah, my prognosis is years of your work hard play hard '..
+        'Good Doctor: Yeah, my prognosis is years of your work-hard, play-hard '..
         'lifestyle may require a miracle to get you back to 100%, but at least '..
         'for now we\'ve got you patched up and you can get back out there and do '..
         'what you do best: PARTAAAAAY!\n'..
         'Keeks: Yeah I guess that\'s true. Great! Well thanks dude!\n'..
         'Good Doctor: It\'s not "dude", its Doctor! I didn\'t go to four years '..
         'of medical school to be called dude you little brat. Now get the hell '..
-        'out of my office',
+        'out of my office.',
     function()
         gStateStack:push(UpdatePlayerStatsState({player = self.player,
             stats = {money = -100, health = 5 * self.gameStats.numVirusDestroyed}, callback =

@@ -6,7 +6,7 @@ local FURNITURE_BUFFER = 8
 function BarWExitState:init(params)
     self.player = gGlobalObjs['player']
     self.bar = params.bar
-    self.nextGameState = params.nextGameState
+    self.nextState = params.nextGameState
 end
 
 function BarWExitState:enter()

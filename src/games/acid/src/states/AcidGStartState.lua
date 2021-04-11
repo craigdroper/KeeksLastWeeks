@@ -105,9 +105,15 @@ function AcidGStartState:update(dt)
                     'Try and match at least three mini-tabs of acid in a row within the '..
                     'blotter paper grid. Click the mini-tabs with the mouse to move '..
                     'them. You can only switch two tabs that are neighbors in one '..
-                    'of the cardanal directions (up, right, down, left).\n'..
+                    'of the cardinal directions (up, right, down, left).\n'..
                     'Match enough tabs and score enough points before the timer '..
-                    'runs out to advance to a....higher level'
+                    'runs out to advance to a....higher level\n'..
+                    'New levels can bring new types of acid (different shapes). '..
+                    'Try and match as many of the pattenerned tabs as possible, since '..
+                    'they are worth more points than the unmarked tabs.\n'..
+                    'Finally, keep an eye out for sparkling tabs. Matching a row '..
+                    'that has a sparkling tab will give get your score so high, you\'ll be asking '..
+                    'yourself: "Is this forever?"'
                 , function()
                     self.pauseInput = false
                   end))

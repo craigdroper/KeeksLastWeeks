@@ -12,7 +12,7 @@ end
 
 function BarWStationaryState:enter()
     gStateStack:push(DialogueState(
-        'Bartender: Morning Keeks! ' ..
+        'Bartender: Morning Keeks!\n' ..
         'We\'ve got your favorite seat saved for you. ' ..
         'What\'ll it be?',
         function()
@@ -20,6 +20,7 @@ function BarWStationaryState:enter()
         function()
             -- Keep the Stationary State on, and put the mini game
             -- on top of it
+            gBarWSounds['exterior']:stop()
             gStateStack:push(BarGStartState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
@@ -30,13 +31,13 @@ end
 
 function BarWStationaryState:update(dt)
     if self.gameStats then
+        gBarWSounds['exterior']:play()
         gStateStack:push(UpdatePlayerStatsState({player = self.player,
-            -- Bar mini game will give 100 fun for every level claered
-            stats = {fun = 100 * self.gameStats.score, money = -50}, callback =
+            stats = {money = -50}, callback =
         function()
         gStateStack:push(DialogueState(
             'Bartender: Hope you enjoyed your time at the bar Keeks!\n' ..
-            'Now while I\'ve got you here, do you think we could settle up your tab?\n\n' ..
+            'Now while I\'ve got you here, do you think we could settle up your tab?\n' ..
             'Keeks: Ummm...',
         function()
             -- Pop the stationary state, push the exit state

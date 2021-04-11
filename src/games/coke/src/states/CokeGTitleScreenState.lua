@@ -11,9 +11,10 @@ CokeGTitleScreenState = Class{__includes = BaseState}
 
 function CokeGTitleScreenState:init()
     self.background = CokeGBackground()
+    self.bird = CokeGBird()
 
-    gCokeSounds['music']:setLooping(true)
-    gCokeSounds['music']:play()
+    gGlobalObjs['music'] = GameMusic(gCokeGSongs)
+    gGlobalObjs['music']:startSong()
 end
 
 function CokeGTitleScreenState:enter()
@@ -46,13 +47,16 @@ end
 function CokeGTitleScreenState:render()
     -- Draw stationary background
     self.background:render()
+    self.bird:render()
 
     -- simple UI code
     love.graphics.setFont(gFonts['flappy-font'])
-    love.graphics.printf('SniffyBird', 0, 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('SniffyBird', 0, 16, VIRTUAL_WIDTH, 'center')
 
+    --[[
     love.graphics.setFont(gFonts['medium-flappy-font'])
-    love.graphics.printf('Press Enter', 0, 100, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT - 100, VIRTUAL_WIDTH, 'center')
+    --]]
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)

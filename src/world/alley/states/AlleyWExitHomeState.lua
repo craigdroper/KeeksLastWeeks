@@ -47,6 +47,7 @@ function AlleyWExitHomeState:tweenExit()
         function()
     -- Pop the Alley Exit off
     gStateStack:pop()
+    gBarWSounds['exterior']:stop()
     gStateStack:push(AptWEnterState())
     gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
         function()

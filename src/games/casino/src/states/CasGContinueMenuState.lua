@@ -39,7 +39,7 @@ function CasGContinueMenuState:init(params)
                         function()
                         -- Pop Continue Menu
                         gStateStack:pop()
-                        self.background.song:stop()
+                        self.background.music:stopSong()
                         self.background.songTimer:remove()
                         gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                             function()

@@ -11,15 +11,15 @@ end
 function DateGStartState:enter()
     -- Push a dialogue box with some simple instructions
     gStateStack:push(DialogueState(
-        'Fiance: Keeks, I can\'t believe how long you kept me waiting here. '..
+        'Fiancee: Keeks, I can\'t believe how long you kept me waiting here. '..
         'It\'s like all you care about is having fun and playing your games. '..
         'Fine, let\'s play a game.\n'..
-        'If you want to earn yourself any more time to play more of the games, '..
-        'you are going to sit here and listen to me talk about everything I want '..
-        'to talk about, like my day, my clothes, my hair, my work, my friends, and '..
-        'most importantly my feelings, and the only thing I want to hear from you '..
-        'the entire time is "Yes Honey"\n'..
-        'If at any time, you say anything but "Yes Honey" to me, this date is over '..
+        'If you want to earn yourself any more time for more fun, '..
+        'you are going to sit here, and listen to me talk about everything I want '..
+        'to talk about. You\'re going to hear all about my day, my clothes, my hair, my work, my friends, and '..
+        'most importantly my feelings. After I\'m finished, the only thing I want to hear from '..
+        'your dumb mounth is "Yes Honey"\n'..
+        'If, at any time, you say anything but "Yes Honey" to me, this date is over '..
         'and you\'re walking home. Got it?!\n\n'..
         'Keeks: Yes Honey',
         function()

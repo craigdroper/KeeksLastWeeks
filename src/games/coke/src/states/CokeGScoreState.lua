@@ -37,7 +37,7 @@ function CokeGScoreState:update(dt)
             function()
             -- pop off the coke game score state and return to the
             -- stationary state
-            gCokeSounds['music']:stop()
+            gGlobalObjs['music']:stopSong()
             gStateStack:pop()
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
             function()
@@ -68,7 +68,7 @@ function CokeGScoreState:render()
     love.graphics.printf(scoreMsg, 0, 100, VIRTUAL_WIDTH, 'center')
 
     restartMsg = 'Press Enter to End the Game'
-    love.graphics.printf(restartMsg, 0, 200, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(restartMsg, 0, VIRTUAL_HEIGHT - 100, VIRTUAL_WIDTH, 'center')
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)

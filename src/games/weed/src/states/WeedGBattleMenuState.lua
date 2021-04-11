@@ -13,7 +13,8 @@ function WeedGBattleMenuState:init(battleState)
 
     local items = {}
     local playLevel = self.battleState.player.weedGPokemon.level
-    for _, attack in pairs(self.battleState.player.weedGPokemon.attacks) do
+    for i = 1, #self.battleState.player.weedGPokemon.attacks do
+        local attack = self.battleState.player.weedGPokemon.attacks[i]
         if playLevel >= attack.minLevel then
             table.insert(items,
                 {

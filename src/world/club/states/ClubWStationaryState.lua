@@ -13,7 +13,7 @@ end
 function ClubWStationaryState:enter()
     gStateStack:push(DialogueState(
         'Keeks: Hey, DJ BJ! Mind if you get me backstage?\n'..
-        'DJ BJ: I have no idea who you are\n'..
+        'DJ BJ: I have no idea who you are.\n'..
         'Keeks: C\'mon, I\'ve been coming to your sets for years!\n'..
         'DJ BJ: Well if that\'s true, you shouldn\'t have any trouble proving to '..
         'me you can cut a rug...',

@@ -165,6 +165,8 @@ function UpdatePlayerStatsState:tweenGameOver()
             self.player.timeOpac = 255
             self.player.healthOpac = 255
             self.player.moneyOpac = 255
+            -- Stop all playing audio
+            love.audio.stop()
             gStateStack:push(FadeInState({r = 0, g = 0, b = 0}, 2,
                 function()
                     gStateStack:clear()

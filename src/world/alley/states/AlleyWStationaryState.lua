@@ -13,7 +13,7 @@ end
 function AlleyWStationaryState:enter()
     gStateStack:push(DialogueState(
         'Keeks: Chicago Breakfast Club! It\'s been a minute. Not like the ironic '..
-        'expresion, I think its literally been a minute. Whats on the drug menu today?\n\n' ..
+        'expression, I think its literally been a minute. Whats on the drug menu today?\n\n' ..
         'Chicago Breakfast Club: You tell me Keeks, what do you desire?',
         function()
             gStateStack:push(AlleyWDrugMenuState({alley = self.alley}))

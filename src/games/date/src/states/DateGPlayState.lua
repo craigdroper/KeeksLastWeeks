@@ -31,7 +31,7 @@ end
 
 function DateGPlayState:resetTextChunks()
     self.respTextChunks = {
-        [1] = {['text'] = 'Fiance:', ['numDots'] = 79},
+        [1] = {['text'] = 'Fiancee:', ['numDots'] = 79},
         [2] = {['text'] = '', ['numDots'] = 86},
         [3] = {['text'] = '', ['numDots'] = 86},
     }
@@ -39,6 +39,7 @@ end
 
 function DateGPlayState:beginDateTalk()
     self.talkSound:play()
+    self.talkSound:setVolume(1.0)
     self.talkingTween = Timer.every(0.2,
         function()
             for i = 1, #self.respTextChunks do
@@ -70,7 +71,7 @@ function DateGPlayState:update(dt)
     if self.isTalkingFinished then
         self.talkSound:stop()
         self.talkingTween:remove()
-        gStateStack:push(DialogueState('Fiance: ' ..
+        gStateStack:push(DialogueState('Fiancee: ' ..
             self.queues[math.random(#self.queues)],
             function()
                 gStateStack:push(UserInputState())

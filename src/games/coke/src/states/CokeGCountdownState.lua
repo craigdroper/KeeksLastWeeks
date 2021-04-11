@@ -17,6 +17,7 @@ function CokeGCountdownState:init(params)
     self.count = 3
     self.timer = 0
     self.background = params.background
+    self.bird = CokeGBird()
 end
 
 --[[
@@ -36,7 +37,9 @@ function CokeGCountdownState:update(dt)
         -- when 0 is reached, we should enter the CokeGPlayState
         if self.count == 0 then
             gStateStack:pop()
-            gStateStack:push(CokeGPlayState({background = self.background}))
+            gStateStack:push(CokeGPlayState({
+                background = self.background,
+                bird = self.bird}))
         end
     end
 end
@@ -44,10 +47,13 @@ end
 function CokeGCountdownState:render()
     -- Draw stationary background
     self.background:render()
+    self.bird:render()
 
     -- render count big in the middle of the screen
     love.graphics.setFont(gFonts['huge-flappy-font'])
+    love.graphics.setColor(255,0,0,255)
     love.graphics.printf(tostring(self.count), 0, 120, VIRTUAL_WIDTH, 'center')
+    love.graphics.setColor(255,255,255,255)
 
     -- Finally draw stationary ground
     love.graphics.filterDrawD(gCokeGImages['ground'], 0, VIRTUAL_HEIGHT - 16)

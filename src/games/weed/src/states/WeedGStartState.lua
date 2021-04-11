@@ -15,6 +15,9 @@ function WeedGStartState:init()
     self.scale = targHeight / sheight
     self.spriteX = VIRTUAL_WIDTH/2 - (swidth * self.scale)/2
     self.spriteY = VIRTUAL_HEIGHT/2 - (sheight * self.scale)/2
+    local music = GameMusic(gWeedGSongs)
+    music:startSong()
+    gGlobalObjs['music'] = music
 
     self.tween = Timer.every(2, function()
         Timer.tween(0.2, {
@@ -34,9 +37,6 @@ function WeedGStartState:init()
 end
 
 function WeedGStartState:enter()
-    gWeedGSounds['marley']:setLooping(true)
-    gWeedGSounds['marley']:play()
-
     self.startMenu = Menu {
         items = {
             {
@@ -47,7 +47,7 @@ function WeedGStartState:enter()
                         function()
                         -- Pop off BarGStartState
                         gStateStack:pop()
-                        gStateStack:push(WeedGPlayState())
+                        gStateStack:push(WeedGPlayState({music = self.music}))
                         gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                             function()
                             end))

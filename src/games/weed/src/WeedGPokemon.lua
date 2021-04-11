@@ -82,8 +82,21 @@ function WeedGPokemon:calculateStats()
     end
 end
 
+gLastWeedDef = nil
+
 function WeedGPokemon.getRandomDef()
-    return POKEMON_DEFS[POKEMON_IDS[math.random(#POKEMON_IDS)]]
+    local tryCount = 0
+    local maxTry = 1000
+    local weedDefIdx = nil
+    while tryCount < maxTry do
+        weedDefIdx = math.random(#POKEMON_IDS)
+        if weedDefIdx ~= gLastWeedDef then
+            break
+        end
+        tryCount = tryCount + 1
+    end
+    gLastWeedDef = weedDefIdx
+    return POKEMON_DEFS[POKEMON_IDS[gLastWeedDef]]
 end
 
 --[[

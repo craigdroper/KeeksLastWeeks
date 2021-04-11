@@ -13,7 +13,7 @@ end
 
 function CasGBetState:enter()
     gStateStack:push(DialogueState(
-        'Dealer: Players, place your bets',
+        'Dealer: Players, place your bets!',
         function()
             gStateStack:push(UserInputState('$', '%D'))
         end))

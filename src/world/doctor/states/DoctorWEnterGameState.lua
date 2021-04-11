@@ -13,7 +13,7 @@ function DoctorWEnterGameState:enter()
         'Keeks: No doctor, it just feels like I\'m a little low on health, '..
         'wanted to see if you could help be feel better.\n'..
         'Good Doctor: Well as you know by now, I\'m more of trial and error '..
-        'physicion as opposed to many of my more traditional by the books '..
+        'physician as opposed to many of my more traditional by the books '..
         'contemporaries. Let\'s do what we usually do and literally throw '..
         'pills at it. I\'ll grab a fistful, and toss it at your mouth, '..
         'and we\'ll see what sticks!',

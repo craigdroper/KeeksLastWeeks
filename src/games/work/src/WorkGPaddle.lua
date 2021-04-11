@@ -34,14 +34,14 @@ function WorkGPaddle:init(x, y, textName, frameName, charFrame)
     self.charFrame = charFrame
     self.width = gFramesInfo[self.frameName][self.charFrame]['width']
     self.height = gFramesInfo[self.frameName][self.charFrame]['height']
-    self.score = 9
+    self.score = 0
     self.renderScore = false
     if charFrame == gKEEKS_IDLE_RIGHT then
         self.scoreX = VIRTUAL_WIDTH / 2 - 50
     else
         self.scoreX = VIRTUAL_WIDTH / 2 + 30
     end
-    self.scoreY = VIRTUAL_HEIGHT / 3 
+    self.scoreY = VIRTUAL_HEIGHT / 3
 end
 
 function WorkGPaddle:update(dt)

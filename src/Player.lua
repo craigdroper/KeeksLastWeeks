@@ -30,6 +30,10 @@ function Player:init()
     -- game and is entering his first state
     self.isFirstScene = true
 
+    -- DEV
+    self.time = 10
+    self.isFirstScene = false
+
     -- For KLW, we almost always don't want the player's state to transition
     -- based on arrow input since we tween almost all animations
     -- The exception for that is in the Pokemon/Weed game where arrow input

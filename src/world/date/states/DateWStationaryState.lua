@@ -8,6 +8,7 @@ function DateWStationaryState:init(params)
 end
 
 function DateWStationaryState:enter()
+    gSounds['footsteps']:stop()
     gStateStack:push(DialogueState(
         'Keeks: Hey baby...Hope you haven\'t been waiting too long...',
         function()

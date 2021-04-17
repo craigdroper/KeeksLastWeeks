@@ -39,6 +39,7 @@ function WeedGTakeTurnState:enter(params)
             return
         end
 
+        Timer.after(0.5, function()
         self:attack(self.secondPokemon, self.firstPokemon, self.secondSprite, self.firstSprite, self.secondBar, self.firstBar, false,
 
         function()
@@ -56,6 +57,7 @@ function WeedGTakeTurnState:enter(params)
             gStateStack:pop()
             gStateStack:push(WeedGBattleMenuState(self.battleState))
         end)
+    end)
     end)
 end
 
@@ -84,6 +86,8 @@ function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderS
         -- attack sound
         gWeedGSounds['powerup']:stop()
         gWeedGSounds['powerup']:play()
+        gWeedGSounds['powerup_smoking']:stop()
+        gWeedGSounds['powerup_smoking']:play()
 
         -- blink the attacker sprite three times (turn on and off blinking 6 times)
         Timer.every(0.1, function()
@@ -97,9 +101,13 @@ function WeedGTakeTurnState:attack(attacker, defender, attackerSprite, defenderS
             if attackSuccess then
                 gWeedGSounds['hit']:stop()
                 gWeedGSounds['hit']:play()
+                gWeedGSounds['hit_smoking']:stop()
+                gWeedGSounds['hit_smoking']:play()
             else
                 gWeedGSounds['miss']:stop()
                 gWeedGSounds['miss']:play()
+                gWeedGSounds['miss_smoking']:stop()
+                gWeedGSounds['miss_smoking']:play()
             end
 
             Timer.every(0.1, function()

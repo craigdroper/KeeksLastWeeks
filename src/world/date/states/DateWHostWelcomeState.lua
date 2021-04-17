@@ -9,14 +9,14 @@ end
 function DateWHostWelcomeState:enter()
     gStateStack:push(DialogueState('Keeks: Good evening...or afternoon? I\'m not really sure...'..
         'Anyway, I\'m meeting my fiance here for a date, I may be a few minutes '..
-        'or hours late but...\n\n'..
+        'or hours late but...\n'..
         'Host: Ah yes good evening monsieur Keeks. Your date has already arrived, '..
         'and believe it or not, hasn\'t left after all this time waiting. She is '..
-        'at your usual table, you know the way, yes?\n\n'..
+        'at your usual table, you know the way, yes?\n'..
         'Keeks: You sure you won\'t show me the way, I\'d prefer some protection, '..
-        'or at least witnesses when I join her at the table\n\n'..
+        'or at least witnesses when I join her at the table\n'..
         'Host: I took an uppercut for you last time monsieur, I\'m sure you can '..
-        'handle yourself alone this time. Enjoy your dinner!\n\n'..
+        'handle yourself alone this time. Enjoy your dinner!\n'..
         'Keeks: *Shit, here goes nothing.*',
             function()
                 self:tweenEnter()

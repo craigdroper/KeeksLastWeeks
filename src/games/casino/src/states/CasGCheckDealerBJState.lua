@@ -88,7 +88,7 @@ function CasGCheckDealerBJState:update(dt)
                                             self.tablePlayer.insureBet}
                                     }))
                         gStateStack:push(CasGDispResState({
-                                        result = 'INSURED LOSS',
+                                        result = 'INSURANCE COVERS',
                                         rgb = {r=255, g=255, b=0},
                                     }))
                     else

@@ -36,19 +36,28 @@ function IntroGIntroState:enter()
 
     Timer.after(introDuration,
         function()
-            gStateStack:pop()
-            gStateStack:push(IntroGMainMenuState())
+            self.finish()
         end)
 end
 
 function IntroGIntroState:update(dt)
+    -- Allow the user to skip the intro with special key
+    if love.keyboard.wasPressed('s') then
+        self.finish()
+    end
+end
+
+function IntroGIntroState:finish()
+    gIntroSounds['odyssey']:stop()
+    gStateStack:pop()
+    gStateStack:push(IntroGMainMenuState())
 end
 
 function IntroGIntroState:render()
     love.graphics.setColor(255, 255, 255, self.opac)
     if self.isFirstTitle then
         love.graphics.setFont(gFonts['huge'])
-        love.graphics.printf('Dirty Bit Studios', 0, VIRTUAL_HEIGHT/2-32, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Dirty Bit Studio', 0, VIRTUAL_HEIGHT/2-32, VIRTUAL_WIDTH, 'center')
     else
         love.graphics.setFont(gFonts['large'])
         love.graphics.printf('Proudly Presents', 0, VIRTUAL_HEIGHT/2-8, VIRTUAL_WIDTH, 'center')

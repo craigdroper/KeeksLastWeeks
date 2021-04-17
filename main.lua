@@ -35,6 +35,7 @@ function love.load()
     gGlobalObjs['music'] = GameMusic(gCasGSongs)
     gGlobalObjs['music']:stopSong()
 
+    --[[
     gStateStack:push(FadeInState({r = 255, g = 255, b = 255}, 1,
         function()
             player.displayStats = true
@@ -46,11 +47,11 @@ function love.load()
             -- gStateStack:push(CokeGTitleScreenState())
             -- gStateStack:push(ClubWEnterState())
             -- gStateStack:push(ClubGStartState())
-            --gStateStack:push(CasWEnterState())
+            -- gStateStack:push(CasWEnterState())
             -- gStateStack:push(CasGStartState())
             -- gStateStack:push(DateWEnterLobbyState())
             -- gStateStack:push(DateWEnterRestState())
-            gStateStack:push(DateGStartState())
+            -- gStateStack:push(DateGStartState())
             -- gStateStack:push(WorkWEnterOfficeState())
             -- gStateStack:push(WorkGStartState())
             -- player.health = 50
@@ -60,12 +61,14 @@ function love.load()
             -- gStateStack:push(WeedGStartState())
             -- gStateStack:push(IntroGMainMenuState())
             -- gStateStack:push(GameOverGTitleState({emptyStat = 'Health'}))
+            -- gStateStack:push(IntroGIntroState())
             gStateStack:push(FadeOutState({r = 255, g = 255, b = 255}, 1,
                 function()
                 end))
     end))
+    --]]
     -- Comment the entire fade block above and uncomment this line for the "prod" release
-    -- gStateStack:push(IntroGIntroState())
+    gStateStack:push(IntroGIntroState())
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
@@ -128,7 +131,7 @@ function love.mousepressed(x, y, button)
 end
 
 function love.mousereleased(x, y, key)
-    love.mouse.keysReleased[key] = true 
+    love.mouse.keysReleased[key] = true
 end
 
 function love.keyboard.wasPressed(key)

@@ -23,6 +23,7 @@ function DateGPlayState:init(params)
         'Isn\'t that right?',
         'Do you understand where I\'m coming from?',
         'I think that\'s justified, don\'t you?',
+        'I\'m not the bad guy here, I was just trying to help, right?',
     }
     self.userInput = nil
 

@@ -15,7 +15,7 @@ function DocGLevel:init()
     self.player = gGlobalObjs['player']
     self.isGameOver = false
 
-    self.launchRem = 2
+    self.launchRem = 5
 
     self.totalAliens = 20 - self.player.health / 5
     if( self.totalAliens < 1 ) then
@@ -27,7 +27,7 @@ function DocGLevel:init()
     self.destroyedBodies = {}
 
     self.obsVelocity = 200
-    self.virusVelocity = 400
+    self.virusVelocity = 250
 
     -- define collision callbacks for our world; the World object expects four,
     -- one for different stages of any given collision

@@ -5,7 +5,6 @@ function GameMusic:init(songs)
     self.songs = songs
     self.songIdx = math.random(#self.songs)
     self.song = self.songs[self.songIdx]
-    self:startSong()
 end
 
 function GameMusic:startSong()
@@ -35,6 +34,10 @@ function GameMusic:changeSong()
 end
 
 function GameMusic:stopSong()
-    self.song:stop()
-    self.songTimer:remove()
+    if self.song then
+        self.song:stop()
+    end
+    if self.songTimer then
+        self.songTimer:remove()
+    end
 end

@@ -57,7 +57,7 @@ function WeedGGameOverState:render()
     love.graphics.setColor(56, 56, 56, 234)
     love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 175, 64, 350, 64, 4)
 
-    love.graphics.setColor(99, 155, 255, 255)
+    love.graphics.setColor(101, 206, 63, 255)
     -- if self.level == 10 then
     love.graphics.printf('SESH OVER', VIRTUAL_WIDTH / 2 - 128, 64, 256, 'center')
     -- else

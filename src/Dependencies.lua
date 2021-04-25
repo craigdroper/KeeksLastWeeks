@@ -712,6 +712,7 @@ gAptWSongs = {
     love.audio.newSource('sounds/taylorswift_lovestory.mp3'),
     love.audio.newSource('sounds/taylorswift_shakeitoff.mp3'),
     love.audio.newSource('sounds/oliviarodrigo_drivers_license.mp3'),
+    love.audio.newSource('sounds/work_from_home.mp3'),
 }
 
 gBarGSounds = {
@@ -722,4 +723,5 @@ gCasGSongs = {
     love.audio.newSource('src/games/casino/sounds/bad_boujee.mp3'),
     love.audio.newSource('src/games/casino/sounds/better_have_my_money.mp3'),
     love.audio.newSource('src/games/casino/sounds/cant_tell_me_nothing.mp3'),
+    love.audio.newSource('src/games/casino/sounds/the_motto.mp3'),
 }

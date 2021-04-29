@@ -713,6 +713,7 @@ gAptWSongs = {
     love.audio.newSource('sounds/taylorswift_shakeitoff.mp3'),
     love.audio.newSource('sounds/oliviarodrigo_drivers_license.mp3'),
     love.audio.newSource('sounds/work_from_home.mp3'),
+    love.audio.newSource('sounds/party_usa.mp3'),
 }
 
 gBarGSounds = {

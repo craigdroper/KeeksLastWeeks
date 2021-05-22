@@ -21,3 +21,7 @@ The final installation step is to download the KLW source code to your local mac
 * Once the download is complete, move the zip file to your desired location on your local machine.
 * Unzip the KLW compressed directory (usually be just double clicking the folder). A new, unzipped KLW directory will be created
 
+### Launch Game
+Open a command terminal, and navigate to the unzipped KLW directory.
+Once in the KLW directory, launching the game with the Love 2D engine by running the following command:
+`love .`

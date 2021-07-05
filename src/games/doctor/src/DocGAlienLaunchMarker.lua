@@ -61,7 +61,13 @@ function DocGAlienLaunchMarker:update(dt)
 
         -- grab mouse coordinates
         local x, y = push:toGame(love.mouse.getPosition())
-        -- Hack with issue where the mouse drops off a retrievable y axis
+        -- Hack with issue where the mouse drops off a retrievable x or y axis
+        -- This can most frequently happen when mirroring the game from a laptop
+        -- to a larger screen, but it can also happen during regular non-mirrored
+        -- play as well
+        if( x == nil ) then
+            x = 0
+        end
         if( y == nil ) then
             y = VIRTUAL_HEIGHT
         end
